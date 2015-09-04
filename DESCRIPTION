@@ -1,0 +1,18 @@
+Package: pinnacle.API
+Type: Package
+Version: 1.8
+Title: A Wrapper for the Pinnacle Sports API
+Author: Marco Blume, Nicholas Jhirad, Amine Gassem
+Maintainer: Marco Blume <marco.blume@pinnaclesports.com>
+Description: An R interface to the Pinnaclesports.com API.
+LazyData: true
+License: GPL-2
+Packaged: 2015-08-26 17:38:00 UTC; nicholasj
+Imports: dplyr,
+    uuid,
+    httr,
+    RCurl,
+    XML,
+    rjson,
+    jsonlite,
+    plyr
