@@ -58,6 +58,7 @@ SetCredentials <- function(username,password){
 #' @export
 #'
 #' @examples
+#' SetCredentials("TESTAPI","APITEST")
 #' GetCredentials()
 GetCredentials <- function() {
   type <- c("Username","Password")

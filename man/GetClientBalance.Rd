@@ -16,8 +16,9 @@ vector client balance parameter
 Get Client Balance
 }
 \examples{
+\donttest{
 SetCredentials("TESTAPI","APITEST")
 AcceptTermsAndConditions(accepted=TRUE)
-GetClientBalance()
+GetClientBalance()}
 }
 

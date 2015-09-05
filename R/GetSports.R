@@ -14,9 +14,10 @@
 #' @export
 #'
 #' @examples
+#' \donttest{
 #' SetCredentials("TESTAPI","APITEST")
 #' AcceptTermsAndConditions(accepted=TRUE)
-#' GetSports()
+#' GetSports()}
 GetSports <-
   function(force=FALSE){
     CheckTermsAndConditions()

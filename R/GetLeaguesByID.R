@@ -17,9 +17,10 @@
 #' @export
 #' 
 #' @examples 
+#' \donttest{
 #' SetCredentials("TESTAPI","APITEST")
 #' AcceptTermsAndConditions(accepted=TRUE)
-#' GetLeaguesByID(1)
+#' GetLeaguesByID(1)}
 GetLeaguesByID <-
   function(sportid){
     CheckTermsAndConditions()

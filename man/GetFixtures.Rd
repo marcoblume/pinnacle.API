@@ -37,8 +37,9 @@ returns a data frame with columns:
 Get Fixtures
 }
 \examples{
+\donttest{
 SetCredentials("TESTAPI","APITEST")
 AcceptTermsAndConditions(accepted=TRUE)
-GetFixtures(sportname = "Badminton",leagueIds = 191545)
+GetFixtures(sportname = "Badminton",leagueIds = 191545)}
 }
 

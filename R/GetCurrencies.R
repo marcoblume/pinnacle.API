@@ -12,9 +12,10 @@
 #' @export
 #'
 #' @examples
+#' \donttest{
 #' SetCredentials("TESTAPI","APITEST")
 #' AcceptTermsAndConditions(accepted=TRUE)
-#' GetCurrencies()
+#' GetCurrencies()}
 GetCurrencies <-
   function(force=FALSE){
     CheckTermsAndConditions()

@@ -21,8 +21,9 @@ A list of bets and associated details
 Get a list of running/settled bets
 }
 \examples{
+\donttest{
 SetCredentials("TESTAPI","APITEST")
 AcceptTermsAndConditions(accepted=TRUE)
-GetBetsList()
+GetBetsList()}
 }
 

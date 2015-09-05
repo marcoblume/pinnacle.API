@@ -29,8 +29,9 @@ whereas spread.hdp refers to the mainline. spread.altLineId is the first alterna
 showOddsDF - Takes a GetOdds JSON response and turns it into a data.frame
 }
 \examples{
+\donttest{
 SetCredentials("TESTAPI","APITEST")
 AcceptTermsAndConditions(accepted=TRUE)
-showOddsDF(sportname="Badminton",leagueIds=191545)
+showOddsDF(sportname="Badminton",leagueIds=191545)}
 }
 

@@ -13,9 +13,10 @@
 #' @export
 #' @import dplyr
 #' @examples
+#' \donttest{
 #' SetCredentials("TESTAPI","APITEST")
 #' AcceptTermsAndConditions(accepted=TRUE)
-#' showOddsDF(sportname="Badminton",leagueIds=191545)
+#' showOddsDF(sportname="Badminton",leagueIds=191545)}
 showOddsDF <- function (sportname,
                         leagueIds=NULL,
                         since=NULL,

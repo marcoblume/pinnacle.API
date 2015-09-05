@@ -21,8 +21,9 @@ a data frame with these columns:
 Returns all sports with the status whether they currently have lines or not
 }
 \examples{
+\donttest{
 SetCredentials("TESTAPI","APITEST")
 AcceptTermsAndConditions(accepted=TRUE)
-GetSports()
+GetSports()}
 }
 

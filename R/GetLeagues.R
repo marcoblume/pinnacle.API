@@ -16,9 +16,10 @@
 #' }
 #'@export
 #'@examples
+#'\donttest{
 #' SetCredentials("TESTAPI","APITEST")
 #' AcceptTermsAndConditions(accepted=TRUE)
-#' GetLeagues("Badminton")
+#' GetLeagues("Badminton")}
 
 
 

@@ -51,6 +51,7 @@
 #' @importFrom rjson toJSON
 #' @import uuid
 #' @examples
+#' \donttest{
 #' SetCredentials("TESTAPI","APITEST")
 #' AcceptTermsAndConditions(accepted=TRUE)
 #' PlaceBet (stake=10,
@@ -62,7 +63,7 @@
 #'           team="TEAM2",
 #'           acceptBetterLine=TRUE,
 #'           winRiskStake="WIN",
-#'           oddsFormat="AMERICAN")
+#'           oddsFormat="AMERICAN")}
 
 PlaceBet <-
   function(
