@@ -13,7 +13,6 @@ Example Code
 ``` r
 library(pinnacle.API)
 library(dplyr)
-library(lubridate)
 ```
 Please make sure that you understand the terms and conditions 
 ``` r
@@ -43,5 +42,9 @@ Use the showOddsDF() function to aggregate all the data into a nicer data.frame
 ```r
 badminton_data <- showOddsDF(sportname = "Badminton" , Badminton_League_Ids )
 ```
-
+Converte  the dates into POSIX
+```r
+badminton_data$StartTime <- as.POSIXct(badminton_data$StartTime,format="%Y-%m-%dT%H:%M:%S")
+badminton_data$cutoff <- as.POSIXct(badminton_data$cutoff,format="%Y-%m-%dT%H:%M:%S")
+```
 This DF has all the necessary IDs and information that you can then pass to the PlaceBet() function to place your wagers.
