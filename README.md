@@ -6,7 +6,11 @@ The Pinnacle Sports ( www.pinnaclesports.com) manual can be found here :
 http://www.pinnaclesports.com/en/api/manual
 
 To use the Pinnacle Sports API you must have an account with Pinnacle Sports.
+
 Please contact Pinnacle Sports directly at csd@pinnaclesports.com for all account questions.
+Pinnacle Terms & Conditions:  http://www.pinnaclesports.com/en/termsandconditions
+
+The API is not acceccsible from all IP-Ranges , especially IP addresses from the UK and the USA are Geo IP blocked.
 
 Example Code
 ------------
