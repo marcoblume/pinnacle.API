@@ -8,9 +8,10 @@
 #' @import httr
 #' @importFrom jsonlite fromJSON
 #' @examples
+#' \donttest{
 #' SetCredentials("TESTAPI","APITEST")
 #' AcceptTermsAndConditions(accepted=TRUE)
-#' GetClientBalance()
+#' GetClientBalance()}
 GetClientBalance <- function(force=TRUE){
   CheckTermsAndConditions()
   

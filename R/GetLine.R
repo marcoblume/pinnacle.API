@@ -30,10 +30,11 @@
 #' @export
 #'
 #' @examples
+#' \donttest{
 #' SetCredentials("TESTAPI","APITEST")
 #' AcceptTermsAndConditions(accepted=TRUE)
 #'  GetLine(sportId=1,leagueids=191545,eventId=495418854,
-#'  periodNumber=0,team="TEAM1",betType="Moneyline")
+#'  periodNumber=0,team="TEAM1",betType="Moneyline")}
 #'
 
 GetLine <- function(sportId,

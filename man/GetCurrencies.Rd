@@ -21,8 +21,9 @@ a data frame with these columns:
 Get the list of supported Currencies
 }
 \examples{
+\donttest{
 SetCredentials("TESTAPI","APITEST")
 AcceptTermsAndConditions(accepted=TRUE)
-GetCurrencies()
+GetCurrencies()}
 }
 

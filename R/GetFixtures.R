@@ -26,9 +26,10 @@
 #' @export
 #'
 #' @examples
+#' \donttest{
 #' SetCredentials("TESTAPI","APITEST")
 #' AcceptTermsAndConditions(accepted=TRUE)
-#' GetFixtures(sportname = "Badminton",leagueIds = 191545)
+#' GetFixtures(sportname = "Badminton",leagueIds = 191545)}
 
 
 

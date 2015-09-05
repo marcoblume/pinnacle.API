@@ -13,6 +13,7 @@ A data.frame with your username and password
 Get your credential values
 }
 \examples{
+SetCredentials("TESTAPI","APITEST")
 GetCredentials()
 }
 

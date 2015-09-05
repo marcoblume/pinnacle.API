@@ -71,6 +71,7 @@ list containing :
 Place bet in the system
 }
 \examples{
+\donttest{
 SetCredentials("TESTAPI","APITEST")
 AcceptTermsAndConditions(accepted=TRUE)
 PlaceBet (stake=10,
@@ -82,6 +83,6 @@ PlaceBet (stake=10,
           team="TEAM2",
           acceptBetterLine=TRUE,
           winRiskStake="WIN",
-          oddsFormat="AMERICAN")
+          oddsFormat="AMERICAN")}
 }
 

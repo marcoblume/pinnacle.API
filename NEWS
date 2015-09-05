@@ -1,0 +1,6 @@
+pinnacle.API v1.8.1 (Release date: 2015-09-5)
+==============
+
+Changes:
+
+* Due to GEO IP Blocking removed the testing of the examples in R CMD check

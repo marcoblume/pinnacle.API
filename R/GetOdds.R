@@ -11,9 +11,10 @@
 #' @import httr
 #' @importFrom jsonlite fromJSON
 #' @examples
+#' \donttest{
 #' SetCredentials("TESTAPI","APITEST")
 #' AcceptTermsAndConditions(accepted=TRUE)
-#' GetOdds (sportname="Badminton", leagueIds=191545,,isLive=0)
+#' GetOdds (sportname="Badminton", leagueIds=191545,,isLive=0)}
 #'
 
 GetOdds <-

@@ -9,9 +9,10 @@
 #' @importFrom jsonlite fromJSON
 #' @importFrom jsonlite rbind.pages
 #' @examples
+#' \donttest{
 #' SetCredentials("TESTAPI","APITEST")
 #' AcceptTermsAndConditions(accepted=TRUE)
-#' GetBetsList()
+#' GetBetsList()}
 GetBetsList <-
   function(betlist = c('SETTLED','RUNNING'),
            fromDate = Sys.Date()-7,

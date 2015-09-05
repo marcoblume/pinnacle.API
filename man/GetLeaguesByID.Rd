@@ -23,8 +23,9 @@ a data frame having columns:
 Returns all Leagues for the Sport(s)
 }
 \examples{
+\donttest{
 SetCredentials("TESTAPI","APITEST")
 AcceptTermsAndConditions(accepted=TRUE)
-GetLeaguesByID(1)
+GetLeaguesByID(1)}
 }
 
