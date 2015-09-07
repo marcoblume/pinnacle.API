@@ -1,8 +1,8 @@
 #' Get a list of running/settled bets
 #'
 #' @param betlist Either 'SETTLED' or 'RUNNING' Default Behavior shows both
-#' @param fromDate Iso8061 Date Default: 7 days prior, Sys.Date()-7
-#' @param toDate Iso8061 Date  Default: Line Close within next 7 days Sys.Date()+7
+#' @param fromDate Iso8061 Date Default: 15 days prior in UTC, as.POSIXct(Sys.Date(), tz = 'UTC')-15*24*60*60
+#' @param toDate Iso8061 Date  Default: 1 day ahead in UTC (to counter possible fencepost situations), as.POSIXct(Sys.Date(), tz = 'UTC') + 24*60*60
 #'
 #' @return A list of bets and associated details 
 #' @export
@@ -15,8 +15,8 @@
 #' GetBetsList()}
 GetBetsList <-
   function(betlist = c('SETTLED','RUNNING'),
-           fromDate = Sys.Date()-7,
-           toDate = Sys.Date()+7){
+           fromDate = as.POSIXct(Sys.Date(), tz = 'UTC')-15*24*60*60,
+           toDate = as.POSIXct(Sys.Date(), tz = 'UTC')+24*60*60){
     
     CheckTermsAndConditions()
     

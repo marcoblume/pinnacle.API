@@ -4,15 +4,16 @@
 \alias{GetBetsList}
 \title{Get a list of running/settled bets}
 \usage{
-GetBetsList(betlist = c("SETTLED", "RUNNING"), fromDate = Sys.Date() - 7,
-  toDate = Sys.Date() + 7)
+GetBetsList(betlist = c("SETTLED", "RUNNING"),
+  fromDate = as.POSIXlt(Sys.Date(), tz = "UTC") - 15 * 24 * 60 * 60,
+  toDate = as.POSIXlt(Sys.Date(), tz = "UTC") + 24 * 60 * 60)
 }
 \arguments{
 \item{betlist}{Either 'SETTLED' or 'RUNNING' Default Behavior shows both}
 
-\item{fromDate}{Iso8061 Date Default: 7 days prior, Sys.Date()-7}
+\item{fromDate}{Iso8061 Date Default: 15 days prior in UTC, as.POSIXct(Sys.Date(), tz = 'UTC')-15*24*60*60}
 
-\item{toDate}{Iso8061 Date  Default: Line Close within next 7 days Sys.Date()+7}
+\item{toDate}{Iso8061 Date  Default: 1 day ahead in UTC (to counter possible fencepost situations), as.POSIXct(Sys.Date(), tz = 'UTC') + 24*60*60}
 }
 \value{
 A list of bets and associated details
