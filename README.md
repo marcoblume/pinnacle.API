@@ -12,6 +12,15 @@ Pinnacle Terms & Conditions:  http://www.pinnaclesports.com/en/termsandcondition
 
 The API is not acceccsible from all IP-Ranges , especially IP addresses from the UK and the USA are Geo IP blocked.
 
+To install the newest version :
+
+```r
+devtools::install_github("marcoblume/pinnacle.API")
+```
+Or install a stable version from CRAN :
+```r
+install.packages("pinnacle.API")
+```
 Example Code
 ------------
 ``` r
@@ -61,7 +70,7 @@ Examples for Filter Settings on Soccer Data , use the same code as above and cha
 ```r
 ## Some Filter Suggestions to clean the Data 
 soccer_filtered <- soccer_data %>% 
-  ## Only bet on Period "0" 
+  ## Only Period "0" , the main period 
   filter(PeriodNumber == 0 ) %>% 
   ## No Live Games
   filter( LiveStatus != 1) %>% 
@@ -73,7 +82,7 @@ soccer_filtered <- soccer_data %>%
   filter(. , !grepl("advance",HomeTeamName)) %>%
   ## No raise the cup lines
   filter(. , !grepl("raise",HomeTeamName)) %>% 
-  ## Filter cames past cutoff time
+  ## Filter games past cutoff time
   filter(cutoff > as.POSIXlt(Sys.time(),tz="UTC")) %>%
   ## Filter games that are played in the next 24h
   filter(StartTime < as.POSIXlt(Sys.time(),tz="UTC")+hours(24) )
