@@ -15,8 +15,8 @@
 #' GetBetsList()}
 GetBetsList <-
   function(betlist = c('SETTLED','RUNNING'),
-           fromDate = as.POSIXct(Sys.Date(), tz = 'UTC')-15*24*60*60,
-           toDate = as.POSIXct(Sys.Date(), tz = 'UTC')+24*60*60){
+           fromDate = as.POSIXlt(Sys.Date(), tz = 'UTC')-15*24*60*60,
+           toDate = as.POSIXlt(Sys.Date(), tz = 'UTC')+24*60*60){
     
     CheckTermsAndConditions()
     
