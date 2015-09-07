@@ -48,19 +48,17 @@ badminton_data <- showOddsDF(sportname = "Badminton" , Badminton_League_Ids )
 ```
 Converte  the dates into POSIX
 ```r
-badminton_data$StartTime <- as.POSIXct(badminton_data$StartTime,format="%Y-%m-%dT%H:%M:%S")
-badminton_data$cutoff <- as.POSIXct(badminton_data$cutoff,format="%Y-%m-%dT%H:%M:%S")
+## Convert Times to Posix
+badminton_data$StartTime <- as.POSIXct(badminton_data$StartTime,format="%Y-%m-%dT%H:%M:%S",tz="UTC")
+badminton_data$cutoff <- as.POSIXct(badminton_data$cutoff,format="%Y-%m-%dT%H:%M:%S",tz="UTC")
 ```
 This DF has all the necessary IDs and information that you can then pass to the PlaceBet() function to place your wagers.
 
 
+Examples for Filter Settings on Soccer Data , use the same code as above and chang the Sport from Badminton to Soccer.
+------------
 ```r
-## Convert Times to Posix
-soccer_data$StartTime <- as.POSIXct(soccer_data$StartTime,format="%Y-%m-%dT%H:%M:%S",tz="UTC")
-soccer_data$cutoff <- as.POSIXct(soccer_data$cutoff,format="%Y-%m-%dT%H:%M:%S",tz="UTC")
-```
-```r
-## Some Filter Suggestions to clean the Data
+## Some Filter Suggestions to clean the Data 
 soccer_filtered <- soccer_data %>% 
   ## Only bet on Period "0" 
   filter(PeriodNumber == 0 ) %>% 
