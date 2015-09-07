@@ -65,8 +65,9 @@ badminton_data$cutoff <- as.POSIXct(badminton_data$cutoff,format="%Y-%m-%dT%H:%M
 This DF has all the necessary IDs and information that you can then pass to the PlaceBet() function to place your wagers.
 
 
-Examples for Filter Settings on Soccer Data , use the same code as above and change the Sport from Badminton to Soccer.
-------------
+Examples for Filter Settings on Soccer Data
+--------------------------
+use the same code as above and change the Sport from Badminton to Soccer.
 ```r
 ## Some Filter Suggestions to clean the Data 
 soccer_filtered <- soccer_data %>% 
