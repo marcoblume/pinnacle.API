@@ -52,3 +52,30 @@ badminton_data$StartTime <- as.POSIXct(badminton_data$StartTime,format="%Y-%m-%d
 badminton_data$cutoff <- as.POSIXct(badminton_data$cutoff,format="%Y-%m-%dT%H:%M:%S")
 ```
 This DF has all the necessary IDs and information that you can then pass to the PlaceBet() function to place your wagers.
+
+
+```r
+## Convert Times to Posix
+soccer_data$StartTime <- as.POSIXct(soccer_data$StartTime,format="%Y-%m-%dT%H:%M:%S",tz="UTC")
+soccer_data$cutoff <- as.POSIXct(soccer_data$cutoff,format="%Y-%m-%dT%H:%M:%S",tz="UTC")
+```
+```r
+## Some Filter Suggestions to clean the Data
+soccer_filtered <- soccer_data %>% 
+  ## Only bet on Period "0" 
+  filter(PeriodNumber == 0 ) %>% 
+  ## No Live Games
+  filter( LiveStatus != 1) %>% 
+  ## No Corners
+  filter(. , !grepl("Corner",HomeTeamName)) %>% 
+  ## No Home vs Aways
+  filter(. , !grepl("Home Team",HomeTeamName)) %>% 
+  ## No advance Lines
+  filter(. , !grepl("advance",HomeTeamName)) %>%
+  ## No raise the cup lines
+  filter(. , !grepl("raise",HomeTeamName)) %>% 
+  ## Filter cames past cutoff time
+  filter(cutoff > as.POSIXlt(Sys.time(),tz="UTC")) %>%
+  ## Filter games that are played in the next 24h
+  filter(StartTime < as.POSIXlt(Sys.time(),tz="UTC")+hours(24) )
+```
