@@ -69,7 +69,8 @@ showOddsDF <- function (sportname,
                                                  "LeagueID" = "LeagueId", 
                                                  "EventID" = "EventId"))
   
+
   fixtodds <- fixtodds %>% select(StartTime,cutoff,SportID,LeagueID,LeagueName,EventID,LineId,PeriodNumber,HomeTeamName,AwayTeamName,Status,LiveStatus,ParlayStatus,RotationNumber,everything())
-  
+
   return(fixtodds)
 }
