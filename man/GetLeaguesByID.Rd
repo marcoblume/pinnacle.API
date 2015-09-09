@@ -4,10 +4,12 @@
 \alias{GetLeaguesByID}
 \title{Get Leagues for Sport(s) by ID}
 \usage{
-GetLeaguesByID(sportid)
+GetLeaguesByID(sportid, force = FALSE)
 }
 \arguments{
 \item{sportid}{integer vector of sports IDs}
+
+\item{force}{boolean whether to get new data (TRUE) or use cached data (FALSE)}
 }
 \value{
 a data frame having columns:

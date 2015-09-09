@@ -5,8 +5,9 @@
 #' @param since numeric This is used to receive incremental updates.
 #' Use the value of last from previous fixtures response.
 #' @param isLive boolean if TRUE retrieves ONLY live events
-#' @param attachLeagueNames boolean default set to true, will attach league names. Since pulling leagues requires an additional
-#' JSON response, setting this to FALSE will boost speed.
+#' @param attachLeagueNames boolean default set to true, will attach league names. 
+#' @param useCachedLeagues boolean default set to false, whether to use cached league data, faster but may not detect new
+#' bettable leagues
 #' @return a dataframe combining GetOdds and GetFixtures data, containing NA's where levels of factors do not have a value.
 #' Naming convention is as follows, Example: spread.altLineId.N is the altLineId associated with spread.hdp.(N+1) 
 #' whereas spread.hdp refers to the mainline. spread.altLineId is the first alternate, and equivalent to spread.altLineId.0
@@ -21,14 +22,16 @@ showOddsDF <- function (sportname,
                         leagueIds=NULL,
                         since=NULL,
                         isLive=0,
-                        attachLeagueNames=!isLive) {
+                        attachLeagueNames=TRUE,
+                        useCachedLeagues=FALSE) {
   CheckTermsAndConditions()
   
-  if(attachLeagueNames){
-    leagues <- GetLeagues(sportname)
+  
+  
+  if(attachLeagueNames | is.null(leagueIds)){
+    leagues <- GetLeagues(sportname,force = !useCachedLeagues)
     if(is.null(leagueIds)) leagueIds <- leagues$LeagueID[leagues$LinesAvailable==1]
-    
-    leagues <- leagues[leagues$LeagueID %in% leagueIds,]
+    if(attachLeagueNames) leagues <- leagues[leagues$LeagueID %in% leagueIds,]
   }
   
   
@@ -37,17 +40,17 @@ showOddsDF <- function (sportname,
                  since=since,
                  isLive=isLive)
   
-  res$leagues = lapply(res$leagues, function(leagueElement) {
-    leagueElement$LeagueName <- leagues$LeagueName[leagueElement$id == leagues$LeagueID]
-    leagueElement
-  })
+  if(attachLeagueNames){
+    res$leagues = lapply(res$leagues, function(leagueElement) {
+      leagueElement$LeagueName <- leagues$LeagueName[leagueElement$id == leagues$LeagueID]
+      leagueElement
+    })
+  }
   
   fixtures <- suppressWarnings(GetFixtures(sportname,
-                          leagueIds,
-                          since=since,
-                          isLive=isLive))
-  
-
+                                           leagueIds,
+                                           since=since,
+                                           isLive=isLive))
   
   odds_DF <- fixPeriods(res,depth=5)
   odds_DF <- combineFactors(odds_DF,depth=4)
@@ -56,19 +59,10 @@ showOddsDF <- function (sportname,
   odds_DF <- fixPeriods(odds_DF,depth=1)
   odds_DF <- combineFactors(odds_DF,depth=0)
   
-  colnames(odds_DF)[c(1:6)] = c("SportId",
-                                "LastOdds",
-                                "LeagueId",
-                                "EventId",
-                                "LineId",
-                                "PeriodNumber")
-  
-  if(attachLeagueNames) names(odds_DF)[names(odds_DF)=="x..i.."] <- "LeagueName"
-  
-  fixtodds <- right_join(fixtures, odds_DF, by=c("SportID" = "SportId", 
-                                                 "LeagueID" = "LeagueId", 
-                                                 "EventID" = "EventId"))
-  
+  fixtodds <- right_join(fixtures, odds_DF, by=c("SportID" = "sportId", 
+                                                 "LeagueID" = "id", 
+                                                 "EventID" = "id.1"))
+  names(fixtodds)[names(fixtodds)=='number'] <- 'PeriodNumber'
   
   orderNameFields <- c('StartTime',
                        'cutoff', 
@@ -76,7 +70,7 @@ showOddsDF <- function (sportname,
                        'LeagueID', 
                        'LeagueName', 
                        'EventID', 
-                       'LineId', 
+                       'lineId', 
                        'PeriodNumber', 
                        'HomeTeamName', 
                        'AwayTeamName', 
@@ -88,7 +82,7 @@ showOddsDF <- function (sportname,
                       setdiff(names(fixtodds),orderNameFields))
   
   fixtodds <- fixtodds[newOrderFields]
- 
-
+  
+  
   return(fixtodds)
 }

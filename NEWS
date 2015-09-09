@@ -1,3 +1,12 @@
+
+pinnacle.API v1.8.5 (Release date: 2015-09-9)
+==============
+
+Changes:
+
+*Fixed showOddsDF for live, live fields now shown
+*Added Caching for GetLeagues
+ 
 pinnacle.API v1.8.4 (Release date: 2015-09-8)
 ==============
 

@@ -33,5 +33,5 @@ GetCurrencies <-
                    stringsAsFactors = FALSE)
     }
 
-    .PinnacleAPI$currencies
+    return(.PinnacleAPI$currencies)
   }
