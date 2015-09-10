@@ -4,7 +4,7 @@
 \alias{GetOdds}
 \title{Get Odds}
 \usage{
-GetOdds(sportname, leagueIds, since = NULL, isLive = 0)
+GetOdds(sportname, leagueIds, since = NULL, isLive = 0, force = TRUE)
 }
 \arguments{
 \item{sportname}{The sport name for which to retrieve the fixutres}
@@ -15,6 +15,8 @@ GetOdds(sportname, leagueIds, since = NULL, isLive = 0)
 Use the value of last from previous fixtures response.}
 
 \item{isLive}{boolean if TRUE retrieves ONLY live events}
+
+\item{force}{boolean if FALSE, functions using cached data will use the values since the last force}
 }
 \value{
 list of lists

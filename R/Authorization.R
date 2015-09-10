@@ -6,8 +6,8 @@
 #' @import RCurl
 #'
 authorization <- function (user = as.character(GetCredentials()$Value[1]),
-pwd = as.character(GetCredentials()$Value[2])){
-    
+                           pwd = as.character(GetCredentials()$Value[2])){
+  
     CheckTermsAndConditions()
   
     credentials = paste(user,pwd,sep=":")

@@ -36,6 +36,6 @@ GetLeagues <-function(sports,force=FALSE,regex=FALSE){
     ids[grepl(patt,tolower(sports.all[,"SportName"]))]
   }
   do.call(rbind,
-          lapply(ids.serach,function(id) GetLeaguesByID(id,force=FALSE)))
+          lapply(ids.serach,function(id) GetLeaguesByID(id,force=force)))
   
 }

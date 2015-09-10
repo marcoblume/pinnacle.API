@@ -6,7 +6,7 @@
 #' Use the value of last from previous fixtures response.
 #' @param isLive boolean if TRUE retrieves ONLY live events
 #' @param attachLeagueNames boolean default set to true, will attach league names. 
-#' @param useCachedLeagues boolean default set to false, whether to use cached league data, faster but may not detect new
+#' @param force boolean default set to TRUE, forces a reload of the cache.
 #' bettable leagues
 #' @return a dataframe combining GetOdds and GetFixtures data, containing NA's where levels of factors do not have a value.
 #' Naming convention is as follows, Example: spread.altLineId.N is the altLineId associated with spread.hdp.(N+1) 
@@ -23,13 +23,13 @@ showOddsDF <- function (sportname,
                         since=NULL,
                         isLive=0,
                         attachLeagueNames=TRUE,
-                        useCachedLeagues=FALSE) {
+                        force = TRUE) {
   CheckTermsAndConditions()
   
   
   
   if(attachLeagueNames | is.null(leagueIds)){
-    leagues <- GetLeagues(sportname,force = !useCachedLeagues)
+    leagues <- GetLeagues(sportname,force = force)
     if(is.null(leagueIds)) leagueIds <- leagues$LeagueID[leagues$LinesAvailable==1]
     if(attachLeagueNames) leagues <- leagues[leagues$LeagueID %in% leagueIds,]
   }

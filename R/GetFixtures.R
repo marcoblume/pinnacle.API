@@ -45,7 +45,7 @@ GetFixtures <-
     ##
     
     
-    PossibleLeagueIds = GetLeaguesByID(sportId)
+    PossibleLeagueIds = GetLeaguesByID(sportId,force=TRUE)
     PossibleLeagueIds = PossibleLeagueIds$LeagueID[PossibleLeagueIds$LinesAvailable==1]
     if(missing(leagueIds))
       leagueIds <- PossibleLeagueIds
@@ -59,7 +59,7 @@ GetFixtures <-
              add_headers(Authorization= authorization(),
                          "Content-Type" = "application/json"),
              query = list(sportId=sportId,
-                          leagueIds = paste(leagueIds,collapse=','),
+                          leagueIds = paste(leagueIds[1],collapse=','),
                           since=since,
                           isLive=isLive*1))
     res <-  jsonlite::fromJSON(content(r,type="text"))
