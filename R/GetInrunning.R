@@ -23,6 +23,7 @@ GetInrunning <- function() {
   inrunningState <- fixPeriods(inrunningState,depth=1)
   inrunningState <- combineFactors(inrunningState,depth=0)
   
-  names(inrunningState)[1:3] = c('SportID','LeagueID','EventID')
+  names(inrunningState)[1:2] = c('SportID','LeagueID')
+  if(length(names(inrunningState))>2) names(inrunningState)[3] = c('EventID')
   return(inrunningState)
 }

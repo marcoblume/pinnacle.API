@@ -1,3 +1,10 @@
+pinnacle.API v1.8.7 (Release date: 2015-09-10)
+==============
+
+Changes:
+
+*Added GetInrunning, to get the state of live events
+
 pinnacle.API v1.8.6 (Release date: 2015-09-9)
 ==============
 
