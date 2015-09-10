@@ -59,7 +59,7 @@ GetFixtures <-
              add_headers(Authorization= authorization(),
                          "Content-Type" = "application/json"),
              query = list(sportId=sportId,
-                          leagueIds = paste(leagueIds[1],collapse=','),
+                          leagueIds = paste(leagueIds,collapse=','),
                           since=since,
                           isLive=isLive*1))
     res <-  jsonlite::fromJSON(content(r,type="text"))
