@@ -1,3 +1,10 @@
+pinnacle.API v1.8.6 (Release date: 2015-09-9)
+==============
+
+Changes:
+
+*Changed default caching behavior
+*Fixed Caching Bug, involving switching leagues
 
 pinnacle.API v1.8.5 (Release date: 2015-09-9)
 ==============

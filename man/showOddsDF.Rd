@@ -5,7 +5,7 @@
 \title{showOddsDF - Takes a GetOdds JSON response and turns it into a data.frame}
 \usage{
 showOddsDF(sportname, leagueIds = NULL, since = NULL, isLive = 0,
-  attachLeagueNames = TRUE, useCachedLeagues = FALSE)
+  attachLeagueNames = TRUE, force = TRUE)
 }
 \arguments{
 \item{sportname}{The sport name for which to retrieve the fixutres}
@@ -19,7 +19,7 @@ Use the value of last from previous fixtures response.}
 
 \item{attachLeagueNames}{boolean default set to true, will attach league names.}
 
-\item{useCachedLeagues}{boolean default set to false, whether to use cached league data, faster but may not detect new
+\item{force}{boolean default set to TRUE, forces a reload of the cache.
 bettable leagues}
 }
 \value{

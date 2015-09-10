@@ -5,7 +5,7 @@
 #' @param since numeric This is used to receive incremental updates.
 #' Use the value of last from previous fixtures response.
 #' @param isLive boolean if TRUE retrieves ONLY live events
-#'
+#' @param force boolean if FALSE, functions using cached data will use the values since the last force
 #' @return list of lists
 #' @export
 #' @import httr
@@ -18,14 +18,14 @@
 #'
 
 GetOdds <-
-  function(sportname,leagueIds,since=NULL,isLive=0){
+  function(sportname,leagueIds,since=NULL,isLive=0,force=TRUE){
     CheckTermsAndConditions()
     if (missing(sportname))
       stop("SportName is not optional")
     
     
     sportid <- GetSports(FALSE)[,"SportID"][sportname== GetSports(FALSE)[,"SportName"]]
-    PossibleLeagueIds = GetLeaguesByID(sportid)
+    PossibleLeagueIds = GetLeaguesByID(sportid,force=force)
     PossibleLeagueIds = PossibleLeagueIds$LeagueID[PossibleLeagueIds$LinesAvailable==1]
     if(missing(leagueIds))
       leagueIds <- PossibleLeagueIds
