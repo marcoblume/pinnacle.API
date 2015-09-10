@@ -33,10 +33,12 @@ fixPeriods <- function(x,depth=5) {
 #'
 combineFactors <- function(x,depth=4) {
   if(depth==0) {
-    nameslist <- sapply(names(x), function(elename) if(length(x[[elename]])>1) names(x[[elename]]) else elename)
-    result <- Reduce(data.frame,x)
+    nameslist <- sapply(names(x), function(elename) {
+      if(length(x[[elename]]) != 0){if('list' %in% typeof(x[elename][[1]])) names(x[elename][[1]]) else elename} else NULL})
+    
+    result <- Reduce(function(a,b) if(length(a) !=0 & length(b)!=0 ) data.frame(a,b) else c(a,b),x)
     names(result) <- unlist(nameslist)
-    result
+    data.frame(result)
   } else {
     lapply(x, function(element) {
       if('list' %in% class(element)) combineFactors(element,depth-1) else element
@@ -45,4 +47,5 @@ combineFactors <- function(x,depth=4) {
   
   
 }
+
 
