@@ -59,9 +59,14 @@ showOddsDF <- function (sportname,
   odds_DF <- fixPeriods(odds_DF,depth=1)
   odds_DF <- combineFactors(odds_DF,depth=0)
   
+  
+  inrunning <- GetInrunning()
   fixtodds <- right_join(fixtures, odds_DF, by=c("SportID" = "sportId", 
                                                  "LeagueID" = "id", 
                                                  "EventID" = "id.1"))
+  fixtodds <- right_join(fixtodds,inrunning, by=c('SportID',
+                                                  'LeagueID',
+                                                  'EventID'))
   names(fixtodds)[names(fixtodds)=='number'] <- 'PeriodNumber'
   
   orderNameFields <- c('StartTime',
