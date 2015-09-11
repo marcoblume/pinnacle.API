@@ -1,6 +1,6 @@
 Package: pinnacle.API
 Type: Package
-Version: 1.87
+Version: 1.88
 Title: A Wrapper for the Pinnacle Sports API
 URL: https://github.com/marcoblume/pinnacle.API
 Author: Marco Blume, Nicholas Jhirad, Amine Gassem
@@ -14,5 +14,4 @@ Imports: dplyr,
     RCurl,
     XML,
     rjson,
-    jsonlite,
-    plyr
+    jsonlite
