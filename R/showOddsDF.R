@@ -27,19 +27,20 @@ showOddsDF <- function (sportname,
   CheckTermsAndConditions()
   
   
-  
+  # 0.18 0 0.74
   if(attachLeagueNames | is.null(leagueIds)){
     leagues <- GetLeagues(sportname,force = force)
     if(is.null(leagueIds)) leagueIds <- leagues$LeagueID[leagues$LinesAvailable==1]
     if(attachLeagueNames) leagues <- leagues[leagues$LeagueID %in% leagueIds,]
   }
   
-  
+  #0.41 0.02 1.17
   res <- GetOdds(sportname,
                  leagueIds,
                  since=since,
                  isLive=isLive)
   
+  # 0 0 0
   if(attachLeagueNames){
     res$leagues = lapply(res$leagues, function(leagueElement) {
       leagueElement$LeagueName <- leagues$LeagueName[leagueElement$id == leagues$LeagueID]
@@ -47,19 +48,21 @@ showOddsDF <- function (sportname,
     })
   }
   
+  #0.37 0.00 1.02
   fixtures <- suppressWarnings(GetFixtures(sportname,
                                            leagueIds,
                                            since=since,
                                            isLive=isLive))
-  
+  # 8.49 0.16 11.09
   odds_DF <- fixPeriods(res,depth=5)
+  # 2.11 0.04 2.90
   odds_DF <- combineFactors(odds_DF,depth=4)
   odds_DF <- fixPeriods(odds_DF,depth=3)
   odds_DF <- combineFactors(odds_DF,depth=2)
   odds_DF <- fixPeriods(odds_DF,depth=1)
   odds_DF <- combineFactors(odds_DF,depth=0)
   
-  
+  #0.07 0.03 0.45
   inrunning <- GetInrunning()
   fixtodds <- right_join(fixtures, odds_DF, by=c("SportID" = "sportId", 
                                                  "LeagueID" = "id", 

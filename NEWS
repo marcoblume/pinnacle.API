@@ -1,3 +1,13 @@
+pinnacle.API v1.8.8 (Release date: 2015-09-11)
+==============
+
+Changes:
+
+*Replaced plyr's rbind.fill with do.call(bind) for speed
+*Removed plyr from import list
+*exported cbindNames from showOddsFunctions
+*fixPeriods is now JSONtoDF and is the only function called 
+
 pinnacle.API v1.8.7 (Release date: 2015-09-10)
 ==============
 

@@ -5,10 +5,10 @@
 #'
 #' @return a tree with the defined level as a dataframe
 #'
-#' @importFrom  plyr rbind.fill
+#' @importFrom  dplyr bind_rows
 fixPeriods <- function(x,depth=5) {
   if(depth==0) {
-    plyr::rbind.fill(
+    do.call(dplyr::bind_rows,
       if(length(x)>1) {
         lapply(x, data.frame)
       } else {
