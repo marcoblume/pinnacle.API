@@ -7,7 +7,7 @@
 cbindNames(x)
 }
 \arguments{
-\item{x}{}
+\item{x}{takes a list of elements with names}
 }
 \value{
 data.frame containing combined names

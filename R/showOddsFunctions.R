@@ -18,7 +18,7 @@ JSONtoDF <- function(x,depth=5,flag=TRUE) {
 
 #' Combines elements of an object, keeping names
 #'
-#' @param x 
+#' @param x takes a list of elements with names
 #'
 #' @return data.frame containing combined names
 #' @export
