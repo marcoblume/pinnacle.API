@@ -26,14 +26,13 @@ showOddsDF <- function (sportname,
                         force = TRUE) {
   CheckTermsAndConditions()
   
-  
+  if(missing(sportname)) stop('Error: sportname not optional')
   # 0.18 0 0.74
   if(attachLeagueNames | is.null(leagueIds)){
     leagues <- GetLeagues(sportname,force = force)
     if(is.null(leagueIds)) leagueIds <- leagues$LeagueID[leagues$LinesAvailable==1]
     if(attachLeagueNames) leagues <- leagues[leagues$LeagueID %in% leagueIds,]
   }
-  
   
   res <- GetOdds(sportname,
                  leagueIds,
