@@ -1,3 +1,12 @@
+pinnacle.API v1.8.9 (Release date: 2015-09-17)
+==============
+
+Changes:
+
+*fixed dplyr duplicate in namespace
+*functions are now case insensitive with respect to sport
+*some changes to documentation
+
 pinnacle.API v1.8.8 (Release date: 2015-09-11)
 ==============
 
