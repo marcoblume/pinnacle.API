@@ -105,7 +105,7 @@ PlaceParlayBet <-
         Sys.sleep(0.000001)
         guids <- c(guids,UUIDgenerate())
     }
-    guids
+    
     place_bet_data <- list(uniqueRequestId=guids[1],
                            acceptBetterLine=acceptBetterLine,
                            oddsFormat=oddsFormat,

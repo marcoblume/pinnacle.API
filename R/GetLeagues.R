@@ -30,7 +30,7 @@ GetLeagues <-function(sports,force=FALSE,regex=FALSE){
   sports.all <- GetSports(force)
   ids <- sports.all[,"SportID"]
   ids.serach <- if(!regex) {
-    ids[match(sports,sports.all[,"SportName"])]
+    ids[match(tolower(sports),tolower(sports.all[,"SportName"]))]
   } else {
     patt <- paste(tolower(sports),collapse='|')
     ids[grepl(patt,tolower(sports.all[,"SportName"]))]

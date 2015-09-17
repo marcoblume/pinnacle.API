@@ -24,7 +24,7 @@ GetOdds <-
       stop("SportName is not optional")
     
     
-    sportid <- GetSports(FALSE)[,"SportID"][sportname== GetSports(FALSE)[,"SportName"]]
+    sportid <- GetSports(FALSE)[,"SportID"][tolower(GetSports(FALSE)[,"SportName"]) %in% tolower(sportname)]
     PossibleLeagueIds = GetLeaguesByID(sportid,force=force)
     PossibleLeagueIds = PossibleLeagueIds$LeagueID[PossibleLeagueIds$LinesAvailable==1]
     if(missing(leagueIds))

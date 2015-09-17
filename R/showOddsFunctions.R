@@ -5,7 +5,6 @@
 #' @param flag whether to start with combining factors or binding rows
 #' @return a tree with the defined level as a dataframe
 #' @export
-#' @importFrom  dplyr bind_rows
 JSONtoDF <- function(x,depth=5,flag=TRUE) {
     if(depth==0) {
       dplyr::bind_rows(if(length(x)>1) lapply(x, data.frame) else list(data.frame(x)))

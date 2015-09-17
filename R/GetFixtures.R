@@ -41,7 +41,7 @@ GetFixtures <-
     if (missing(sportname))
       stop("Provide a Sport Name")
     
-    sportId <- GetSports(FALSE)[,"SportID"][sportname== GetSports(FALSE)[,"SportName"]]
+    sportId <- GetSports(FALSE)[,"SportID"][tolower(GetSports(FALSE)[,"SportName"]) %in% tolower(sportname)]
     ##
     
     
