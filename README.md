@@ -10,7 +10,7 @@ To use the Pinnacle Sports API you must have an account with Pinnacle Sports.
 Please contact Pinnacle Sports directly at csd@pinnaclesports.com for all account questions.
 Pinnacle Terms & Conditions:  http://www.pinnaclesports.com/en/termsandconditions
 
-The API is not acceccsible from all IP-Ranges , especially IP addresses from the UK and the USA are Geo IP blocked.
+The API is not accessible  from all IP-Ranges , especially IP addresses from the UK and the USA are Geo IP blocked.
 
 To install the newest version :
 
@@ -28,7 +28,7 @@ library(pinnacle.API)
 library(dplyr)
 library(lubridate)
 ```
-Please make sure that you understand the terms and conditions 
+Please make sure that you understand the terms and conditions.
 ``` r
 AcceptTermsAndConditions()
 ```
@@ -36,12 +36,12 @@ and then accept them. If AcceptTermsnAndConditions is not set to TRUE the functi
 ```r
 AcceptTermsAndConditions(TRUE)
 ```
-Your credentials are the username and password for logging into www.pinnaclesports.com
+Your credentials are the username and password for logging into www.pinnaclesports.com.
 ``` r
 SetCredentials("MyUserName","MyPassWord")
 ```
 
-Pull the Sport Data and filter out the leagues that have lines for Badminton availble
+Pull the Sport Data and filter out the leagues that have lines for Badminton available.
 
 ```r
 Sport_data <- GetSports() 
@@ -52,11 +52,11 @@ active_leagues <- League_data %>%
 Badminton_League_Ids <- active_leagues$LeagueID
 ```
 
-Use the showOddsDF() function to aggregate all the data into a nicer data.frame
+Use the showOddsDF() function to aggregate all the data into a nicer data.frame.
 ```r
 badminton_data <- showOddsDF(sportname = "Badminton" , Badminton_League_Ids )
 ```
-Converte  the dates into POSIX
+Convert  the dates into POSIX
 ```r
 ## Convert Times to Posix
 badminton_data$StartTime <- as.POSIXct(badminton_data$StartTime,format="%Y-%m-%dT%H:%M:%S",tz="UTC")
@@ -87,4 +87,30 @@ soccer_filtered <- soccer_data %>%
   filter(cutoff > as.POSIXlt(Sys.time(),tz="UTC")) %>%
   ## Filter games that are played in the next 24h
   filter(StartTime < as.POSIXlt(Sys.time(),tz="UTC")+hours(24) )
+```
+This is a filter Ideas for Live Games in Soccer. 
+Modify showOddsDF() with ISLive= TRUE for a faster response if only Live Events are needed.
+The League IDs are retrieved using GetLeagues().
+
+```r
+data <- showOddsDF(sportname = "Soccer" , Sport_Type_League_IDs , isLive = TRUE)
+
+data %>%
+      ## Only bet on Period "1"
+      filter(PeriodNumber == 0 ) %>%
+      ## No Live Games
+      filter( LiveStatus == 1) %>%
+      ## Specific
+      filter(homeScore + awayScore == 3 ) %>%
+      ## only 1st half
+      filter(state == 1) %>%
+      ## only from 17th min into state
+      filter(elapsed  > 17)
+```
+To check all Running Wagers use GetBetsList() with betlist = "RUNNING". Below call will fetch all wagers that are RUNNING from the last 28 days.
+
+```r
+ betlist <- GetBetsList(betlist = "RUNNING",
+                         fromDate = as.POSIXlt(Sys.Date(), tz = "UTC") - 28 * 24 * 60 * 60,
+                         toDate = as.POSIXlt(Sys.Date(), tz = "UTC") + 24 * 60 * 60)
 ```
