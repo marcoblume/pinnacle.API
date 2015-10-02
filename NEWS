@@ -1,3 +1,10 @@
+pinnacle.API v1.9.0 (Release date: 2015-10-02)
+==============
+
+Changes:
+
+*Added pinnRawXMLResponse for debugging unusual API responses
+
 pinnacle.API v1.8.9 (Release date: 2015-09-17)
 ==============
 
