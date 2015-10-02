@@ -2,7 +2,7 @@
 #'
 #' @return a list containing the raw and the converted XML responses
 #' @export
-pinnRawJSONResponse <-
+pinnRawXMLResponse <-
   function(){
     CheckTermsAndConditions()
     
