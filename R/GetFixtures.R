@@ -63,17 +63,20 @@ GetFixtures <-
                           since=since,
                           isLive=isLive*1))
     res <-  jsonlite::fromJSON(content(r,type="text"))
-
-    target.cols <- c("id", "starts", "home",
-                     "away", "rotNum", "liveStatus",
-                     "status", "parlayRestriction")
-
+    
+    # defunct, was removing pitchers
+    # target.cols <- c("id", "starts", "home",
+    #                  "away", "rotNum", "liveStatus",
+    #                  "status", "parlayRestriction",'homePitcher','awayPitcher')
+    
     out <- cbind(res$sportId,
                  res$last,
-                 do.call(rbind,Map(function(id,events)
-                   data.frame(idEvent =id,events[,target.cols]) ,
+                 do.call(bind_rows,Map(function(id,events)
+                   data.frame(idEvent =id,events) ,
                    res$league$id,res$league$events)))
-    colnames(out) <- c("SportID","Last","LeagueID","EventID",
+    
+    
+    colnames(out)[1:11] <- c("SportID","Last","LeagueID","EventID",
                        "StartTime","HomeTeamName","AwayTeamName",
                        "RotationNumber","LiveStatus","Status","ParlayStatus")
     out
