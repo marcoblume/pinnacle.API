@@ -60,9 +60,13 @@ showOddsDF <- function (sportname,
   fixtodds <- right_join(fixtures, odds_DF, by=c("SportID" = "sportId", 
                                                  "LeagueID" = "id", 
                                                  "EventID" = "id.1"))
-  fixtodds <- left_join(fixtodds,inrunning, by=c('SportID',
-                                                  'LeagueID',
-                                                  'EventID'))
+  
+  #fixed to deal with bug that 
+  if(ncol(inrunning)>2) {
+    fixtodds <- left_join(fixtodds,inrunning, by=c('SportID',
+                                                   'LeagueID',
+                                                   'EventID'))
+  }
   names(fixtodds)[names(fixtodds)=='number'] <- 'PeriodNumber'
   
   orderNameFields <- c('StartTime',
