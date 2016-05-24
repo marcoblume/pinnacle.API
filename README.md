@@ -96,13 +96,12 @@ The League IDs are retrieved using GetLeagues().
 data <- showOddsDF(sportname = "Soccer" , Sport_Type_League_IDs , isLive = TRUE)
 
 data %>%
-      ## Only bet on Period "1"
+      ## Only bet on Period "0"
       filter(PeriodNumber == 0 ) %>%
-      ## No Live Games
+      ## Only Live Games
       filter( LiveStatus == 1) %>%
       ## Specific
       filter(homeScore + awayScore == 3 ) %>%
-      ## only 1st half
       filter(state == 1) %>%
       ## only from 17th min into state
       filter(elapsed  > 17)
