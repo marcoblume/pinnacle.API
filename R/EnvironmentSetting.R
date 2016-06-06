@@ -52,6 +52,22 @@ SetCredentials <- function(username,password){
   .PinnacleAPI$credentials$user <- username
   .PinnacleAPI$credentials$pwd <- password
 }
+
+#' Sets the API endpoint to use
+#'
+#' @param url a url, default value is the usual API endpoint 
+#'
+#' @return void
+#' @export
+#'
+#' @examples
+#' SetAPIEndpoint("https://api.pinnaclesports.com)
+#' SetAPIEndpoint()
+SetAPIEndpoint <- function(url = "https://api.pinnaclesports.com") {
+  writeLines(paste('Package endpoint changed to:',url))
+  .PinnacleAPI$url <- url
+}
+
 #' Get your credential values
 #'
 #' @return A data.frame with your username and password

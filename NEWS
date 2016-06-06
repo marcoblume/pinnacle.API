@@ -1,3 +1,10 @@
+pinnacle.API v1.9.1 (Release date: 2016-06-06)
+==============
+
+Changes:
+
+*Added setAPIEndpoint function for dev and future reliability.
+
 pinnacle.API v1.9.0 (Release date: 2015-10-02)
 ==============
 

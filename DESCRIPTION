@@ -8,10 +8,12 @@ Maintainer: Marco Blume <marco.blume@pinnaclesports.com>
 Description: An R interface to the Pinnaclesports.com API.
 LazyData: true
 License: GPL-3
-Imports: dplyr,
+Imports:
+    dplyr,
     uuid,
     httr,
     RCurl,
     XML,
     rjson,
     jsonlite
+RoxygenNote: 5.0.1
