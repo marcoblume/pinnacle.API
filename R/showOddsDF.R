@@ -24,22 +24,25 @@ showOddsDF <- function (sportname,
                         isLive=0,
                         attachLeagueNames=TRUE,
                         force = TRUE) {
+  # Has user agreed to TOS?
   CheckTermsAndConditions()
   
   if(missing(sportname)) stop('Error: sportname not optional')
-  # 0.18 0 0.74
+  
+  # If specific league Ids have not been given, Pull League info and set those params
   if(attachLeagueNames | is.null(leagueIds)){
     leagues <- GetLeagues(sportname,force = force)
     if(is.null(leagueIds)) leagueIds <- leagues$LeagueID[leagues$LinesAvailable==1]
     if(attachLeagueNames) leagues <- leagues[leagues$LeagueID %in% leagueIds,]
   }
   
+  # Get JSON of odds
   res <- GetOdds(sportname,
                  leagueIds,
                  since=since,
                  isLive=isLive)
   
-  
+  # Conditionally add League Names to response
   if(attachLeagueNames){
     res$leagues = lapply(res$leagues, function(leagueElement) {
       leagueElement$LeagueName <- leagues$LeagueName[leagueElement$id == leagues$LeagueID]
@@ -47,27 +50,32 @@ showOddsDF <- function (sportname,
     })
   }
   
-  
+  # Get additional matchup details
   fixtures <- suppressWarnings(GetFixtures(sportname,
                                            leagueIds,
                                            since=since,
                                            isLive=isLive))
- 
+  
+  # Convert res from JSON Tree to data.frame with NAs at missing factor levels
   odds_DF <- suppressWarnings(JSONtoDF(res))
   
-
+  
+  # Get any Inrunning odds
   inrunning <- suppressWarnings(GetInrunning())
+  
+  # Join fixtures onto odds_DF and Inrunning onto that
   fixtodds <- right_join(fixtures, odds_DF, by=c("SportID" = "sportId", 
                                                  "LeagueID" = "id", 
                                                  "EventID" = "id.1"))
-  
-  #fixed to deal with bug that 
   if(ncol(inrunning)>2) {
     fixtodds <- left_join(fixtodds,inrunning, by=c('SportID',
                                                    'LeagueID',
                                                    'EventID'))
   }
-  names(fixtodds)[names(fixtodds)=='number'] <- 'PeriodNumber'
+  
+  if('number' %in% names(fixtodds)) {
+    names(fixtodds)[names(fixtodds)=='number'] <- 'PeriodNumber'
+  }
   
   orderNameFields <- c('StartTime',
                        'cutoff', 
@@ -83,6 +91,7 @@ showOddsDF <- function (sportname,
                        'LiveStatus', 
                        'ParlayStatus', 
                        'RotationNumber')
+  
   newOrderFields <- c(orderNameFields[orderNameFields %in% names(fixtodds)],
                       setdiff(names(fixtodds),orderNameFields[orderNameFields %in% names(fixtodds)]))
   

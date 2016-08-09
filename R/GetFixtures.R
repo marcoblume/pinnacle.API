@@ -74,11 +74,11 @@ GetFixtures <-
                  do.call(bind_rows,Map(function(id,events)
                    data.frame(idEvent =id,events) ,
                    res$league$id,res$league$events)))
+    InternalNames = c("res$sportId", "res$last", "idEvent" ,"id","starts","home","away", "rotNum","liveStatus","status","parlayRestriction")
+    ReplacementNames = c("SportID","Last","LeagueID","EventID","StartTime","HomeTeamName","AwayTeamName","RotationNumber","LiveStatus","Status","ParlayStatus")
     
-    
-    colnames(out)[1:11] <- c("SportID","Last","LeagueID","EventID",
-                       "StartTime","HomeTeamName","AwayTeamName",
-                       "RotationNumber","LiveStatus","Status","ParlayStatus")
+    colnames(out) <- ifelse(is.na(match(colnames(out),InternalNames)), colnames(out), ReplacementNames[match(colnames(out),InternalNames)])    
+  
     out
 
   }
