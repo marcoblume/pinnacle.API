@@ -9,14 +9,16 @@ JSONtoDF <- function(x,depth=5,flag=TRUE) {
     if(depth==0) {
       dplyr::bind_rows(if(length(x)>1) lapply(x, data.frame) else list(data.frame(x)))
     } else if(flag) {
-      cbindNames(lapply(x, function(element) if('list' %in% class(element)) JSONtoDF(element,depth-1,flag = !flag) else element))
+      cbindNames(lapply(x, function(element) 
+        if('list' %in% class(element)) JSONtoDF(element,depth-1,flag = !flag) else element))
     } else {
-      dplyr::bind_rows(lapply(x, function(element) if('list' %in% class(element)) JSONtoDF(element,depth-1,flag = !flag) else element))
+      dplyr::bind_rows(lapply(x, function(element) 
+        if('list' %in% class(element)) JSONtoDF(element,depth-1,flag = !flag) else element))
     }
 }
 
 
-#' Combines elements of an object, keeping names
+#' Column Binds elements of an object, keeping names
 #'
 #' @param x takes a list of elements with names
 #'

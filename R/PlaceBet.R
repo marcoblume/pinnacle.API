@@ -13,7 +13,7 @@
 #' \item{MALAY}
 #' }
 #' @param stake numeric Wager amount in  currency
-#' @param winRiskStake Default="RISK", either place the stake to RISK or to WIN
+#' @param winRiskStake Default="RISK", either place the stake to RISK/WIN
 #'  \itemize{
 #' \item{WIN}
 #' \item{RISK}
