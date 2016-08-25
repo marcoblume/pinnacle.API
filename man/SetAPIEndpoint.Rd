@@ -15,4 +15,8 @@ void
 \description{
 Sets the API endpoint to use
 }
+\examples{
+SetAPIEndpoint("https://api.pinnaclesports.com")
+SetAPIEndpoint()
+}
 
