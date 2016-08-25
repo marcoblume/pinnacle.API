@@ -2,7 +2,7 @@
 % Please edit documentation in R/showOddsFunctions.R
 \name{cbindNames}
 \alias{cbindNames}
-\title{Combines elements of an object, keeping names}
+\title{Column Binds elements of an object, keeping names}
 \usage{
 cbindNames(x)
 }
@@ -13,6 +13,6 @@ cbindNames(x)
 data.frame containing combined names
 }
 \description{
-Combines elements of an object, keeping names
+Column Binds elements of an object, keeping names
 }
 

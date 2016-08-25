@@ -2,6 +2,7 @@
 
 export(AcceptTermsAndConditions)
 export(CheckTermsAndConditions)
+export(GetAPIEndpoint)
 export(GetBetsList)
 export(GetClientBalance)
 export(GetCredentials)

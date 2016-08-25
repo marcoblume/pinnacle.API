@@ -61,11 +61,24 @@ SetCredentials <- function(username,password){
 #' @export
 #'
 #' @examples
-#' SetAPIEndpoint("https://api.pinnaclesports.com)
+#' SetAPIEndpoint("https://api.pinnaclesports.com")
 #' SetAPIEndpoint()
 SetAPIEndpoint <- function(url = "https://api.pinnaclesports.com") {
   writeLines(paste('Package endpoint changed to:',url))
   .PinnacleAPI$url <- url
+}
+
+#' Gets the current API endpoint
+#'
+#' @return the currently set API endpoint
+#' @export
+#'
+#' @examples
+#' SetAPIEndpoint("https://api.pinnaclesports.com/v2/")
+#' GetAPIEndGetAPIEndpoint()
+#' SetAPIEndpoint("https://api.pinnaclesports.com")
+GetAPIEndpoint <- function() {
+  .PinnacleAPI$url
 }
 
 #' Get your credential values

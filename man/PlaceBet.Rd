@@ -45,7 +45,7 @@ PlaceBet(stake, sportId, eventId, periodNumber, lineId, betType,
 \item{acceptBetterLine}{Default=TRUE ,boolean Whether or not to accept a bet
 when there is a line change in favor of the client}
 
-\item{winRiskStake}{Default="RISK", either place the stake to RISK or to WIN
+\item{winRiskStake}{Default="RISK", either place the stake to RISK/WIN
  \itemize{
 \item{WIN}
 \item{RISK}
