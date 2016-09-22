@@ -14,7 +14,7 @@ Gets the current API endpoint
 }
 \examples{
 SetAPIEndpoint("https://api.pinnaclesports.com/v2/")
-GetAPIEndGetAPIEndpoint()
+GetAPIEndpoint()
 SetAPIEndpoint("https://api.pinnaclesports.com")
 }
 

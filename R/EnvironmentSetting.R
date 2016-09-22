@@ -75,7 +75,7 @@ SetAPIEndpoint <- function(url = "https://api.pinnaclesports.com") {
 #'
 #' @examples
 #' SetAPIEndpoint("https://api.pinnaclesports.com/v2/")
-#' GetAPIEndGetAPIEndpoint()
+#' GetAPIEndpoint()
 #' SetAPIEndpoint("https://api.pinnaclesports.com")
 GetAPIEndpoint <- function() {
   .PinnacleAPI$url

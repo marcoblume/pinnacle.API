@@ -7,16 +7,30 @@
 #' @export
 JSONtoDF <- function(x,depth=5,flag=TRUE) {
     if(depth==0) {
-      dplyr::bind_rows(if(length(x)>1) lapply(x, data.frame) else list(data.frame(x)))
+      dplyr::bind_rows(
+        if(length(x)>1) lapply(x, data.frame) else list(data.frame(x)))
     } else if(flag) {
       cbindNames(lapply(x, function(element) 
-        if('list' %in% class(element)) JSONtoDF(element,depth-1,flag = !flag) else element))
+        if('list' %in% class(element)) JSONtoDF(element,depth-1, flag = !flag) else element))
     } else {
       dplyr::bind_rows(lapply(x, function(element) 
-        if('list' %in% class(element)) JSONtoDF(element,depth-1,flag = !flag) else element))
+        if('list' %in% class(element)) JSONtoDF(element,depth-1, flag = !flag) else element))
     }
 }
 
+#' Set all null fields to NA
+#'
+#' @param x an R object
+#'
+#' @return the same object with nulls replaced
+#' @export
+#'
+#' @examples replaceNulls(list(1,NULL, list(1, NULL, list(1,NULL))))
+replaceNulls <- function(x) {
+  if(is.null(x)) return(NA)
+  if(is.atomic(x)) return(x)
+  if(!is.atomic(x)) lapply(x, replaceNulls)
+}
 
 #' Column Binds elements of an object, keeping names
 #'
