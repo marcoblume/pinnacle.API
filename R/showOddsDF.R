@@ -36,6 +36,7 @@ showOddsDF <- function (sportname,
     if(attachLeagueNames) leagues <- leagues[leagues$LeagueID %in% leagueIds,]
   }
   
+  
   # Get JSON of odds
   res <- GetOdds(sportname,
                  leagueIds,
@@ -57,7 +58,7 @@ showOddsDF <- function (sportname,
                                            isLive=isLive))
   
   # Convert res from JSON Tree to data.frame with NAs at missing factor levels
-  odds_DF <- suppressWarnings(JSONtoDF(res))
+  odds_DF <- suppressWarnings(JSONtoDF(replaceNulls(res)))
   
   
   # Get any Inrunning odds
