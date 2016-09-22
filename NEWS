@@ -1,10 +1,11 @@
-pinnacle.API v1.9.2 (Release date: 2016-06-06)
+pinnacle.API v1.9.2 (Release data: 2016-08-09)
 ==============
 
 Changes:
 
 *Added replaceNulls function to cover an edge case
 *Added getAPIEndpoint function to check the current endpoint
+* Changed GetFixtures to work with MLB Pitcher names.
 
 pinnacle.API v1.9.1 (Release date: 2016-06-06)
 ==============
