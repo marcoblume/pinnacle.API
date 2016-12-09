@@ -1,6 +1,6 @@
 #' Get the list of supported Currencies
 #'
-#' @param force  Default=FALSE, boolean if TRUE force a reload of the data if FALSE use cached data
+#' @param force  Default=TRUE, boolean if TRUE force a reload of the data if FALSE use cached data
 #' @return  a data frame with these columns:
 #' \itemize{
 #' \item Currency Code
@@ -8,7 +8,6 @@
 #' \item Currency Name
 #' }
 #' @import httr
-#' @import XML
 #' @export
 #'
 #' @examples
@@ -17,21 +16,21 @@
 #' AcceptTermsAndConditions(accepted=TRUE)
 #' GetCurrencies()}
 GetCurrencies <-
-  function(force=FALSE){
+  function(force=TRUE){
     CheckTermsAndConditions()
     if(length(.PinnacleAPI$currencies)==0 || force){
-      r <- GET(paste0(.PinnacleAPI$url ,"/v1/currencies"),
-               add_headers("Authorization"= authorization())
-      )
-      dc <- xmlParse(content(r, "text"))
-      xml_path <- "/rsp/currencies/currency"
-      .PinnacleAPI$currencies <-
-        data.frame("CurrencyCode"=xpathSApply(dc,xml_path,xmlGetAttr,"code"),
-                   "ExchangeRateToUSD"=xpathSApply(dc,xml_path,xmlGetAttr,"rate"),
-                   "CurrencyName" = xpathSApply(dc,xml_path,xmlValue),
-                   check.names = FALSE,
-                   stringsAsFactors = FALSE)
+      sprintf('%s/v2/currencies',.PinnacleAPI$url) %>%
+        GET(add_headers("Authorization"= authorization(),
+                        'Content-Type' = 'application/json')) %>%
+        content(type = 'text') %>%
+        jsonlite::fromJSON(flatten = TRUE) %>%
+        unlist(recursive = FALSE) %>%
+        as.data.frame %T>%
+        with({
+          .PinnacleAPI$currencies <- .
+        })
     }
+       
 
     return(.PinnacleAPI$currencies)
   }

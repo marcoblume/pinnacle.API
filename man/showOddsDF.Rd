@@ -2,25 +2,34 @@
 % Please edit documentation in R/showOddsDF.R
 \name{showOddsDF}
 \alias{showOddsDF}
-\title{showOddsDF - Takes a GetOdds JSON response and turns it into a data.frame}
+\title{showOddsDF - Takes a GetOdds JSON response and combines with Fixtures and Inrunning}
 \usage{
-showOddsDF(sportname, leagueIds = NULL, since = NULL, isLive = 0,
-  attachLeagueNames = TRUE, force = TRUE)
+showOddsDF(sportid, leagueids = NULL, since = NULL, islive = 0,
+  force = TRUE, tableFormat = "long", namesLength = 3)
 }
 \arguments{
-\item{sportname}{The sport name for which to retrieve the fixutres}
+\item{sportid}{(optional) The sportid to get odds from, if none is given, 
+a list of options and a prompt are provided}
 
-\item{leagueIds}{numeric vector of leagueids - can get as output from GetLeagues}
+\item{leagueids}{numeric vector of leagueids - can get as output from GetLeagues}
 
 \item{since}{numeric This is used to receive incremental updates.
 Use the value of last from previous fixtures response.}
 
-\item{isLive}{boolean if TRUE retrieves ONLY live events}
-
-\item{attachLeagueNames}{boolean default set to true, will attach league names.}
+\item{islive}{boolean if TRUE retrieves ONLY live events
+#' @param tableformat 
+\itemize{
+\item 'mainlines' (default), only shows mainlines
+\item 'long' for a single record for each spread/total on an event, 
+\item 'wide' for all lines as one record, 
+\item 'subtables' all lines for spreads/totals stored as nested tables
+}}
 
 \item{force}{boolean default set to TRUE, forces a reload of the cache.
+
 bettable leagues}
+
+\item{namesLength}{how many identifiers to use in the names, default is 3}
 }
 \value{
 a dataframe combining GetOdds and GetFixtures data, containing NA's where levels of factors do not have a value.
@@ -28,12 +37,12 @@ Naming convention is as follows, Example: spread.altLineId.N is the altLineId as
 whereas spread.hdp refers to the mainline. spread.altLineId is the first alternate, and equivalent to spread.altLineId.0
 }
 \description{
-showOddsDF - Takes a GetOdds JSON response and turns it into a data.frame
+showOddsDF - Takes a GetOdds JSON response and combines with Fixtures and Inrunning
 }
 \examples{
 \donttest{
 SetCredentials("TESTAPI","APITEST")
 AcceptTermsAndConditions(accepted=TRUE)
-showOddsDF(sportname="Badminton",leagueIds=191545)}
+showOddsDF()}
 }
 

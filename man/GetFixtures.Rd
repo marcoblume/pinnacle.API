@@ -4,15 +4,15 @@
 \alias{GetFixtures}
 \title{Get Fixtures}
 \usage{
-GetFixtures(sportname, leagueIds, since = NULL, isLive = 0)
+GetFixtures(sportid, leagueids = NULL, since = NULL, islive = 0)
 }
 \arguments{
+\item{since}{Default=NULL, numeric This is used to receive incremental updates.
+Use the value of last from previous fixtures response.}
+
 \item{sportname}{The sport name for which to retrieve the fixtures}
 
 \item{leagueIds}{integer vector with league IDs.}
-
-\item{since}{Default=NULL, numeric This is used to receive incremental updates.
-Use the value of last from previous fixtures response.}
 
 \item{isLive}{Default=FALSE, boolean if TRUE retrieves ONLY live events if FALSE retrieved all events}
 }
@@ -40,6 +40,6 @@ Get Fixtures
 \donttest{
 SetCredentials("TESTAPI","APITEST")
 AcceptTermsAndConditions(accepted=TRUE)
-GetFixtures(sportname = "Badminton",leagueIds = 191545)}
+GetFixtures(sportid = 41,leagueIds = 191545)}
 }
 

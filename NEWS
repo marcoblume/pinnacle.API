@@ -1,3 +1,17 @@
+pinnacle.API v2.0.3 (Release date: 2016-12-06)
+==============
+
+Changes:
+* Major Upgrade, all functions now more in line with
+  the fields and wrappers in the pinnacle.api manual
+  
+pinnacle.API v1.9.3 (Release data: 2016-11-30)
+==============
+
+Changes:
+
+* Removing XML support in line with new API guidelines
+
 pinnacle.API v1.9.2 (Release data: 2016-08-09)
 ==============
 
