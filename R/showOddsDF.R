@@ -1,103 +1,95 @@
-#' showOddsDF - Takes a GetOdds JSON response and turns it into a data.frame
+#' showOddsDF - Takes a GetOdds JSON response and combines with Fixtures and Inrunning
 #'
-#' @param sportname The sport name for which to retrieve the fixutres
-#' @param leagueIds numeric vector of leagueids - can get as output from GetLeagues
+#' @param sportid (optional) The sportid to get odds from, if none is given, 
+#' a list of options and a prompt are provided
+#' @param leagueids numeric vector of leagueids - can get as output from GetLeagues
 #' @param since numeric This is used to receive incremental updates.
 #' Use the value of last from previous fixtures response.
-#' @param isLive boolean if TRUE retrieves ONLY live events
-#' @param attachLeagueNames boolean default set to true, will attach league names. 
+#' @param islive boolean if TRUE retrieves ONLY live events
+#' #' @param tableformat 
+#' \itemize{
+#' \item 'mainlines' (default), only shows mainlines
+#' \item 'long' for a single record for each spread/total on an event, 
+#' \item 'wide' for all lines as one record, 
+#' \item 'subtables' all lines for spreads/totals stored as nested tables
+#' } 
+#' @param namesLength how many identifiers to use in the names, default is 3
 #' @param force boolean default set to TRUE, forces a reload of the cache.
+#' 
 #' bettable leagues
 #' @return a dataframe combining GetOdds and GetFixtures data, containing NA's where levels of factors do not have a value.
 #' Naming convention is as follows, Example: spread.altLineId.N is the altLineId associated with spread.hdp.(N+1) 
 #' whereas spread.hdp refers to the mainline. spread.altLineId is the first alternate, and equivalent to spread.altLineId.0
 #' @export
-#' @import dplyr
+#' @import httr
+#' @import data.table
 #' @examples
 #' \donttest{
 #' SetCredentials("TESTAPI","APITEST")
 #' AcceptTermsAndConditions(accepted=TRUE)
-#' showOddsDF(sportname="Badminton",leagueIds=191545)}
-showOddsDF <- function (sportname,
-                        leagueIds=NULL,
+#' showOddsDF()}
+showOddsDF <- function (sportid,
+                        leagueids=NULL,
                         since=NULL,
-                        isLive=0,
-                        attachLeagueNames=TRUE,
-                        force = TRUE) {
+                        islive=0,
+                        force = TRUE,
+                        tableFormat = 'mainlines',
+                        namesLength = 3,
+                        attachLeagueInfo = TRUE) {
   # Has user agreed to TOS?
   CheckTermsAndConditions()
   
-  if(missing(sportname)) stop('Error: sportname not optional')
-  
-  # If specific league Ids have not been given, Pull League info and set those params
-  if(attachLeagueNames | is.null(leagueIds)){
-    leagues <- GetLeagues(sportname,force = force)
-    if(is.null(leagueIds)) leagueIds <- leagues$LeagueID[leagues$LinesAvailable==1]
-    if(attachLeagueNames) leagues <- leagues[leagues$LeagueID %in% leagueIds,]
+  if(missing(sportid)) {
+    cat('No Sports Selected, choose one:\n')
+    ViewSports()
+    sportid <- readline('Selection (id): ')
   }
   
   
   # Get JSON of odds
-  res <- GetOdds(sportname,
-                 leagueIds,
+  res <- GetOdds(sportid,
+                 leagueids = leagueids,
                  since=since,
-                 isLive=isLive)
-  
-  # Conditionally add League Names to response
-  if(attachLeagueNames){
-    res$leagues = lapply(res$leagues, function(leagueElement) {
-      leagueElement$LeagueName <- leagues$LeagueName[leagueElement$id == leagues$LeagueID]
-      leagueElement
-    })
-  }
+                 islive=islive,
+                 tableFormat = tableFormat)
   
   # Get additional matchup details
-  fixtures <- suppressWarnings(GetFixtures(sportname,
-                                           leagueIds,
-                                           since=since,
-                                           isLive=isLive))
-  
-  # Convert res from JSON Tree to data.frame with NAs at missing factor levels
-  odds_DF <- suppressWarnings(JSONtoDF(replaceNulls(res)))
+  fixtures <- GetFixtures(sportid,
+                          leagueids,
+                          since=since,
+                          islive=islive)
+  inrunning <- GetInrunning()
   
   
-  # Get any Inrunning odds
-  inrunning <- suppressWarnings(GetInrunning())
+  setDT(res)
+  setDT(fixtures)
+  setDT(inrunning)
   
-  # Join fixtures onto odds_DF and Inrunning onto that
-  fixtodds <- right_join(fixtures, odds_DF, by=c("SportID" = "sportId", 
-                                                 "LeagueID" = "id", 
-                                                 "EventID" = "id.1"))
-  if(ncol(inrunning)>2) {
-    fixtodds <- left_join(fixtodds,inrunning, by=c('SportID',
-                                                   'LeagueID',
-                                                   'EventID'))
-  }
-  
-  if('number' %in% names(fixtodds)) {
-    names(fixtodds)[names(fixtodds)=='number'] <- 'PeriodNumber'
-  }
-  
-  orderNameFields <- c('StartTime',
-                       'cutoff', 
-                       'SportID', 
-                       'LeagueID', 
-                       'LeagueName', 
-                       'EventID', 
-                       'lineId', 
-                       'PeriodNumber', 
-                       'HomeTeamName', 
-                       'AwayTeamName', 
-                       'Status', 
-                       'LiveStatus', 
-                       'ParlayStatus', 
-                       'RotationNumber')
-  
-  newOrderFields <- c(orderNameFields[orderNameFields %in% names(fixtodds)],
-                      setdiff(names(fixtodds),orderNameFields[orderNameFields %in% names(fixtodds)]))
-  
-  fixtodds <- fixtodds[newOrderFields]
+  res %>% 
+    merge(fixtures, 
+          by.x = 'leagues.events.id',
+          by.y = 'league.events.id', # Seriously? league vs leagues?
+          all = TRUE,suffixes = c('','.Fixture')) %>%
+    merge(inrunning[sports.id %in% sportid],
+          by.x = 'leagues.events.id',
+          by.y = 'sports.leagues.events.id',
+          all = TRUE,
+          suffixes = c('','.Inrunning')) %>%
+    with({
+      if(attachLeagueInfo) {
+        leagueinfo <- GetLeaguesByID(sportid)
+        setDT(leagueinfo)
+        merge(., leagueinfo, 
+              by.x = 'league.id',
+              by.y = 'leagues.id',
+              all.x = TRUE, 
+              suffixes = c('','.LeagueInfo'))
+      } else {
+        .
+      }
+    }) %>%
+    FixNames(namesLength) %>%
+    as.data.frame
   
   
-  return(fixtodds)
 }

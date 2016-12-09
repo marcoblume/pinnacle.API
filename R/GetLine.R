@@ -26,6 +26,7 @@
 #' \item Parlay Status
 #' }
 #' @import httr
+#' @import data.table
 #' @importFrom jsonlite fromJSON
 #' @export
 #'
@@ -37,34 +38,46 @@
 #'  periodNumber=0,team="TEAM1",betType="Moneyline")}
 #'
 
-GetLine <- function(sportId,
+GetLine <- function(sportid,
                     leagueids,
-                    eventId,
-                    periodNumber,
+                    eventid,
+                    periodnumber,
                     betType,
                     team=NULL,
                     side=NULL,
                     handicap=NULL,
-                    oddsFormat="AMERICAN")
+                    oddsFormat="AMERICAN",
+                    force = TRUE)
 {
   
   CheckTermsAndConditions()
+  if(missing(sportid)) {
+    cat('No Sports Selected, choose one:\n')
+    ViewSports(force = force)
+    sportid <- readline('Selection (id): ')
+  }
   
-  r <- GET(paste0(.PinnacleAPI$url ,"/v1/line?sportId"),
-           add_headers(Authorization= authorization(),
-                       "Content-Type" = "application/json"),
-           query = list(sportId=sportId,
-                        leagueId = paste(leagueids,collapse=','),
-                        eventId=eventId,
-                        periodNumber=periodNumber,
-                        betType=betType,
-                        team=team,
-                        side=side,
-                        handicap=handicap,
-                        oddsFormat=oddsFormat))
-  res <-  jsonlite::fromJSON(content(r,type="text"))
+  if(missing(leagueids)) {
+    cat('No Leagues Selected, choose:\n')
+    ViewLeagues(force = force)
+    leagueids <- readline('Selection (id): ')
+  }
   
-  res
-
+  r <- sprintf('%s/v1/line', .PinnacleAPI$url) %>%
+    modify_url(
+      query = list(sportId=sportid,
+                   leagueId = paste(leagueids,collapse=','),
+                   eventId=eventid,
+                   periodNumber=periodnumber,
+                   betType=betType,
+                   team=team,
+                   side=side,
+                   handicap=handicap,
+                   oddsFormat=oddsFormat)
+      ) %>%
+    GET(add_headers(Authorization= authorization(),
+                    "Content-Type" = "application/json")) %>%
+    content(type = 'text') %>%
+    jsonlite::fromJSON()
   
 }

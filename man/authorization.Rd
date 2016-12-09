@@ -4,8 +4,7 @@
 \alias{authorization}
 \title{Authorization for the Pinnacle API}
 \usage{
-authorization(user = as.character(GetCredentials()$Value[1]),
-  pwd = as.character(GetCredentials()$Value[2]))
+authorization(user, pwd)
 }
 \arguments{
 \item{user}{Pinnacle Username}

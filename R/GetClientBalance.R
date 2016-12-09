@@ -16,11 +16,16 @@ GetClientBalance <- function(force=TRUE){
   CheckTermsAndConditions()
   
   if(length(.PinnacleAPI$ClientBalance)==0 || force){
-    r <- GET(paste0(.PinnacleAPI$url ,"/v1/client/balance"),
+    GET(paste0(.PinnacleAPI$url ,"/v1/client/balance"),
              add_headers("Authorization"= authorization(),
                          "Content-Type" = "application/json")
-    )
-    .PinnacleAPI$ClientBalance <- jsonlite::fromJSON(content(r, "text"))
+    ) %>%
+      content("text") %>% 
+      jsonlite::fromJSON(flatten = TRUE) %T>%
+      with({
+        .PinnacleAPI$ClientBalance <- .
+      })
+     
   }
   .PinnacleAPI$ClientBalance
 }

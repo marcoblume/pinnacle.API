@@ -14,7 +14,7 @@
 #' \item LeagueName
 #' }
 #' @import httr
-#' @import XML
+#' @import data.table
 #' @export
 #' 
 #' @examples 
@@ -22,26 +22,43 @@
 #' SetCredentials("TESTAPI","APITEST")
 #' AcceptTermsAndConditions(accepted=TRUE)
 #' GetLeaguesByID(1)}
+
 GetLeaguesByID <-
-  function(sportid, force = FALSE){
+  function(sportid, force = TRUE) {
     CheckTermsAndConditions()
-    if(length(.PinnacleAPI$leagueIds)==0 || force){
-      r <- GET(paste0(.PinnacleAPI$url ,"/v1/leagues"),
-               add_headers("Authorization"= authorization()),
-               query = list(sportid=sportid)
-      )
-      
-      dc <- xmlParse(content(r, "text"))
-      xml_path <- "/rsp/leagues/league"
-      .PinnacleAPI$leagueIds <- data.frame("LeagueID"= xpathSApply(dc,xml_path,xmlGetAttr,"id"),
-                                           "LinesAvailable"= xpathSApply(dc,xml_path,xmlGetAttr,"feedContents"),
-                                           "HomeTeam" = xpathSApply(dc,xml_path,xmlGetAttr,"homeTeamType"),
-                                           "AllowRoundRobin"= xpathSApply(dc,xml_path,xmlGetAttr,"allowRoundRobins"),
-                                           "LeagueName"= xpathSApply(dc,xml_path,xmlValue),
-                                           check.names  = FALSE,
-                                           stringsAsFactors = FALSE)
+    
+    if(missing(sportid)) {
+      cat('No Sports Selected, choose one:\n')
+      ViewSports()
+      sportid <- readline('Selection (id): ')
+    }
+    if(is.null(.PinnacleAPI$leagueIds) || force) {
+        # Generate url
+        sprintf('%s/v2/leagues',.PinnacleAPI$url) %>%
+        # Add Headers
+        GET(add_headers("Authorization" = authorization()),
+            query = list(sportid = sportid)) %>%
+        # Extract content
+        content(type = 'text') %>%
+        # Convert to data.frame
+        jsonlite::fromJSON() %>%
+        # Return leagues field
+        as.data.table() %>%
+        with({
+          if(all(sapply(.,is.atomic))) .
+          else expandListColumns(.)
+        }) %>%
+        with({
+          if(all(sapply(.,is.atomic))) .
+          else expandListColumns(.)
+        }) %T>%
+        with({
+          # assign data to cache
+          .PinnacleAPI$leagueIds <- .
+        })
     }
     
-    return(.PinnacleAPI$leagueIds)
+    # If cached, just take cached data
+    .PinnacleAPI$leagueIds
     
   }

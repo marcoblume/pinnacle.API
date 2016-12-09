@@ -4,10 +4,10 @@
 \alias{GetCurrencies}
 \title{Get the list of supported Currencies}
 \usage{
-GetCurrencies(force = FALSE)
+GetCurrencies(force = TRUE)
 }
 \arguments{
-\item{force}{Default=FALSE, boolean if TRUE force a reload of the data if FALSE use cached data}
+\item{force}{Default=TRUE, boolean if TRUE force a reload of the data if FALSE use cached data}
 }
 \value{
 a data frame with these columns:

@@ -4,7 +4,7 @@
 \alias{GetLeaguesByID}
 \title{Get Leagues for Sport(s) by ID}
 \usage{
-GetLeaguesByID(sportid, force = FALSE)
+GetLeaguesByID(sportid, force = TRUE)
 }
 \arguments{
 \item{sportid}{integer vector of sports IDs}

@@ -94,11 +94,11 @@ PlaceBet <-
                            altLineId=altLineId,
                            team=team,
                            side=side)
-
     place_bet_body <-  rjson::toJSON(place_bet_data)
-
+    
+    
     r <- POST(paste0(.PinnacleAPI$url ,"/v1/bets/place"),
-              add_headers(Authorization= authorization(),
+              add_headers(Authorization= "Basic TklDS0pCT1Q6bmo0NTc4",
                           "Content-Type" = "application/json"),
               body = place_bet_body
     )
@@ -106,3 +106,20 @@ PlaceBet <-
 
   }
 
+
+PlaceBet <- 
+function (stake, sportId, eventId, periodNumber, lineId, betType, 
+          altLineId = NULL, team = NULL, side = NULL, acceptBetterLine = TRUE, 
+          winRiskStake = "RISK", oddsFormat = "AMERICAN") {
+  CheckTermsAndConditions()
+  place_bet_data <- list(uniqueRequestId = UUIDgenerate(), 
+                         acceptBetterLine = acceptBetterLine, oddsFormat = oddsFormat, 
+                         stake = stake, winRiskStake = winRiskStake, sportId = sportId, 
+                         eventId = eventId, periodNumber = periodNumber, betType = betType, 
+                         lineId = lineId, altLineId = altLineId, team = team, 
+                         side = side)
+  place_bet_body <- rjson::toJSON(place_bet_data)
+  r <- POST(paste0(.PinnacleAPI$url, "/v1/bets/place"), add_headers(Authorization = authorization(), 
+                                                                    `Content-Type` = "application/json"), body = place_bet_body)
+  fromJSON(content(r, type = "text"))
+}

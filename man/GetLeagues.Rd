@@ -4,7 +4,7 @@
 \alias{GetLeagues}
 \title{Get Leagues for Sport(s) by name}
 \usage{
-GetLeagues(sports, force = FALSE, regex = FALSE)
+GetLeagues(sports, force = TRUE, regex = FALSE)
 }
 \arguments{
 \item{sports}{character vector of sports names.}

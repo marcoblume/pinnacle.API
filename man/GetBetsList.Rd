@@ -4,11 +4,13 @@
 \alias{GetBetsList}
 \title{Get a list of running/settled bets}
 \usage{
-GetBetsList(betlist = c("SETTLED", "RUNNING"),
+GetBetsList(betids = NULL, betlist = c("SETTLED", "RUNNING"),
   fromDate = as.POSIXlt(Sys.Date(), tz = "UTC") - 15 * 24 * 60 * 60,
   toDate = as.POSIXlt(Sys.Date(), tz = "UTC") + 24 * 60 * 60)
 }
 \arguments{
+\item{betids}{a vector of betids (overrides betlist) default = NULL}
+
 \item{betlist}{Either 'SETTLED' or 'RUNNING' Default Behavior shows both}
 
 \item{fromDate}{Iso8061 Date Default: 15 days prior in UTC, as.POSIXct(Sys.Date(), tz = 'UTC')-15*24*60*60}
