@@ -6,7 +6,8 @@
 #' @param since numeric This is used to receive incremental updates.
 #' Use the value of last from previous fixtures response.
 #' @param islive boolean if TRUE retrieves ONLY live events
-#' #' @param tableformat 
+#' @param force boolean default set to TRUE, forces a reload of the cache.
+#' @param tableformat 
 #' \itemize{
 #' \item 'mainlines' (default), only shows mainlines
 #' \item 'long' for a single record for each spread/total on an event, 
@@ -14,8 +15,8 @@
 #' \item 'subtables' all lines for spreads/totals stored as nested tables
 #' } 
 #' @param namesLength how many identifiers to use in the names, default is 3
-#' @param force boolean default set to TRUE, forces a reload of the cache.
-#' 
+#' @param attachLeagueInfo whether or not to include league information in the data
+#' @param oddsformat default AMERICAN, see API manual for more options
 #' bettable leagues
 #' @return a dataframe combining GetOdds and GetFixtures data, containing NA's where levels of factors do not have a value.
 #' Naming convention is as follows, Example: spread.altLineId.N is the altLineId associated with spread.hdp.(N+1) 
@@ -35,7 +36,8 @@ showOddsDF <- function (sportid,
                         force = TRUE,
                         tableFormat = 'mainlines',
                         namesLength = 3,
-                        attachLeagueInfo = TRUE) {
+                        attachLeagueInfo = TRUE,
+                        oddsformat = 'AMERICAN') {
   # Has user agreed to TOS?
   CheckTermsAndConditions()
   
@@ -51,7 +53,8 @@ showOddsDF <- function (sportid,
                  leagueids = leagueids,
                  since=since,
                  islive=islive,
-                 tableFormat = tableFormat)
+                 tableFormat = tableFormat,
+                 oddsformat = oddsformat)
   
   # Get additional matchup details
   fixtures <- GetFixtures(sportid,
