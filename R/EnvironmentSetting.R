@@ -1,5 +1,5 @@
 .PinnacleAPI <- new.env()
-.PinnacleAPI$url <- "https://api.pinnaclesports.com"
+.PinnacleAPI$url <- "https://api.pinnacle.com"
 .PinnacleAPI$accepttermsandconditions <- 'N'
 .PinnacleAPI$Terms <- "This package is a GUIDELINE only. All responsibility of activity on pinnaclesports.com lies with the user of the package and NOT with the authors of the package. Especially wagers placed with the help of this packages are the sole responsibility of the user of this package. The authors and maintainers of the package are not liable or responsible in any form.Please consult http://www.pinnaclesports.com/en/api/manual#fair-use,http://www.pinnaclesports.com/api-xml/terms-and-conditions.aspx and http://www.pinnaclesports.com/en/termsandconditions"
 
