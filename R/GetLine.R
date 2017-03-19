@@ -1,14 +1,15 @@
 #' Get Lines 
 #' (Use to get more detail on a single line, but the GetOdds or showOddsDF versions are intended for large amounts of data)
-#' @param sportId The sport ID 
+#' @param sportid The sport ID 
 #' @param leagueids integer vector of leagueids.
-#' @param eventId numeric xxxxx
-#' @param periodNumber xxxxx
+#' @param eventid numeric xxxxx
+#' @param periodnumber xxxxx
 #' @param betType xxxx
 #' @param team xxxx
 #' @param side xxx
 #' @param handicap xxx
 #' @param oddsFormat xxx
+#' @param force passed along to GetSports
 #'
 #' @return returns a data frame with columns:
 #' \itemize{
@@ -38,11 +39,8 @@
 #'  periodNumber=0,team="TEAM1",betType="Moneyline")}
 #'
 
-GetLine <- function(sportid,
-                    leagueids,
-                    eventid,
-                    periodnumber,
-                    betType,
+GetLine <- function(sportid, leagueids, eventid,
+                    periodnumber, betType,
                     team=NULL,
                     side=NULL,
                     handicap=NULL,

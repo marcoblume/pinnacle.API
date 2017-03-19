@@ -1,7 +1,16 @@
+# CRAN FIXES
+#' @importFrom purrr map_if
+#' @import magrittr
+#' @importFrom stats setNames
+if(getRversion() >= "2.15.1")  utils::globalVariables(c("."))
+grp <- NULL
+sports.id <- NULL
+simplify_all <- NULL
+
 # expand list columns, only works if we have corresponding data
 # for example, two tables of alt-lines will give misleading data
 expandListColumns <- function(dt) {
-  require(data.table)
+  #require(data.table)
   
   x <- 
     try( 

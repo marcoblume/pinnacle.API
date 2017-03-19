@@ -2,43 +2,40 @@
 % Please edit documentation in R/GetSpecialOdds.R
 \name{GetSpecialOdds}
 \alias{GetSpecialOdds}
-\title{Get Odds}
+\title{Get Special Odds}
 \usage{
 GetSpecialOdds(sportid, leagueids = NULL, since = NULL,
-  oddsformat = "AMERICAN", tableFormat = "clean", force = TRUE)
+  oddsformat = "AMERICAN", tableformat = "clean", force = TRUE)
 }
 \arguments{
-\item{since}{numeric This is used to receive incremental updates.
-Use the value of last from previous fixtures response.}
+\item{sportid}{(optional) The sport id for which to retrieve the fixutres}
+
+\item{leagueids}{(optional) integer vector of leagueids.}
+
+\item{since}{(optional) numeric This is used to receive incremental updates.
+Use the value of last from previous response.}
 
 \item{oddsformat}{default AMERICAN, see API manual for more options}
 
-\item{force}{boolean if FALSE, functions using cached data will use the values since the last force}
-
-\item{sportname}{The sport name for which to retrieve the fixutres}
-
-\item{leagueIds}{integer vector of leagueids.}
-
-\item{isLive}{boolean if TRUE retrieves ONLY live events}
-
 \item{tableformat}{\itemize{
-\item 'clean' default should return each contestant records, other formats kept to keep style in line with GetOdds
+\item 'clean' default should return each contestant records 
 \item 'long' for a single record for each spread/total on an event, 
 \item 'wide' for all lines as one record, 
 \item 'subtables' all lines for spreads/totals stored as nested tables
 }}
+
+\item{force}{boolean if FALSE, functions using cached data will use the values since the last force}
 }
 \value{
 data.frame of odds
 }
 \description{
-Get Odds
+Get Special Odds
 }
 \examples{
 \donttest{
 SetCredentials("TESTAPI","APITEST")
 AcceptTermsAndConditions(accepted=TRUE)
-GetOdds (sportname="Badminton", leagueIds=191545,,isLive=0)}
-
+GetSpecialOdds()}
 }
 

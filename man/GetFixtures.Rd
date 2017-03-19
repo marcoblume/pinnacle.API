@@ -7,14 +7,14 @@
 GetFixtures(sportid, leagueids = NULL, since = NULL, islive = 0)
 }
 \arguments{
-\item{since}{Default=NULL, numeric This is used to receive incremental updates.
-Use the value of last from previous fixtures response.}
+\item{sportid}{(optional) an integer giving the sport, if missing, a menu of options is presented}
 
-\item{sportname}{The sport name for which to retrieve the fixtures}
+\item{leagueids}{(optional) integer vector with league IDs.}
 
-\item{leagueIds}{integer vector with league IDs.}
+\item{since}{(optional) numeric this is used to receive incremental updates.
+Use the value of `last` from previous fixtures response.}
 
-\item{isLive}{Default=FALSE, boolean if TRUE retrieves ONLY live events if FALSE retrieved all events}
+\item{islive}{Default=FALSE, boolean if TRUE retrieves ONLY live events if FALSE retrieved all events}
 }
 \value{
 returns a data frame with columns:
@@ -38,8 +38,8 @@ Get Fixtures
 }
 \examples{
 \donttest{
-SetCredentials("TESTAPI","APITEST")
+SetCredentials("TESTAPI", "APITEST")
 AcceptTermsAndConditions(accepted=TRUE)
-GetFixtures(sportid = 41,leagueIds = 191545)}
+GetFixtures(sportid = 41, leagueids = 191545)}
 }
 

@@ -3,7 +3,7 @@
 #' @param sportid (optional) The sport id for which to retrieve the fixutres
 #' @param leagueids (optional) integer vector of leagueids.
 #' @param since (optional) numeric This is used to receive incremental updates.
-#' Use the value of last from previous fixtures response.
+#' Use the value of last from previous response.
 #' @param islive boolean if TRUE retrieves ONLY live events
 #' @param oddsformat default AMERICAN, see API manual for more options
 #' @param tableformat
@@ -22,20 +22,16 @@
 #' @examples
 #' \donttest{
 #' SetCredentials("TESTAPI","APITEST")
-#' AcceptTermsAndConditions(accepted=TRUE)
+#' AcceptTermsAndConditions(accepted = TRUE)
 #' # We can run without parameters, and will be given a selection of sports
-#' GetOdds()
-#' # Badminton is sportid 4, as can be found in GetSports()
-#' }
-#'
-
+#' GetOdds()}
 GetOdds <-
   function(sportid,
            leagueids = NULL,
            since = NULL,
            islive = 0,
            oddsformat = 'AMERICAN',
-           tableFormat = 'mainlines',
+           tableformat = 'mainlines',
            force=TRUE){
     CheckTermsAndConditions()
     
@@ -74,10 +70,10 @@ GetOdds <-
       }) %>%
       with({
         
-        if(tableFormat == 'mainlines') SpreadsAndTotalsMainlines(.)
-        else if(tableFormat == 'long')      SpreadsAndTotalsLong(.)
-        else if(tableFormat == 'wide')      SpreadsAndTotalsWide(.)
-        else if(tableFormat == 'subtables') .
+        if(tableformat == 'mainlines') SpreadsAndTotalsMainlines(.)
+        else if(tableformat == 'long')      SpreadsAndTotalsLong(.)
+        else if(tableformat == 'wide')      SpreadsAndTotalsWide(.)
+        else if(tableformat == 'subtables') .
         else stop("Undefined value for tableFormat, options are 'mainlines','long','wide', and 'subtables'")
       }) %>%
       as.data.frame()
