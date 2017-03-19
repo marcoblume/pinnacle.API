@@ -28,13 +28,14 @@
 #' \donttest{
 #' SetCredentials("TESTAPI","APITEST")
 #' AcceptTermsAndConditions(accepted=TRUE)
+#' # Run without arguments, it will prompt you for the sport
 #' showOddsDF()}
 showOddsDF <- function (sportid,
                         leagueids=NULL,
                         since=NULL,
                         islive=0,
                         force = TRUE,
-                        tableFormat = 'mainlines',
+                        tableformat = 'mainlines',
                         namesLength = 3,
                         attachLeagueInfo = TRUE,
                         oddsformat = 'AMERICAN') {
@@ -53,7 +54,7 @@ showOddsDF <- function (sportid,
                  leagueids = leagueids,
                  since=since,
                  islive=islive,
-                 tableFormat = tableFormat,
+                 tableformat = tableformat,
                  oddsformat = oddsformat)
   
   # Get additional matchup details

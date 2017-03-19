@@ -8,22 +8,29 @@ GetSpecialFixtures(sportid, leagueids = NULL, category = NULL,
   eventid = NULL, specialid = NULL, since = NULL)
 }
 \arguments{
-\item{sportid}{}
+\item{sportid}{(optional) an integer giving the sport, if missing, a menu of options is presented}
 
-\item{leagueids}{}
+\item{leagueids}{(optional) integer vector with league IDs.}
 
-\item{category}{}
+\item{category}{(optional) See API Manual}
 
-\item{eventid}{}
+\item{eventid}{(optional) Associated event ID}
 
-\item{specialid}{}
+\item{specialid}{(optional) Associated special ID}
 
-\item{since}{}
+\item{since}{(optional) numeric This is used to receive incremental updates.
+Use the value of last from previous fixtures response.}
 }
 \value{
-a data.frame of settled special fixtures
+a data.frame of special fixtures
 }
 \description{
 Get Special Fixtures
+}
+\examples{
+\donttest{
+SetCredentials("TESTAPI", "APITEST")
+AcceptTermsAndConditions(accepted=TRUE)
+GetSpecialFixtures()}
 }
 

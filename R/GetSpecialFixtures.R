@@ -1,15 +1,21 @@
 #' Get Special Fixtures
 #'
-#' @param sportid 
-#' @param leagueids 
-#' @param category 
-#' @param eventid 
-#' @param specialid 
-#' @param since 
+#' @param sportid (optional) an integer giving the sport, if missing, a menu of options is presented
+#' @param leagueids (optional) integer vector with league IDs.
+#' @param category (optional) See API Manual
+#' @param eventid (optional) Associated event ID
+#' @param specialid (optional) Associated special ID
+#' @param since (optional) numeric This is used to receive incremental updates.
+#' Use the value of last from previous fixtures response.
 #'
-#' @return a data.frame of settled special fixtures
+#' @return a data.frame of special fixtures
 #' @export
 #' @import data.table
+#' @examples
+#' \donttest{
+#' SetCredentials("TESTAPI", "APITEST")
+#' AcceptTermsAndConditions(accepted=TRUE)
+#' GetSpecialFixtures()}
 GetSpecialFixtures <- function(sportid, 
                                leagueids = NULL, 
                                category = NULL,

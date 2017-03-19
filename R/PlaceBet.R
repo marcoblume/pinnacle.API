@@ -102,7 +102,7 @@ PlaceBet <-
                           "Content-Type" = "application/json"),
               body = place_bet_body
     )
-    fromJSON(content(r,type="text"))
+    jsonlite::fromJSON(content(r,type="text"))
 
   }
 
@@ -119,7 +119,7 @@ function (stake, sportId, eventId, periodNumber, lineId, betType,
                          lineId = lineId, altLineId = altLineId, team = team, 
                          side = side)
   place_bet_body <- rjson::toJSON(place_bet_data)
-  r <- POST(paste0(.PinnacleAPI$url, "/v1/bets/place"), add_headers(Authorization = authorization(), 
+  r <- httr::POST(paste0(.PinnacleAPI$url, "/v1/bets/place"), add_headers(Authorization = authorization(), 
                                                                     `Content-Type` = "application/json"), body = place_bet_body)
-  fromJSON(content(r, type = "text"))
+  jsonlite::fromJSON(content(r, type = "text"))
 }

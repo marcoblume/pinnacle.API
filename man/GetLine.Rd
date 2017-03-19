@@ -9,7 +9,13 @@ GetLine(sportid, leagueids, eventid, periodnumber, betType, team = NULL,
   side = NULL, handicap = NULL, oddsFormat = "AMERICAN", force = TRUE)
 }
 \arguments{
+\item{sportid}{The sport ID}
+
 \item{leagueids}{integer vector of leagueids.}
+
+\item{eventid}{numeric xxxxx}
+
+\item{periodnumber}{xxxxx}
 
 \item{betType}{xxxx}
 
@@ -21,11 +27,7 @@ GetLine(sportid, leagueids, eventid, periodnumber, betType, team = NULL,
 
 \item{oddsFormat}{xxx}
 
-\item{sportId}{The sport ID}
-
-\item{eventId}{numeric xxxxx}
-
-\item{periodNumber}{xxxxx}
+\item{force}{passed along to GetSports}
 }
 \value{
 returns a data frame with columns:

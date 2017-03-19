@@ -1,12 +1,19 @@
 #' Get Settled Fixtures
 #'
-#' @param sportid 
-#' @param leagueids 
-#' @param since 
+#' @param sportid (optional) an integer giving the sport, if missing, a menu of options is presented
+#' @param leagueids (optional) integer vector with league IDs.
+#' @param since (optional), numeric, This is used to receive incremental updates.
+#' Use the value of `last` from previous fixtures response.
 #' 
 #' @return a data.frame of settled fixtures
 #' @export
 #' @import data.table
+#' @examples
+#' \donttest{
+#' SetCredentials("TESTAPI", "APITEST")
+#' AcceptTermsAndConditions(accepted=TRUE)
+#' GetSettledFixtures()
+#' }
 GetSettledFixtures <- function(sportid, 
                                leagueids = NULL, 
                                since = FALSE) {

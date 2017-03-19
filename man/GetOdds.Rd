@@ -5,7 +5,7 @@
 \title{Get Odds}
 \usage{
 GetOdds(sportid, leagueids = NULL, since = NULL, islive = 0,
-  oddsformat = "AMERICAN", tableFormat = "mainlines", force = TRUE)
+  oddsformat = "AMERICAN", tableformat = "mainlines", force = TRUE)
 }
 \arguments{
 \item{sportid}{(optional) The sport id for which to retrieve the fixutres}
@@ -13,13 +13,11 @@ GetOdds(sportid, leagueids = NULL, since = NULL, islive = 0,
 \item{leagueids}{(optional) integer vector of leagueids.}
 
 \item{since}{(optional) numeric This is used to receive incremental updates.
-Use the value of last from previous fixtures response.}
+Use the value of last from previous response.}
 
 \item{islive}{boolean if TRUE retrieves ONLY live events}
 
 \item{oddsformat}{default AMERICAN, see API manual for more options}
-
-\item{force}{boolean if FALSE, functions using cached data will use the values since the last force}
 
 \item{tableformat}{\itemize{
 \item 'mainlines' (default), only shows mainlines
@@ -27,6 +25,8 @@ Use the value of last from previous fixtures response.}
 \item 'wide' for all lines as one record, 
 \item 'subtables' all lines for spreads/totals stored as nested tables
 }}
+
+\item{force}{boolean if FALSE, functions using cached data will use the values since the last force}
 }
 \value{
 data.frame of odds
@@ -37,11 +37,8 @@ Get Odds
 \examples{
 \donttest{
 SetCredentials("TESTAPI","APITEST")
-AcceptTermsAndConditions(accepted=TRUE)
+AcceptTermsAndConditions(accepted = TRUE)
 # We can run without parameters, and will be given a selection of sports
-GetOdds()
-# Badminton is sportid 4, as can be found in GetSports()
-}
-
+GetOdds()}
 }
 

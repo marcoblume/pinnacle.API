@@ -1,10 +1,10 @@
 #' Get Fixtures
 #'
-#' @param sportname The sport name for which to retrieve the fixtures
-#' @param leagueIds integer vector with league IDs.
-#' @param since Default=NULL, numeric This is used to receive incremental updates.
-#' Use the value of last from previous fixtures response.
-#' @param isLive Default=FALSE, boolean if TRUE retrieves ONLY live events if FALSE retrieved all events
+#' @param sportid (optional) an integer giving the sport, if missing, a menu of options is presented
+#' @param leagueids (optional) integer vector with league IDs.
+#' @param since (optional) numeric this is used to receive incremental updates.
+#' Use the value of `last` from previous fixtures response.
+#' @param islive Default=FALSE, boolean if TRUE retrieves ONLY live events if FALSE retrieved all events
 #'
 #' @return returns a data frame with columns:
 #' \itemize{
@@ -28,9 +28,9 @@
 #'
 #' @examples
 #' \donttest{
-#' SetCredentials("TESTAPI","APITEST")
+#' SetCredentials("TESTAPI", "APITEST")
 #' AcceptTermsAndConditions(accepted=TRUE)
-#' GetFixtures(sportid = 41,leagueIds = 191545)}
+#' GetFixtures(sportid = 41, leagueids = 191545)}
 
 GetFixtures <-
   function(sportid,
