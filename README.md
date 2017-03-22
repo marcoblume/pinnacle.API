@@ -1,10 +1,6 @@
 # Accessing the Pinnacle API
 `r Sys.Date()`  
 
-> "He who gives up [code] safety for [code] speed deserves neither."
-([via](https://twitter.com/hadleywickham/status/504368538874703872))
-
-
 ## The Pinnacle API package
 
 This document covers version >= 2.0 of the package and is
@@ -26,6 +22,9 @@ While also allowing the usage of this data by
 Detailed information about what is available is in the Pinnacle API Manual:
 https://www.pinnacle.com/en/api/manual
 
+To use the Pinnacle Sports API you must have an account with Pinnacle Sports.
+
+Please contact Pinnacle Sports directly at csd@pinnaclesports.com for all account questions.
 
 *** 
 
@@ -65,11 +64,18 @@ load and configure it as follows:
 
 ```r
  library(pinnacle.API)
- AcceptTermsAndConditions(TRUE)
+ AcceptTermsAndConditions()
  SetCredentials()
 ```
 
-You will be prompted for your username and password. This can also be done uninteractively with:
+Please make sure that you understand the terms and conditions.
+
+and then accept them. If AcceptTermsnAndConditions is not set to TRUE the functions will not run.
+
+You will be prompted for your username and password. 
+Your credentials are the username and password for logging into www.pinnaclesports.com.
+
+This can also be done uninteractively with:
 
 
 ```r
