@@ -14,7 +14,16 @@ Please contact Pinnacle directly at [csd@pinnacle.com](mailto:csd@pinnacle.com) 
 
 ***
 
-Pinnacle Terms & Conditions: [http://www.pinnacle.com/en/termsandconditions](http://www.pinnacle.com/en/api/manual)
+## Pinnacle Terms & Conditions:
+This package is a **GUIDELINE** only. 
+
+All responsibility of activity on [Pinnacle](http://pinnacle.com) lies with the user of the package and NOT with the authors of the package. 
+
+Especially wagers placed with the help of this package are the sole responsibility of the user of this package.  The authors and maintainers of the package are not liable or responsible in any form. 
+Please see [Manual:Fair-Use](http://www.pinnacle.com/en/api/manual#fair-use),
+[xml-terms-and-conditions](http://www.pinnacle.com/api-xml/terms-and-conditions.aspx) and [terms and conditions](http://www.pinnacle.com/en/termsandconditions)
+
+[http://www.pinnacle.com/en/termsandconditions](http://www.pinnacle.com/en/api/manual)
 
 ***
 
@@ -130,63 +139,63 @@ A Record Example:
 <tbody>
   <tr>
    <td style="text-align:left;"> league.id </td>
-   <td style="text-align:left;"> 1708 </td>
+   <td style="text-align:left;"> 2117 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> leagues.events.id </td>
-   <td style="text-align:left;"> 702193777 </td>
+   <td style="text-align:left;"> 706786965 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> sportId </td>
-   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> 29 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> last </td>
-   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> 379958992 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> leagues.id </td>
-   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> 2117 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> events.periods.lineId </td>
-   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> 379958992 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> events.periods.number </td>
-   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> 0 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> events.periods.cutoff </td>
-   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> 2017-03-22T19:00:00Z </td>
   </tr>
   <tr>
    <td style="text-align:left;"> events.periods.maxSpread </td>
-   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> 2000 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> events.periods.maxMoneyline </td>
-   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> 500 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> events.periods.maxTotal </td>
-   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> 2000 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> events.periods.maxTeamTotal </td>
-   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> 750 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> periods.spreads.hdp </td>
-   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> -1.25 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> periods.spreads.home </td>
-   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> -118 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> periods.spreads.away </td>
-   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> 108 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> periods.spreads.altLineId </td>
@@ -194,15 +203,15 @@ A Record Example:
   </tr>
   <tr>
    <td style="text-align:left;"> periods.totals.points </td>
-   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> 2.5 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> periods.totals.over </td>
-   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> -107 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> periods.totals.under </td>
-   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> -104 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> periods.totals.altLineId </td>
@@ -210,55 +219,55 @@ A Record Example:
   </tr>
   <tr>
    <td style="text-align:left;"> periods.moneyline.home </td>
-   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> -289 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> periods.moneyline.away </td>
-   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> 957 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> periods.moneyline.draw </td>
-   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> 358 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> teamTotal.home.points </td>
-   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> 2 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> teamTotal.home.over </td>
-   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> 101 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> teamTotal.home.under </td>
-   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> -123 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> teamTotal.away.points </td>
-   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> 0.5 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> teamTotal.away.over </td>
-   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> 108 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> teamTotal.away.under </td>
-   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> -133 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> leagues.events.awayScore </td>
-   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> 0 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> leagues.events.homeScore </td>
-   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> 0 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> leagues.events.awayRedCards </td>
-   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> 0 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> leagues.events.homeRedCards </td>
-   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> 0 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> sportId.Fixture </td>
@@ -266,31 +275,31 @@ A Record Example:
   </tr>
   <tr>
    <td style="text-align:left;"> last.Fixture </td>
-   <td style="text-align:left;"> 102173434 </td>
+   <td style="text-align:left;"> 102176288 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> league.events.starts </td>
-   <td style="text-align:left;"> 2017-04-01T17:00:00Z </td>
+   <td style="text-align:left;"> 2017-03-22T17:00:00Z </td>
   </tr>
   <tr>
    <td style="text-align:left;"> league.events.home </td>
-   <td style="text-align:left;"> test1 </td>
+   <td style="text-align:left;"> Czech Republic </td>
   </tr>
   <tr>
    <td style="text-align:left;"> league.events.away </td>
-   <td style="text-align:left;"> test2 </td>
+   <td style="text-align:left;"> Lithuania </td>
   </tr>
   <tr>
    <td style="text-align:left;"> league.events.rotNum </td>
-   <td style="text-align:left;"> 222222 </td>
+   <td style="text-align:left;"> 30904 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> league.events.liveStatus </td>
-   <td style="text-align:left;"> 0 </td>
+   <td style="text-align:left;"> 1 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> league.events.status </td>
-   <td style="text-align:left;"> H </td>
+   <td style="text-align:left;"> I </td>
   </tr>
   <tr>
    <td style="text-align:left;"> league.events.parlayRestriction </td>
@@ -298,23 +307,23 @@ A Record Example:
   </tr>
   <tr>
    <td style="text-align:left;"> sports.id </td>
-   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> 29 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> sports.leagues.id </td>
-   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> 2117 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> leagues.events.state </td>
-   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> 1 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> leagues.events.elapsed </td>
-   <td style="text-align:left;"> NA </td>
+   <td style="text-align:left;"> 5 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> leagues.name </td>
-   <td style="text-align:left;"> AFC - Champions League </td>
+   <td style="text-align:left;"> International - Friendlies </td>
   </tr>
   <tr>
    <td style="text-align:left;"> leagues.homeTeamType </td>
@@ -322,11 +331,11 @@ A Record Example:
   </tr>
   <tr>
    <td style="text-align:left;"> leagues.hasOfferings </td>
-   <td style="text-align:left;"> FALSE </td>
+   <td style="text-align:left;"> TRUE </td>
   </tr>
   <tr>
    <td style="text-align:left;"> leagues.container </td>
-   <td style="text-align:left;"> AFC </td>
+   <td style="text-align:left;">  </td>
   </tr>
   <tr>
    <td style="text-align:left;"> leagues.allowRoundRobins </td>
@@ -338,15 +347,14 @@ A Record Example:
   </tr>
   <tr>
    <td style="text-align:left;"> leagues.eventSpecialsCount </td>
-   <td style="text-align:left;"> 0 </td>
+   <td style="text-align:left;"> 13 </td>
   </tr>
   <tr>
    <td style="text-align:left;"> leagues.eventCount </td>
-   <td style="text-align:left;"> 0 </td>
+   <td style="text-align:left;"> 13 </td>
   </tr>
 </tbody>
 </table>
-
 ## Basic Functions
 
 *** 
