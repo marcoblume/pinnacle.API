@@ -1,6 +1,5 @@
 ---
 title: "Accessing the Pinnacle API"
-author: "Nicholas Jhirad"
 date: "`r Sys.Date()`"
 output:
   html_document:
@@ -14,6 +13,27 @@ output:
       collapsed: FALSE
       smooth_scroll: true
 ---
+
+The [Pinnacle](http://pinnacle.com) manual can be found here :
+
+[http://www.pinnacle.com/en/api/manual](http://www.pinnacle.com/en/api/manual)
+
+***
+
+To use the Pinnacle API you must have an account with [Pinnacle](http://pinnacle.com).
+
+***
+
+Please contact Pinnacle directly at [csd@pinnacle.com](mailto:csd@pinnacle.com) for all account questions. 
+
+***
+
+Pinnacle Terms & Conditions: [http://www.pinnacle.com/en/termsandconditions](http://www.pinnacle.com/en/api/manual)
+
+***
+
+#####The API is not accessible from all IP-Ranges. For example, IP addresses from the UK and the USA are Geo IP blocked.
+
 
 ## The Pinnacle API package
 
@@ -31,7 +51,7 @@ The `pinnacle.API` package allows an R user to Access:
 
 While also allowing the usage of this data by 
 
-* Placing wagers/parlays/teasers. 
+* Placing wagers/parlays. 
 
 Detailed information about what is available is in the Pinnacle API Manual:
 https://www.pinnacle.com/en/api/manual
@@ -75,16 +95,265 @@ load and configure it as follows:
 
 ```{r, echo=TRUE, eval=FALSE}
  library(pinnacle.API)
- AcceptTermsAndConditions(TRUE)
+```
+
+Please make sure that you understand the terms and conditions.
+
+```{r, echo=TRUE, eval=FALSE}
+ AcceptTermsAndConditions()
+```
+
+Run the following to store your session credentials:
+
+```{r, echo=TRUE, eval=FALSE}
  SetCredentials()
 ```
 
-You will be prompted for your username and password. This can also be done uninteractively with:
+Your credentials are the username and password for logging into www.pinnacle.com.
 
+## Example Usage:
+
+Pull the Sport Data and filter out the leagues that have lines for Soccer available.
 
 ```{r, echo=TRUE, eval=FALSE}
- SetCredentials('USERNAME', 'PASSWORD')
+# Get Sports
+sport_data <- GetSports()
+# Get Soccer id
+soccer_id <- with(sport_data, id[name == 'Soccer'])
+# Get Odds
+soccer_data <- showOddsDF(soccer_id)
+
+# Lets select a single record and see what we're looking at
+# (transposed for easier reading)
 ```
+
+A Record Example:
+<table>
+ <thead>
+  <tr>
+   <th style="text-align:left;">   </th>
+   <th style="text-align:left;"> Data </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> league.id </td>
+   <td style="text-align:left;"> 1708 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> leagues.events.id </td>
+   <td style="text-align:left;"> 702193777 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> sportId </td>
+   <td style="text-align:left;"> NA </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> last </td>
+   <td style="text-align:left;"> NA </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> leagues.id </td>
+   <td style="text-align:left;"> NA </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> events.periods.lineId </td>
+   <td style="text-align:left;"> NA </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> events.periods.number </td>
+   <td style="text-align:left;"> NA </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> events.periods.cutoff </td>
+   <td style="text-align:left;"> NA </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> events.periods.maxSpread </td>
+   <td style="text-align:left;"> NA </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> events.periods.maxMoneyline </td>
+   <td style="text-align:left;"> NA </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> events.periods.maxTotal </td>
+   <td style="text-align:left;"> NA </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> events.periods.maxTeamTotal </td>
+   <td style="text-align:left;"> NA </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> periods.spreads.hdp </td>
+   <td style="text-align:left;"> NA </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> periods.spreads.home </td>
+   <td style="text-align:left;"> NA </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> periods.spreads.away </td>
+   <td style="text-align:left;"> NA </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> periods.spreads.altLineId </td>
+   <td style="text-align:left;"> NA </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> periods.totals.points </td>
+   <td style="text-align:left;"> NA </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> periods.totals.over </td>
+   <td style="text-align:left;"> NA </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> periods.totals.under </td>
+   <td style="text-align:left;"> NA </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> periods.totals.altLineId </td>
+   <td style="text-align:left;"> NA </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> periods.moneyline.home </td>
+   <td style="text-align:left;"> NA </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> periods.moneyline.away </td>
+   <td style="text-align:left;"> NA </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> periods.moneyline.draw </td>
+   <td style="text-align:left;"> NA </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> teamTotal.home.points </td>
+   <td style="text-align:left;"> NA </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> teamTotal.home.over </td>
+   <td style="text-align:left;"> NA </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> teamTotal.home.under </td>
+   <td style="text-align:left;"> NA </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> teamTotal.away.points </td>
+   <td style="text-align:left;"> NA </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> teamTotal.away.over </td>
+   <td style="text-align:left;"> NA </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> teamTotal.away.under </td>
+   <td style="text-align:left;"> NA </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> leagues.events.awayScore </td>
+   <td style="text-align:left;"> NA </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> leagues.events.homeScore </td>
+   <td style="text-align:left;"> NA </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> leagues.events.awayRedCards </td>
+   <td style="text-align:left;"> NA </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> leagues.events.homeRedCards </td>
+   <td style="text-align:left;"> NA </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> sportId.Fixture </td>
+   <td style="text-align:left;"> 29 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> last.Fixture </td>
+   <td style="text-align:left;"> 102173434 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> league.events.starts </td>
+   <td style="text-align:left;"> 2017-04-01T17:00:00Z </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> league.events.home </td>
+   <td style="text-align:left;"> test1 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> league.events.away </td>
+   <td style="text-align:left;"> test2 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> league.events.rotNum </td>
+   <td style="text-align:left;"> 222222 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> league.events.liveStatus </td>
+   <td style="text-align:left;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> league.events.status </td>
+   <td style="text-align:left;"> H </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> league.events.parlayRestriction </td>
+   <td style="text-align:left;"> 2 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> sports.id </td>
+   <td style="text-align:left;"> NA </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> sports.leagues.id </td>
+   <td style="text-align:left;"> NA </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> leagues.events.state </td>
+   <td style="text-align:left;"> NA </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> leagues.events.elapsed </td>
+   <td style="text-align:left;"> NA </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> leagues.name </td>
+   <td style="text-align:left;"> AFC - Champions League </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> leagues.homeTeamType </td>
+   <td style="text-align:left;"> Team1 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> leagues.hasOfferings </td>
+   <td style="text-align:left;"> FALSE </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> leagues.container </td>
+   <td style="text-align:left;"> AFC </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> leagues.allowRoundRobins </td>
+   <td style="text-align:left;"> TRUE </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> leagues.leagueSpecialsCount </td>
+   <td style="text-align:left;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> leagues.eventSpecialsCount </td>
+   <td style="text-align:left;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> leagues.eventCount </td>
+   <td style="text-align:left;"> 0 </td>
+  </tr>
+</tbody>
+</table>
 
 ## Basic Functions
 
@@ -180,7 +449,7 @@ head(LiveBasketballOdds)
 
 ### show Odds DF:
 
-Combines the GetOdds, GetFixtures, and GetInrunning Calls, to get one picture of lines
+Combines the `GetOdds`, `GetFixtures`, and `GetInrunning` Calls, to get one picture of lines
 
 Column names are slightly different than in the above calls, in that only the last 3 identifiers are kept
 
@@ -212,37 +481,55 @@ head(BasketballOddsDF)
 
 Once we have our odds information, we can use this to make a bet, or string of bets
 
-for the following example, we will place a bet of 0.01$ 
-(Below the minimum bet amount) on the favorite MONEYLINE
+for the following example, we will place a bet of $0.01 
+(Below the minimum bet amount) on the favorite `MONEYLINE`
 
 
 ```{r, echo=TRUE, eval=FALSE}
 BasketballOddsDF <- showOddsDF(4,tableFormat = 'mainlines')
 
-# We transpose to make this easy to read
-# And only select those columns we're interested in
-t(BasketballOddsDF[1,c('sportId',
-                       'leagues.events.id',
-                       'events.periods.number',
-                       'events.periods.lineId',
-                       'events.periods.maxMoneyline',
-                       'periods.moneyline.home',
-                       'periods.moneyline.away')])
 ```
 
+Record example (filtered to only the interesting fields):
 
-
-
-                                        
-----------------------------  ----------
-sportId                                4
-leagues.events.id              669895493
-events.periods.number                  0
-events.periods.lineId          357125002
-events.periods.maxMoneyline          250
-periods.moneyline.home              -130
-periods.moneyline.away               118
-----------------------------  ----------
+<table>
+ <thead>
+  <tr>
+   <th style="text-align:left;">   </th>
+   <th style="text-align:right;"> Data </th>
+  </tr>
+ </thead>
+<tbody>
+  <tr>
+   <td style="text-align:left;"> sportId </td>
+   <td style="text-align:right;"> 4 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> leagues.events.id </td>
+   <td style="text-align:right;"> 704584684 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> events.periods.number </td>
+   <td style="text-align:right;"> 0 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> events.periods.lineId </td>
+   <td style="text-align:right;"> 379913314 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> events.periods.maxMoneyline </td>
+   <td style="text-align:right;"> 250 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> periods.moneyline.home </td>
+   <td style="text-align:right;"> -477 </td>
+  </tr>
+  <tr>
+   <td style="text-align:left;"> periods.moneyline.away </td>
+   <td style="text-align:right;"> 353 </td>
+  </tr>
+</tbody>
+</table>
 
 *** 
 
@@ -253,10 +540,45 @@ Now we can use those details to fill out the PlaceBet arguments
 PlaceBet(
     stake = 0.01, 
     sportId = 4,
-    eventId = 669895493,
+    eventId = 704584684,
     periodNumber = 0,
-    lineId = 357092455,
+    lineId = 379913314,
     betType = 'MONEYLINE',
     team = 'TEAM1'
 )
 ```
+
+Here, our stake is below the minimum amount, as we can see in the error message that is returned
+
+List of 5:
+
+ - status               : chr "PROCESSED_WITH_ERROR"
+ - errorCode            : chr "BELOW_MIN_BET_AMOUNT"
+ - betId                : NULL
+ - uniqueRequestId      : chr "b9d95cf0-54bf-47ee-bad5-4a6dc557da7a"
+ - betterLineWasAccepted: logi FALSE
+
+ 
+ 
+ If we do it for a larger amount:
+ 
+```{r, echo=TRUE, eval=FALSE}
+PlaceBet(
+    stake = 500, 
+    sportId = 4,
+    eventId = 704584684,
+    periodNumber = 0,
+    lineId = 379913314,
+    betType = 'MONEYLINE',
+    team = 'TEAM1'
+)
+```
+
+List of 6:
+
+ - status               : chr "ACCEPTED"
+ - errorCode            : NULL
+ - betId                : int 706865959
+ - uniqueRequestId      : chr "5acf90ff-bbde-4449-af28-b0db7534e249"
+ - betterLineWasAccepted: logi FALSE
+ - price                : num -477
