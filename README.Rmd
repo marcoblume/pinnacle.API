@@ -1,6 +1,19 @@
-# Accessing the Pinnacle API
-Nicholas Jhirad  
-`r Sys.Date()`  
+---
+title: "Accessing the Pinnacle API"
+author: "Nicholas Jhirad"
+date: "`r Sys.Date()`"
+output:
+  html_document:
+    keep_md: TRUE
+    highlight: null
+    mathjax: null
+    toc: true
+    theme: readable
+    fold: TRUE
+    toc_float:
+      collapsed: FALSE
+      smooth_scroll: true
+---
 
 ## The Pinnacle API package
 
@@ -31,16 +44,14 @@ https://www.pinnacle.com/en/api/manual
 The most recent stable version is on CRAN, and can be installed with:
 
 
-
-```r
+```{r, echo=TRUE, eval=FALSE}
 install.packages('pinnacle.API')
 ```
 
 Development versions are available via github, and can be installed with the devtools package
 
 
-
-```r
+```{r, echo=TRUE, eval=FALSE}
 install.packages('devtools')
 devtools::install_github('marcoblume/pinnacle.API')
 ```
@@ -62,8 +73,7 @@ the package depends on:
 load and configure it as follows:
 
 
-
-```r
+```{r, echo=TRUE, eval=FALSE}
  library(pinnacle.API)
  AcceptTermsAndConditions(TRUE)
  SetCredentials()
@@ -72,8 +82,7 @@ load and configure it as follows:
 You will be prompted for your username and password. This can also be done uninteractively with:
 
 
-
-```r
+```{r, echo=TRUE, eval=FALSE}
  SetCredentials('USERNAME', 'PASSWORD')
 ```
 
@@ -86,8 +95,7 @@ You will be prompted for your username and password. This can also be done unint
 
 
 
-
-```r
+```{r, echo=TRUE, eval=FALSE}
 GetClientBalance()
 ```
 
@@ -109,8 +117,7 @@ GetClientBalance()
 
 ### Get Sports:
 
-
-```r
+```{r, echo=TRUE, eval=FALSE}
 Sports <- GetSports()
 
 head(Sports)
@@ -122,8 +129,7 @@ head(Sports)
 ### Get Leagues:
 
 
-
-```r
+```{r, echo=TRUE, eval=FALSE}
 BasketBallLeagues <- GetLeaguesByID(4)
 
 # Get first 5 entries Basketball Leagues
@@ -135,8 +141,7 @@ head(BasketBallLeagues)
 ### Get Fixtures:
 
 
-
-```r
+```{r, echo=TRUE, eval=FALSE}
 # Get Basketball Fixtures
 BasketballFixtures <- GetFixtures(4)
 head(BasketballFixtures)
@@ -145,8 +150,7 @@ head(BasketballFixtures)
 *** 
 
 
-
-```r
+```{r, echo=TRUE, eval=FALSE}
 # Get Live Basketball Fixtures
 LiveBasketballFixtures <- GetFixtures(4, islive = 1)
 head(LiveBasketballFixtures)
@@ -157,8 +161,7 @@ head(LiveBasketballFixtures)
 ### Get Odds:
 
 
-
-```r
+```{r, echo=TRUE, eval=FALSE}
 # Get Basketball Odds
 BasketballOdds <- GetOdds(4)
 head(BasketballOdds)
@@ -167,8 +170,7 @@ head(BasketballOdds)
 *** 
 
 
-
-```r
+```{r, echo=TRUE, eval=FALSE}
 # Get Live Basketball Odds
 LiveBasketballOdds <- GetOdds(4, islive = 1)
 head(LiveBasketballOdds)
@@ -195,8 +197,7 @@ This is done to make the tables easier to work with, but can be overridden (see 
 (Default is to show only mainlines, alternate lines are accessible via the `tableFormat` option)
 
 
-
-```r
+```{r, echo=TRUE, eval=FALSE}
 # Get Basketball oddsDF
 BasketballOddsDF <- showOddsDF(4)
 head(BasketballOddsDF)
@@ -215,8 +216,7 @@ for the following example, we will place a bet of 0.01$
 (Below the minimum bet amount) on the favorite MONEYLINE
 
 
-
-```r
+```{r, echo=TRUE, eval=FALSE}
 BasketballOddsDF <- showOddsDF(4,tableFormat = 'mainlines')
 
 # We transpose to make this easy to read
@@ -249,8 +249,7 @@ periods.moneyline.away               118
 Now we can use those details to fill out the PlaceBet arguments
 
 
-
-```r
+```{r, echo=TRUE, eval=FALSE}
 PlaceBet(
     stake = 0.01, 
     sportId = 4,
