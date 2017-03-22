@@ -1,5 +1,4 @@
 # Accessing the Pinnacle API
-`r Sys.Date()`  
 
 The [Pinnacle](http://pinnacle.com) manual can be found here :
 
