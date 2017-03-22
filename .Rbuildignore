@@ -4,3 +4,5 @@ Icon.jpg
 \.Rhistory
 \.Rbuildignore
 ^\\.git/
+^.*\.Rmd
+^.*\.html
