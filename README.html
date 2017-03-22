@@ -9,7 +9,6 @@
 <meta name="generator" content="pandoc" />
 
 
-<meta name="author" content="Nicholas Jhirad" />
 
 <meta name="date" content="2017-03-22" />
 
@@ -207,12 +206,23 @@ div.tocify {
 
 
 <h1 class="title toc-ignore">Accessing the Pinnacle API</h1>
-<h4 class="author"><em>Nicholas Jhirad</em></h4>
 <h4 class="date"><em>2017-03-22</em></h4>
 
 </div>
 
 
+<p>The <a href="http://pinnacle.com">Pinnacle</a> manual can be found here :</p>
+<p><a href="http://www.pinnacle.com/en/api/manual" class="uri">http://www.pinnacle.com/en/api/manual</a></p>
+<hr />
+<p>To use the Pinnacle API you must have an account with <a href="http://pinnacle.com">Pinnacle</a>.</p>
+<hr />
+<p>Please contact Pinnacle directly at <a href="mailto:csd@pinnacle.com">csd@pinnacle.com</a> for all account questions.</p>
+<hr />
+<p>Pinnacle Terms &amp; Conditions: <a href="http://www.pinnacle.com/en/api/manual">http://www.pinnacle.com/en/termsandconditions</a></p>
+<hr />
+<div id="the-api-is-not-accessible-from-all-ip-ranges.-for-example-ip-addresses-from-the-uk-and-the-usa-are-geo-ip-blocked." class="section level5">
+<h5>The API is not accessible from all IP-Ranges. For example, IP addresses from the UK and the USA are Geo IP blocked.</h5>
+</div>
 <div id="the-pinnacle-api-package" class="section level2">
 <h2>The Pinnacle API package</h2>
 <p>This document covers version &gt;= 2.0 of the package and is intended to be an introduction to the package, it does <strong>Not</strong> cover all functions.</p>
@@ -226,7 +236,7 @@ div.tocify {
 </ul>
 <p>While also allowing the usage of this data by</p>
 <ul>
-<li>Placing wagers/parlays/teasers.</li>
+<li>Placing wagers/parlays.</li>
 </ul>
 <p>Detailed information about what is available is in the Pinnacle API Manual: <a href="https://www.pinnacle.com/en/api/manual" class="uri">https://www.pinnacle.com/en/api/manual</a></p>
 <hr />
@@ -253,11 +263,471 @@ devtools::install_github('marcoblume/pinnacle.API')</code></pre>
 <li><code>magrittr</code></li>
 </ul>
 <p>load and configure it as follows:</p>
-<pre class="r"><code> library(pinnacle.API)
- AcceptTermsAndConditions(TRUE)
- SetCredentials()</code></pre>
-<p>You will be prompted for your username and password. This can also be done uninteractively with:</p>
-<pre class="r"><code> SetCredentials('USERNAME', 'PASSWORD')</code></pre>
+<pre class="r"><code> library(pinnacle.API)</code></pre>
+<p>Please make sure that you understand the terms and conditions.</p>
+<pre class="r"><code> AcceptTermsAndConditions()</code></pre>
+<p>Run the following to store your session credentials:</p>
+<pre class="r"><code> SetCredentials()</code></pre>
+<p>Your credentials are the username and password for logging into www.pinnacle.com.</p>
+</div>
+<div id="example-usage" class="section level2">
+<h2>Example Usage:</h2>
+<p>Pull the Sport Data and filter out the leagues that have lines for Soccer available.</p>
+<pre class="r"><code># Get Sports
+sport_data &lt;- GetSports()
+# Get Soccer id
+soccer_id &lt;- with(sport_data, id[name == 'Soccer'])
+# Get Odds
+soccer_data &lt;- showOddsDF(soccer_id)
+
+# Lets select a single record and see what we're looking at
+# (transposed for easier reading)</code></pre>
+A Record Example:
+<table>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:left;">
+Data
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+league.id
+</td>
+<td style="text-align:left;">
+1708
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+leagues.events.id
+</td>
+<td style="text-align:left;">
+702193777
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+sportId
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+last
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+leagues.id
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+events.periods.lineId
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+events.periods.number
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+events.periods.cutoff
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+events.periods.maxSpread
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+events.periods.maxMoneyline
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+events.periods.maxTotal
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+events.periods.maxTeamTotal
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+periods.spreads.hdp
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+periods.spreads.home
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+periods.spreads.away
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+periods.spreads.altLineId
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+periods.totals.points
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+periods.totals.over
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+periods.totals.under
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+periods.totals.altLineId
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+periods.moneyline.home
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+periods.moneyline.away
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+periods.moneyline.draw
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+teamTotal.home.points
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+teamTotal.home.over
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+teamTotal.home.under
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+teamTotal.away.points
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+teamTotal.away.over
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+teamTotal.away.under
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+leagues.events.awayScore
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+leagues.events.homeScore
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+leagues.events.awayRedCards
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+leagues.events.homeRedCards
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+sportId.Fixture
+</td>
+<td style="text-align:left;">
+29
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+last.Fixture
+</td>
+<td style="text-align:left;">
+102173434
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+league.events.starts
+</td>
+<td style="text-align:left;">
+2017-04-01T17:00:00Z
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+league.events.home
+</td>
+<td style="text-align:left;">
+test1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+league.events.away
+</td>
+<td style="text-align:left;">
+test2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+league.events.rotNum
+</td>
+<td style="text-align:left;">
+222222
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+league.events.liveStatus
+</td>
+<td style="text-align:left;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+league.events.status
+</td>
+<td style="text-align:left;">
+H
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+league.events.parlayRestriction
+</td>
+<td style="text-align:left;">
+2
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+sports.id
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+sports.leagues.id
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+leagues.events.state
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+leagues.events.elapsed
+</td>
+<td style="text-align:left;">
+NA
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+leagues.name
+</td>
+<td style="text-align:left;">
+AFC - Champions League
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+leagues.homeTeamType
+</td>
+<td style="text-align:left;">
+Team1
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+leagues.hasOfferings
+</td>
+<td style="text-align:left;">
+FALSE
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+leagues.container
+</td>
+<td style="text-align:left;">
+AFC
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+leagues.allowRoundRobins
+</td>
+<td style="text-align:left;">
+TRUE
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+leagues.leagueSpecialsCount
+</td>
+<td style="text-align:left;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+leagues.eventSpecialsCount
+</td>
+<td style="text-align:left;">
+0
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+leagues.eventCount
+</td>
+<td style="text-align:left;">
+0
+</td>
+</tr>
+</tbody>
+</table>
 </div>
 <div id="basic-functions" class="section level2">
 <h2>Basic Functions</h2>
@@ -317,7 +787,7 @@ head(LiveBasketballOdds)</code></pre>
 </div>
 <div id="show-odds-df" class="section level3">
 <h3>show Odds DF:</h3>
-<p>Combines the GetOdds, GetFixtures, and GetInrunning Calls, to get one picture of lines</p>
+<p>Combines the <code>GetOdds</code>, <code>GetFixtures</code>, and <code>GetInrunning</code> Calls, to get one picture of lines</p>
 <p>Column names are slightly different than in the above calls, in that only the last 3 identifiers are kept</p>
 <div id="for-example" class="section level5">
 <h5>For example:</h5>
@@ -335,47 +805,75 @@ head(BasketballOddsDF)</code></pre>
 <div id="place-bet" class="section level3">
 <h3>Place Bet</h3>
 <p>Once we have our odds information, we can use this to make a bet, or string of bets</p>
-<p>for the following example, we will place a bet of 0.01$ (Below the minimum bet amount) on the favorite MONEYLINE</p>
-<pre class="r"><code>BasketballOddsDF &lt;- showOddsDF(4,tableFormat = 'mainlines')
-
-# We transpose to make this easy to read
-# And only select those columns we're interested in
-t(BasketballOddsDF[1,c('sportId',
-                       'leagues.events.id',
-                       'events.periods.number',
-                       'events.periods.lineId',
-                       'events.periods.maxMoneyline',
-                       'periods.moneyline.home',
-                       'periods.moneyline.away')])</code></pre>
+<p>for the following example, we will place a bet of $0.01 (Below the minimum bet amount) on the favorite <code>MONEYLINE</code></p>
+<pre class="r"><code>BasketballOddsDF &lt;- showOddsDF(4,tableFormat = 'mainlines')</code></pre>
+<p>Record example (filtered to only the interesting fields):</p>
 <table>
+<thead>
+<tr>
+<th style="text-align:left;">
+</th>
+<th style="text-align:right;">
+Data
+</th>
+</tr>
+</thead>
 <tbody>
-<tr class="odd">
-<td align="left">sportId</td>
-<td align="right">4</td>
+<tr>
+<td style="text-align:left;">
+sportId
+</td>
+<td style="text-align:right;">
+4
+</td>
 </tr>
-<tr class="even">
-<td align="left">leagues.events.id</td>
-<td align="right">669895493</td>
+<tr>
+<td style="text-align:left;">
+leagues.events.id
+</td>
+<td style="text-align:right;">
+704584684
+</td>
 </tr>
-<tr class="odd">
-<td align="left">events.periods.number</td>
-<td align="right">0</td>
+<tr>
+<td style="text-align:left;">
+events.periods.number
+</td>
+<td style="text-align:right;">
+0
+</td>
 </tr>
-<tr class="even">
-<td align="left">events.periods.lineId</td>
-<td align="right">357125002</td>
+<tr>
+<td style="text-align:left;">
+events.periods.lineId
+</td>
+<td style="text-align:right;">
+379913314
+</td>
 </tr>
-<tr class="odd">
-<td align="left">events.periods.maxMoneyline</td>
-<td align="right">250</td>
+<tr>
+<td style="text-align:left;">
+events.periods.maxMoneyline
+</td>
+<td style="text-align:right;">
+250
+</td>
 </tr>
-<tr class="even">
-<td align="left">periods.moneyline.home</td>
-<td align="right">-130</td>
+<tr>
+<td style="text-align:left;">
+periods.moneyline.home
+</td>
+<td style="text-align:right;">
+-477
+</td>
 </tr>
-<tr class="odd">
-<td align="left">periods.moneyline.away</td>
-<td align="right">118</td>
+<tr>
+<td style="text-align:left;">
+periods.moneyline.away
+</td>
+<td style="text-align:right;">
+353
+</td>
 </tr>
 </tbody>
 </table>
@@ -384,12 +882,40 @@ t(BasketballOddsDF[1,c('sportId',
 <pre class="r"><code>PlaceBet(
     stake = 0.01, 
     sportId = 4,
-    eventId = 669895493,
+    eventId = 704584684,
     periodNumber = 0,
-    lineId = 357092455,
+    lineId = 379913314,
     betType = 'MONEYLINE',
     team = 'TEAM1'
 )</code></pre>
+<p>Here, our stake is below the minimum amount, as we can see in the error message that is returned</p>
+<p>List of 5:</p>
+<ul>
+<li>status : chr “PROCESSED_WITH_ERROR”</li>
+<li>errorCode : chr “BELOW_MIN_BET_AMOUNT”</li>
+<li>betId : NULL</li>
+<li>uniqueRequestId : chr “b9d95cf0-54bf-47ee-bad5-4a6dc557da7a”</li>
+<li>betterLineWasAccepted: logi FALSE</li>
+</ul>
+<p>If we do it for a larger amount:</p>
+<pre class="r"><code>PlaceBet(
+    stake = 500, 
+    sportId = 4,
+    eventId = 704584684,
+    periodNumber = 0,
+    lineId = 379913314,
+    betType = 'MONEYLINE',
+    team = 'TEAM1'
+)</code></pre>
+<p>List of 6:</p>
+<ul>
+<li>status : chr “ACCEPTED”</li>
+<li>errorCode : NULL</li>
+<li>betId : int 706865959</li>
+<li>uniqueRequestId : chr “5acf90ff-bbde-4449-af28-b0db7534e249”</li>
+<li>betterLineWasAccepted: logi FALSE</li>
+<li>price : num -477</li>
+</ul>
 </div>
 </div>
 
