@@ -32,7 +32,7 @@ Pinnacle Terms & Conditions: [http://www.pinnacle.com/en/termsandconditions](htt
 
 ***
 
-#####The API is not accessible from all IP-Ranges. For example, IP addresses from the UK and the USA are Geo IP blocked.
+<em>The API is not accessible from all IP-Ranges. For example, IP addresses from the UK and the USA are Geo IP blocked.</em>
 
 
 ## The Pinnacle API package
