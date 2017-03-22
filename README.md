@@ -21,7 +21,7 @@ All responsibility of activity on [Pinnacle](http://pinnacle.com) lies with the 
 
 Especially wagers placed with the help of this package are the sole responsibility of the user of this package.  The authors and maintainers of the package are not liable or responsible in any form. 
 Please see [Manual:Fair-Use](http://www.pinnacle.com/en/api/manual#fair-use),
-[xml-terms-and-conditions](http://www.pinnacle.com/api-xml/terms-and-conditions.aspx) and [terms and conditions](http://www.pinnacle.com/en/termsandconditions)
+[API Rules](http://www.pinnacle.com/api-xml/terms-and-conditions.aspx) and [Terms and Conditions](http://www.pinnacle.com/en/termsandconditions)
 
 [http://www.pinnacle.com/en/termsandconditions](http://www.pinnacle.com/en/api/manual)
 
