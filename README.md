@@ -1,3 +1,5 @@
+[![CRAN Status Badge](https://www.r-pkg.org/badges/version/pinnacle.API)](https://cran.r-project.org/package=pinnacle.API) [![CRAN Total Downloads](http://cranlogs.r-pkg.org/badges/grand-total/pinnacle.API)](https://cran.r-project.org/package=pinnacle.API) [![CRAN Monthly Downloads](http://cranlogs.r-pkg.org/badges/pinnacle.API)](https://cran.r-project.org/package=pinnacle.API)
+
 # Accessing the Pinnacle API
 
 The [Pinnacle](http://pinnacle.com) manual can be found here :
