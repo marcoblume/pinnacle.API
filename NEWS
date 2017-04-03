@@ -1,9 +1,16 @@
-pinnacle.API v2.0.4 (Release date: 2016-12-06)
+pinnacle.API v2.0.5 (Release date: 2016-04-02)
+==============
+
+Changes:
+* Fix to showOddsDF (No live games bug)
+
+pinnacle.API v2.0.4 (Release date: 2016-03-11)
 ==============
 
 Changes:
 * Major Upgrade, all functions now more in line with
   the fields and wrappers in the pinnacle.api manual
+  (CRAN RELEASE READY)
 
 pinnacle.API v2.0.3 (Release date: 2016-12-06)
 ==============
