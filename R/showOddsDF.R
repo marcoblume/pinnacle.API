@@ -68,17 +68,23 @@ showOddsDF <- function (sportid,
   setDT(res)
   setDT(fixtures)
   setDT(inrunning)
-  
+
   res %>% 
     merge(fixtures, 
           by.x = 'leagues.events.id',
           by.y = 'league.events.id', # Seriously? league vs leagues?
           all = TRUE,suffixes = c('','.Fixture')) %>%
-    merge(inrunning[sports.id %in% sportid],
-          by.x = 'leagues.events.id',
-          by.y = 'sports.leagues.events.id',
-          all = TRUE,
-          suffixes = c('','.Inrunning')) %>%
+    with({
+      if('leagues.events.id' %in% names(inrunning)) {
+        merge(.,inrunning[sports.id %in% sportid],
+              by.x = 'leagues.events.id',
+              by.y = 'sports.leagues.events.id',
+              all = TRUE,
+              suffixes = c('','.Inrunning'))
+      } else {
+        .
+      }
+    }) %>%
     with({
       if(attachLeagueInfo) {
         leagueinfo <- GetLeaguesByID(sportid)
