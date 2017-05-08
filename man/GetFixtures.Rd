@@ -42,4 +42,3 @@ SetCredentials("TESTAPI", "APITEST")
 AcceptTermsAndConditions(accepted=TRUE)
 GetFixtures(sportid = 41, leagueids = 191545)}
 }
-

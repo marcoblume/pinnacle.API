@@ -12,4 +12,3 @@ Prompts User for Terms and Conditions, otherwise stops running function
 \examples{
 CheckTermsAndConditions()
 }
-

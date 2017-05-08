@@ -85,4 +85,3 @@ PlaceBet (stake=10,
           winRiskStake="WIN",
           oddsFormat="AMERICAN")}
 }
-

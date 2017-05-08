@@ -14,4 +14,3 @@ authorization(user, pwd)
 \description{
 Authorization for the Pinnacle API
 }
-

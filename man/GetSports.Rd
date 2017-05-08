@@ -26,4 +26,3 @@ SetCredentials("TESTAPI","APITEST")
 AcceptTermsAndConditions(accepted=TRUE)
 GetSports()}
 }
-

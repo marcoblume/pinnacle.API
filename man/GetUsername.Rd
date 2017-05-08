@@ -16,4 +16,3 @@ Get your Username
 SetCredentials("TESTAPI","APITEST")
 GetUsername()
 }
-
