@@ -58,4 +58,3 @@ AcceptTermsAndConditions(accepted=TRUE)
  periodNumber=0,team="TEAM1",betType="Moneyline")}
 
 }
-

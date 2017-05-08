@@ -17,4 +17,3 @@ Set your pinnaclesports.com user credentials
 \examples{
 SetCredentials("TESTAPI","APITEST")
 }
-

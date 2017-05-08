@@ -15,4 +15,3 @@ Accept terms and conditions, only run once per session, must agree to terms or f
 \examples{
 AcceptTermsAndConditions(accepted=TRUE)
 }
-

@@ -19,4 +19,3 @@ AcceptTermsAndConditions(accepted=TRUE)
 GetInrunning()
 }
 }
-

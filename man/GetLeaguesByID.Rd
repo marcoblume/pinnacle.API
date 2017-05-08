@@ -30,4 +30,3 @@ SetCredentials("TESTAPI","APITEST")
 AcceptTermsAndConditions(accepted=TRUE)
 GetLeaguesByID(1)}
 }
-

@@ -41,4 +41,3 @@ AcceptTermsAndConditions(accepted = TRUE)
 # We can run without parameters, and will be given a selection of sports
 GetOdds()}
 }
-

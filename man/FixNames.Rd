@@ -17,4 +17,3 @@ same data.frame with names fixed to length x indicators
 \description{
 Fix up names to be shorter
 }
-

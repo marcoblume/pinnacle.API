@@ -50,4 +50,3 @@ AcceptTermsAndConditions(accepted=TRUE)
 # Run without arguments, it will prompt you for the sport
 showOddsDF()}
 }
-

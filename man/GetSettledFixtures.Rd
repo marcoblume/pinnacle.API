@@ -27,4 +27,3 @@ AcceptTermsAndConditions(accepted=TRUE)
 GetSettledFixtures()
 }
 }
-

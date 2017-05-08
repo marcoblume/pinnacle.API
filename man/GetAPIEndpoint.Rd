@@ -17,4 +17,3 @@ SetAPIEndpoint("https://api.pinnaclesports.com/v2/")
 GetAPIEndpoint()
 SetAPIEndpoint("https://api.pinnaclesports.com")
 }
-

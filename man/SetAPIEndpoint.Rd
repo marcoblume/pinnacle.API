@@ -19,4 +19,3 @@ Sets the API endpoint to use
 SetAPIEndpoint("https://api.pinnaclesports.com")
 SetAPIEndpoint()
 }
-

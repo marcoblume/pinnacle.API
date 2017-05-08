@@ -27,4 +27,3 @@ AcceptTermsAndConditions(accepted=TRUE)
 # Can be run without arguments
 GetSettledSpecialFixtures()}
 }
-

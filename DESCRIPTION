@@ -1,6 +1,6 @@
 Package: pinnacle.API
 Type: Package
-Version: 2.0.5
+Version: 2.0.6
 Title: A Wrapper for the Pinnacle API
 URL: https://github.com/marcoblume/pinnacle.API
 Author: Nicholas Jhirad, Marco Blume, Amine Gassem
@@ -17,4 +17,4 @@ Imports:
     httr,
     jsonlite,
     rjson
-RoxygenNote: 5.0.1
+RoxygenNote: 6.0.1

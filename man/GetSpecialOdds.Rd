@@ -38,4 +38,3 @@ SetCredentials("TESTAPI","APITEST")
 AcceptTermsAndConditions(accepted=TRUE)
 GetSpecialOdds()}
 }
-

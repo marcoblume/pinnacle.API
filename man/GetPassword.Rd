@@ -12,4 +12,3 @@ Current Password in plaintext
 \description{
 Get your Password
 }
-
