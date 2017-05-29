@@ -8,21 +8,32 @@ sports.id <- NULL
 
 # Simplifies each list column to be wide
 simplify_all <- function(x) {
+  #browser()
   mainlines <- 
     lapply(x, function(y) {
       if(is.null(y)) data.frame(nullcol = NA) 
       else if(!is.null(y[['altLineId']])) y[is.na(y[['altLineId']]),] 
       else y
     })
-  alternates <- 
-    lapply(x, function(y) {
-      if(!is.null(y) && !is.null(y[['altLineId']])) as.list(unlist_special(y[!is.na(y[['altLineId']]),]))
+  
+  max_mainlines_returned <- max(sapply(mainlines, NROW))
+  
+  if(max_mainlines_returned == 1) {
+    alternates <- 
+      lapply(x, function(y) {
+        if(!is.null(y) && !is.null(y[['altLineId']])) as.list(unlist_special(y[!is.na(y[['altLineId']]),]))
       })
-  out <- rbindlist(Map(c, mainlines, alternates), fill = TRUE)
-  out[, nullcol := NULL]
-  # altLineId is always null by design
-  out[, altLineId := NULL]
-  out
+    out <- rbindlist(Map(c, mainlines, alternates), fill = TRUE)
+    suppressWarnings(out[, nullcol := NULL])
+    # altLineId is always null by design
+    suppressWarnings(out[, altLineId := NULL])
+    out
+  } else {
+    # several lines per row. Specials
+    # no altLineId will be present
+    rbindlist(lapply(mainlines, function(x) as.list(unlist_special(x))), 
+              fill = TRUE)
+  }
 }
 
 # Does unlist, but with a better naming convention

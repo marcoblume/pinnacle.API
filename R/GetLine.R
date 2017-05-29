@@ -78,4 +78,5 @@ GetLine <- function(sportid, leagueids, eventid,
     content(type = 'text') %>%
     jsonlite::fromJSON()
   
+  return(r)
 }

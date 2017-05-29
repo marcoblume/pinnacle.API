@@ -1,3 +1,10 @@
+pinnacle.API v2.0.6 (Release date: 2016-05-29)
+==============
+
+Changes:
+* GetLine now returns visibly
+* GetSpecialOdds, wide format now working correctly
+
 pinnacle.API v2.0.6 (Release date: 2016-05-08)
 ==============
 
