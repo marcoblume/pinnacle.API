@@ -29,6 +29,11 @@ vignettes/*.pdf
 /*_cache/
 /cache/
 
+# Nonstandard package contents
+/www/
+*.Rmd
+*.html
+
 # Temporary files created by R markdown
 *.utf8.md
 .Rproj.user
