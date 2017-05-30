@@ -55,18 +55,17 @@ GetSpecialOdds <-
     r %>%
       jsonlite::fromJSON(flatten = TRUE) %>%
       as.data.table %>%
-      with({
-        
+      {
         if(all(sapply(.,is.atomic))) .
         expandListColumns(.)
-      }) %>%
-      with({
+      } %>%
+      {
         if(tableformat == 'long')      SpreadsAndTotalsLong(.)
         else if(tableformat == 'wide')      SpreadsAndTotalsWide(.)
         else if(tableformat == 'subtables') .
         else if(tableformat == 'clean') expandListColumns(.)
         else stop("Undefined value for tableFormat, options are 'mainlines','long','wide', and 'subtables'")
-      }) %>%
+      } %>%
       as.data.frame()
   }
 

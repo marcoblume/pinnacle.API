@@ -8,7 +8,7 @@ sports.id <- NULL
 
 # Simplifies each list column to be wide
 simplify_all <- function(x) {
-  #browser()
+  
   mainlines <- 
     lapply(x, function(y) {
       if(is.null(y)) data.frame(nullcol = NA) 
@@ -31,8 +31,18 @@ simplify_all <- function(x) {
   } else {
     # several lines per row. Specials
     # no altLineId will be present
-    rbindlist(lapply(mainlines, function(x) as.list(unlist_special(x))), 
-              fill = TRUE)
+    suppressWarnings(
+      rbindlist(
+        lapply(mainlines, function(x) {
+          if(length(x) > 0) as.list(unlist_special(x))
+          else list(id = NA, 
+                    lineId = NA, 
+                    price = NA,
+                    handicap = NA)
+          }), 
+        fill = TRUE
+      )
+    )
   }
 }
 
