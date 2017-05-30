@@ -1,4 +1,10 @@
-pinnacle.API v2.0.6 (Release date: 2016-05-29)
+pinnacle.API v2.0.8 (Release date: 2016-05-30)
+==============
+
+Changes:
+* Bug: solution for GetSpecialOdds caused another issue, fixed
+
+pinnacle.API v2.0.7 (Release date: 2016-05-29)
 ==============
 
 Changes:
