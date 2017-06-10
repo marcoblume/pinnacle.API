@@ -8,7 +8,10 @@ sports.id <- NULL
 
 # Simplifies each list column to be wide
 simplify_all <- function(x) {
+  # Define to eliminate CRAN Note
+  altLineId <- nullcol <- NULL
   
+  # Remove Mainlines
   mainlines <- 
     lapply(x, function(y) {
       if(is.null(y)) data.frame(nullcol = NA) 
