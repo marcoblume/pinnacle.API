@@ -26,11 +26,15 @@ GetBetsList <-
         r <- GET(paste0(.PinnacleAPI$url ,"/v1/bets"),
              add_headers(Authorization= authorization(),
                          "Content-Type" = "application/json"),
-             query = list(betlist=betlist_type,
-                          betids=
-                            if(!is.null(betids)) paste0(betids, collapse = ',') else NULL,
-                          fromDate=as.character(fromDate),
-                          toDate=as.character(toDate)))
+             query = 
+               list(
+                 betlist=betlist_type,
+                 betids=
+                   if(!is.null(betids)) paste0(betids, collapse = ',') else NULL,
+                 fromDate=as.character(fromDate),
+                 toDate=as.character(toDate),
+                 appId = 'R')
+             )
         res <-  jsonlite::fromJSON(content(r,type="text"))
     
         as.data.frame(unlist(res, recursive = FALSE))
