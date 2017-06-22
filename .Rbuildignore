@@ -6,3 +6,4 @@ Icon.jpg
 ^\\.git/
 ^.*\.Rmd
 ^.*\.html
+^.*\.png
