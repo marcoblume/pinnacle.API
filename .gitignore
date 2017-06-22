@@ -35,7 +35,7 @@ vignettes/*.pdf
 *.html
 
 # Any resources for Markdown
-*.png
+# *.png
 
 # Temporary files created by R markdown
 *.utf8.md
