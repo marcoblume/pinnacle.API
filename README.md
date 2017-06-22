@@ -1,6 +1,12 @@
-# Accessing the Pinnacle API
+
+
+
 
 <div style='position:relative;float:right;'><img src='r-pinnacle-api-sm.png'></div>
+
+[![CRAN Status Badge](https://www.r-pkg.org/badges/version/pinnacle.API)](https://cran.r-project.org/package=pinnacle.API) [![CRAN Total Downloads](http://cranlogs.r-pkg.org/badges/grand-total/pinnacle.API)](https://cran.r-project.org/package=pinnacle.API) [![CRAN Monthly Downloads](http://cranlogs.r-pkg.org/badges/pinnacle.API)](https://cran.r-project.org/package=pinnacle.API)
+
+<h1>Accessing the Pinnacle API</h1>
 
 The [Pinnacle](http://pinnacle.com) manual can be found here :
 
