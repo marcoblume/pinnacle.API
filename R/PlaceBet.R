@@ -90,8 +90,7 @@ function (
     if (!is.null(team)) sprintf(' team: %s ', team),
     if (!is.null(side)) sprintf(' side: %s ', side),
     if (!is.null(acceptBetterLine)) sprintf(' acceptBetterLine: %s ', acceptBetterLine),
-    ' oddsformat: ', oddsFormat,
-    ' tableformat: ', tableFormat
+    ' oddsformat: ', oddsFormat
   )
   
   place_bet_data <- list(uniqueRequestId = UUIDgenerate(), 
