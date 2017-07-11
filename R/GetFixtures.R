@@ -40,7 +40,7 @@ GetFixtures <-
 
     CheckTermsAndConditions()
     ## retrieve sportid
-    if (missing(sportid)) {
+    if(missing(sportid)) {
       cat('No Sports Selected, choose one:\n')
       ViewSports()
       sportid <- readline('Selection (id): ')
@@ -62,6 +62,7 @@ GetFixtures <-
     
     # If no rows are returned, return empty data.frame
     if (identical(r, '')) return(data.frame())
+
     
     r %>%
       jsonlite::fromJSON(flatten = TRUE) %>%

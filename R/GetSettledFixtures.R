@@ -36,6 +36,7 @@ GetSettledFixtures <- function(sportid,
         query = list(sportId=sportid,
                      leagueIds = if(!is.null(leagueids)) paste(leagueids,collapse=',') else NULL,
                      since=since)) %>%
+
     content(type="text", encoding = "UTF-8") 
   
   if(identical(r, '')) return(data.frame())

@@ -27,7 +27,8 @@ GetLeaguesByID <-
   function(sportid, force = TRUE) {
     CheckTermsAndConditions()
     
-    if (missing(sportid)) {
+
+    if(missing(sportid)) {
       cat('No Sports Selected, choose one:\n')
       ViewSports()
       sportid <- readline('Selection (id): ')

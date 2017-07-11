@@ -23,7 +23,6 @@ GetSports <-
   function(force = TRUE) {
     CheckTermsAndConditions()
     # If Force = FALSE or the SportList is Empty then load a new Sport List
-    
     if (length(.PinnacleAPI$sports) == 0 || force) {
       
       message(

@@ -18,6 +18,7 @@ GetSettledSpecialFixtures <- function(sportid,
                                leagueids = NULL, 
                                since = NULL) {
   
+
   if (missing(sportid)) {
     cat('No Sports Selected, choose one:\n')
     ViewSports()
@@ -39,11 +40,13 @@ GetSettledSpecialFixtures <- function(sportid,
     
     content(type = "text", encoding = "UTF-8") 
   if (identical(r, '')) return(data.frame())
+
   r %>%
     jsonlite::fromJSON(flatten = TRUE) %>%
     as.data.table %>%
     expandListColumns() %>%
     with({
+
       if (all(sapply(.,is.atomic))) .
       else expandListColumns(.)
     }) %>%

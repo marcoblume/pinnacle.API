@@ -53,7 +53,9 @@ GetSpecialFixtures <- function(sportid,
                      specialId = specialid,
                      since=since)) %>%
     
+
     content(type="text", encoding = "UTF-8") 
+
   if(identical(r, '')) return(data.frame())
   r %>%
     jsonlite::fromJSON(flatten = TRUE) %>%
