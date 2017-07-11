@@ -101,11 +101,14 @@ PlaceParlayBet <-
     
     guids <- c()
     #Generate UUIDs
-    for(i in 1:(length(legslist)+1)) {
+    for (i in 1:(length(legslist)+1)) {
         Sys.sleep(0.000001)
         guids <- c(guids, uuid::UUIDgenerate())
     }
-    
+    message(
+      Sys.time(),
+      '| Placing Parlay Bet'
+    )
     place_bet_data <- list(uniqueRequestId=guids[1],
                            acceptBetterLine=acceptBetterLine,
                            oddsFormat=oddsFormat,
@@ -120,7 +123,7 @@ PlaceParlayBet <-
                           "Content-Type" = "application/json"),
               body = place_bet_body
     )
-    jsonlite::fromJSON(content(r,type="text"))
+    jsonlite::fromJSON(content(r,type="text", encoding = "UTF-8"))
     
   }
 

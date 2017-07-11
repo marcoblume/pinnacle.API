@@ -14,19 +14,23 @@
 #' }
 GetInrunning <- function() {
   CheckTermsAndConditions()
+  
+  message(Sys.time(),
+          '| Pulling Inrunning (Live) State')
+  
   sprintf('%s/v1/inrunning', .PinnacleAPI$url) %>%
-    GET(add_headers(Authorization= authorization(),
+    GET(add_headers(Authorization = authorization(),
                     "Content-Type" = "application/json")) %>%
-    content(type = 'text') %>%
+    content(type = 'text', encoding = "UTF-8") %>%
     jsonlite::fromJSON(flatten = TRUE) %>%
     as.data.table() %>%
-    with({
-      if(all(sapply(.,is.atomic))) .
+    {
+      if (all(sapply(.,is.atomic))) .
       expandListColumns(.)
-    }) %>%
-    with({
-      if(all(sapply(.,is.atomic))) .
+    } %>%
+    {
+      if (all(sapply(.,is.atomic))) .
       expandListColumns(.)
-    })
+    }
   
 }

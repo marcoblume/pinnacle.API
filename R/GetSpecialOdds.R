@@ -39,6 +39,17 @@ GetSpecialOdds <-
       sportid <- readline('Selection (id): ')
     }
     
+    message(
+      Sys.time(),
+      '| Pulling Specials Odds for - sportid: ', sportid,
+      if (!is.null(leagueids)) sprintf(' leagueids: %s', paste(leagueids, collapse = ', ')),
+      if (!is.null(since)) sprintf(' since: %s', since),
+      ' islive: ', islive,
+      ' oddsformat: ', oddsformat,
+      ' tableformat: ', tableformat
+    )
+    
+    
     r <- 
       sprintf('%s/v1/odds/special', .PinnacleAPI$url) %>%
       modify_url(query = list(sportId = sportid,
@@ -46,7 +57,7 @@ GetSpecialOdds <-
                               since = since)) %>%
       httr::GET(add_headers(Authorization= authorization(),
                       "Content-Type" = "application/json")) %>%
-      content(type="text") 
+      content(type="text", encoding = "UTF-8") 
     
     
     # If no rows are returned, return empty data.frame

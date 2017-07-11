@@ -64,54 +64,36 @@
 #'           acceptBetterLine=TRUE,
 #'           winRiskStake="WIN",
 #'           oddsFormat="AMERICAN")}
-
-PlaceBet <-
-  function(
-           stake,
-           sportId,
-           eventId,
-           periodNumber,
-           lineId,
-           betType,
-           altLineId=NULL,
-           team=NULL,
-           side=NULL,
-           acceptBetterLine=TRUE,
-           winRiskStake="RISK",
-           oddsFormat="AMERICAN"){
-
-    CheckTermsAndConditions()
-    place_bet_data <- list(uniqueRequestId=UUIDgenerate(),
-                           acceptBetterLine=acceptBetterLine,
-                           oddsFormat=oddsFormat,
-                           stake=stake,
-                           winRiskStake=winRiskStake,
-                           sportId=sportId,
-                           eventId=eventId,
-                           periodNumber=periodNumber,
-                           betType=betType,
-                           lineId=lineId,
-                           altLineId=altLineId,
-                           team=team,
-                           side=side)
-    place_bet_body <-  rjson::toJSON(place_bet_data)
-    
-    
-    r <- POST(paste0(.PinnacleAPI$url ,"/v1/bets/place"),
-              add_headers(Authorization= "Basic TklDS0pCT1Q6bmo0NTc4",
-                          "Content-Type" = "application/json"),
-              body = place_bet_body
-    )
-    jsonlite::fromJSON(content(r,type="text"))
-
-  }
-
-
 PlaceBet <- 
-function (stake, sportId, eventId, periodNumber, lineId, betType, 
-          altLineId = NULL, team = NULL, side = NULL, acceptBetterLine = TRUE, 
-          winRiskStake = "RISK", oddsFormat = "AMERICAN") {
+function (
+  stake, sportId, eventId, 
+  periodNumber, lineId, betType, 
+  altLineId = NULL, 
+  team = NULL, 
+  side = NULL, 
+  acceptBetterLine = TRUE, 
+  winRiskStake = "RISK", 
+  oddsFormat = "AMERICAN"
+) {
   CheckTermsAndConditions()
+  
+  message(
+    Sys.time(),
+    '| Placing Bet - stake: ', stake,
+    ' WinOrRisk: ', winRiskStake,
+    ' sportid: ', sportId,
+    ' eventid: ', eventId,
+    ' periodnumber: ', periodNumber,
+    ' lineid: ', lineId,
+    ' bettype: ', betType,
+    if (!is.null(altLineId)) sprintf(' altLineId: %s ', altLineId),
+    if (!is.null(team)) sprintf(' team: %s ', team),
+    if (!is.null(side)) sprintf(' side: %s ', side),
+    if (!is.null(acceptBetterLine)) sprintf(' acceptBetterLine: %s ', acceptBetterLine),
+    ' oddsformat: ', oddsformat,
+    ' tableformat: ', tableformat
+  )
+  
   place_bet_data <- list(uniqueRequestId = UUIDgenerate(), 
                          acceptBetterLine = acceptBetterLine, oddsFormat = oddsFormat, 
                          stake = stake, winRiskStake = winRiskStake, sportId = sportId, 
@@ -120,6 +102,8 @@ function (stake, sportId, eventId, periodNumber, lineId, betType,
                          side = side)
   place_bet_body <- rjson::toJSON(place_bet_data)
   r <- httr::POST(paste0(.PinnacleAPI$url, "/v1/bets/place"), add_headers(Authorization = authorization(), 
-                                                                    `Content-Type` = "application/json"), body = place_bet_body)
-  jsonlite::fromJSON(content(r, type = "text"))
+                                                                    `Content-Type` = "application/json"), 
+                  body = place_bet_body)
+  
+  jsonlite::fromJSON(content(r, type = "text", encoding = "UTF-8"))
 }

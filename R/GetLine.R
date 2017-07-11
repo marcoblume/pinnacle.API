@@ -49,17 +49,29 @@ GetLine <- function(sportid, leagueids, eventid,
 {
   
   CheckTermsAndConditions()
-  if(missing(sportid)) {
+  if (missing(sportid)) {
     cat('No Sports Selected, choose one:\n')
     ViewSports(force = force)
     sportid <- readline('Selection (id): ')
   }
   
-  if(missing(leagueids)) {
+  if (missing(leagueids)) {
     cat('No Leagues Selected, choose:\n')
     ViewLeagues(force = force)
     leagueids <- readline('Selection (id): ')
   }
+  
+  message(
+    Sys.time(),
+    '| Pulling line - sportid: ', sportid,
+    ' leagueids: ', leagueids, 
+    ' eventid: ', eventid,
+    ' betType: ', betType,
+    if (!is.null(team)) sprintf(' team: %s', team),
+    if (!is.null(side)) sprintf(' side: %s', side),
+    if (!is.null(handicap)) sprintf(' handicap: %s', handicap),
+    ' oddsFormat: ', oddsFormat
+  )
   
   r <- sprintf('%s/v1/line', .PinnacleAPI$url) %>%
     modify_url(
@@ -75,7 +87,7 @@ GetLine <- function(sportid, leagueids, eventid,
       ) %>%
     GET(add_headers(Authorization= authorization(),
                     "Content-Type" = "application/json")) %>%
-    content(type = 'text') %>%
+    content(type = 'text', encoding = "UTF-8") %>%
     jsonlite::fromJSON()
   
   return(r)

@@ -23,15 +23,22 @@ GetSports <-
   function(force = TRUE) {
     CheckTermsAndConditions()
     # If Force = FALSE or the SportList is Empty then load a new Sport List
-    if(length(.PinnacleAPI$sports)==0 || force) {
+    
+    if (length(.PinnacleAPI$sports) == 0 || force) {
+      
+      message(
+        Sys.time(),
+        '| Pulling Sports'
+      )
+      
       sprintf("%s/v2/sports",.PinnacleAPI$url) %>%
-        GET(add_headers("Authorization"= authorization())) %>%
-        content(type = 'text') %>%
+        GET(add_headers("Authorization" = authorization())) %>%
+        content(type = 'text', encoding = "UTF-8") %>%
         jsonlite::fromJSON() %>%
         .[['sports']] %T>%
-        with({
+        {
           .PinnacleAPI$sports <- .
-        })
+        }
     }
     
     .PinnacleAPI$sports

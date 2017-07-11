@@ -32,6 +32,17 @@ GetSpecialFixtures <- function(sportid,
                 readline('Selection (id): ')
               })
           }
+  
+  message(
+    Sys.time(),
+    '| Pulling Special Fixtures for - sportid: ', sportid,
+    if (!is.null(leagueids)) sprintf(' leagueids: %s', paste(leagueids, collapse = ', ')),
+    if (!is.null(since)) sprintf(' since: %s', since),
+    if (!is.null(category)) sprintf(' category: %s', category),
+    if (!is.null(eventid)) sprintf(' eventid: %s', eventid),
+    if (!is.null(specialid)) sprintf(' specialid: %s', specialid)
+  )
+  
   r <- sprintf('%s/v1/fixtures/special',.PinnacleAPI$url) %>%
     GET(add_headers(Authorization= authorization(),
                     "Content-Type" = "application/json"),
@@ -42,7 +53,7 @@ GetSpecialFixtures <- function(sportid,
                      specialId = specialid,
                      since=since)) %>%
     
-    content(type="text") 
+    content(type="text", encoding = "UTF-8") 
   if(identical(r, '')) return(data.frame())
   r %>%
     jsonlite::fromJSON(flatten = TRUE) %>%

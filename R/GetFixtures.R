@@ -40,25 +40,28 @@ GetFixtures <-
 
     CheckTermsAndConditions()
     ## retrieve sportid
-    if(missing(sportid)) {
+    if (missing(sportid)) {
       cat('No Sports Selected, choose one:\n')
       ViewSports()
       sportid <- readline('Selection (id): ')
     }
     
+    message(Sys.time(), '| Pulling Fixtures for SportID: ', sportid, 
+            if (!is.null(leagueids)) sprintf(' and leagueIds: %s', leagueids))
+    
     r <- 
       sprintf('%s/v1/fixtures', .PinnacleAPI$url) %>%
-      GET(add_headers(Authorization= authorization(),
+      GET(add_headers(Authorization = authorization(),
                       "Content-Type" = "application/json"),
-          query = list(sportId=sportid,
-                       leagueIds = if(!is.null(leagueids)) paste(leagueids,collapse=',') else NULL,
-                       since=since,
-                       isLive=islive*1L)) %>%
-      content(type="text") 
+          query = list(sportId = sportid,
+                       leagueIds = if (!is.null(leagueids)) paste(leagueids,collapse = ',') else NULL,
+                       since = since,
+                       isLive = islive*1L)) %>%
+      content(type = "text", encoding = "UTF-8") 
     
     
     # If no rows are returned, return empty data.frame
-    if(identical(r, '')) return(data.frame())
+    if (identical(r, '')) return(data.frame())
     
     r %>%
       jsonlite::fromJSON(flatten = TRUE) %>%

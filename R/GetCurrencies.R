@@ -18,11 +18,13 @@
 GetCurrencies <-
   function(force=TRUE){
     CheckTermsAndConditions()
-    if(length(.PinnacleAPI$currencies)==0 || force){
+    message(Sys.time(),
+            '| Pulling Currencies')
+    if (length(.PinnacleAPI$currencies) == 0 || force) {
       sprintf('%s/v2/currencies',.PinnacleAPI$url) %>%
-        GET(add_headers("Authorization"= authorization(),
+        GET(add_headers("Authorization" = authorization(),
                         'Content-Type' = 'application/json')) %>%
-        content(type = 'text') %>%
+        content(type = 'text', encoding = "UTF-8") %>%
         jsonlite::fromJSON(flatten = TRUE) %>%
         unlist(recursive = FALSE) %>%
         as.data.frame %T>%

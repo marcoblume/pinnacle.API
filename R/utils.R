@@ -182,6 +182,7 @@ ViewSports <-
            showEventCount = TRUE,
            showEspecials = FALSE,
            showLspecials = FALSE) {
+    
     with(GetSports(force = TRUE),{
       cat(sprintf('SportId - Sport (# %s):\n',
                   paste0(if(showEventCount) 'events',
