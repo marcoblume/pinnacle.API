@@ -27,35 +27,37 @@ GetLeaguesByID <-
   function(sportid, force = TRUE) {
     CheckTermsAndConditions()
     
-    if(missing(sportid)) {
+    if (missing(sportid)) {
       cat('No Sports Selected, choose one:\n')
       ViewSports()
       sportid <- readline('Selection (id): ')
     }
-    if(is.null(.PinnacleAPI$leagueIds) || force) {
+    if (is.null(.PinnacleAPI$leagueIds) || force) {
+      message(Sys.time(),
+              '| Pulling new league ids for sportid: ', sportid)
         # Generate url
         sprintf('%s/v2/leagues',.PinnacleAPI$url) %>%
         # Add Headers
         GET(add_headers("Authorization" = authorization()),
             query = list(sportid = sportid)) %>%
         # Extract content
-        content(type = 'text') %>%
+        content(type = 'text', encoding = "UTF-8") %>%
         # Convert to data.frame
         jsonlite::fromJSON() %>%
         # Return leagues field
         as.data.table() %>%
-        with({
-          if(all(sapply(.,is.atomic))) .
+        {
+          if (all(sapply(.,is.atomic))) .
           else expandListColumns(.)
-        }) %>%
-        with({
-          if(all(sapply(.,is.atomic))) .
+        } %>%
+        {
+          if (all(sapply(.,is.atomic))) .
           else expandListColumns(.)
-        }) %T>%
-        with({
+        } %T>%
+        {
           # assign data to cache
           .PinnacleAPI$leagueIds <- .
-        })
+        }
     }
     
     # If cached, just take cached data

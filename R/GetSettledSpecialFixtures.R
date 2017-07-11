@@ -18,26 +18,33 @@ GetSettledSpecialFixtures <- function(sportid,
                                leagueids = NULL, 
                                since = NULL) {
   
-          if(missing(sportid)) {
-            cat('No Sports Selected, choose one:\n')
-            ViewSports()
-            sportid <- readline('Selection (id): ')
-          }
+  if (missing(sportid)) {
+    cat('No Sports Selected, choose one:\n')
+    ViewSports()
+    sportid <- readline('Selection (id): ')
+  }
+  
+  message(
+    Sys.time(),
+    '| Pulling Settled Special Fixtures for - sportid: ', sportid,
+    if (!is.null(leagueids)) sprintf(' leagueids: %s', paste(leagueids, collapse = ', ')),
+    if (!is.null(since)) sprintf(' since: %s', since)
+  )
   r <- sprintf('%s/v1/fixtures/special/settled',.PinnacleAPI$url) %>%
-    GET(add_headers(Authorization= authorization(),
+    GET(add_headers(Authorization = authorization(),
                     "Content-Type" = "application/json"),
-        query = list(sportId=sportid,
-                     leagueIds = if(!is.null(leagueids)) paste(leagueids,collapse=',') else NULL,
-                     since=since)) %>%
+        query = list(sportId = sportid,
+                     leagueIds = if (!is.null(leagueids)) paste(leagueids,collapse = ',') else NULL,
+                     since = since)) %>%
     
-    content(type="text") 
-  if(identical(r, '')) return(data.frame())
+    content(type = "text", encoding = "UTF-8") 
+  if (identical(r, '')) return(data.frame())
   r %>%
     jsonlite::fromJSON(flatten = TRUE) %>%
     as.data.table %>%
     expandListColumns() %>%
     with({
-      if(all(sapply(.,is.atomic))) .
+      if (all(sapply(.,is.atomic))) .
       else expandListColumns(.)
     }) %>%
     as.data.frame()

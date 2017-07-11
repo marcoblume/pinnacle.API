@@ -12,15 +12,18 @@
 #' SetCredentials("TESTAPI","APITEST")
 #' AcceptTermsAndConditions(accepted=TRUE)
 #' GetClientBalance()}
-GetClientBalance <- function(force=TRUE){
+GetClientBalance <- function(force = TRUE){
   CheckTermsAndConditions()
   
-  if(length(.PinnacleAPI$ClientBalance)==0 || force){
+  message(Sys.time(),
+          '| Pulling Client Balance')
+  
+  if (length(.PinnacleAPI$ClientBalance) == 0 || force) {
     GET(paste0(.PinnacleAPI$url ,"/v1/client/balance"),
-             add_headers("Authorization"= authorization(),
+             add_headers("Authorization" = authorization(),
                          "Content-Type" = "application/json")
     ) %>%
-      content("text") %>% 
+      content("text", encoding = "UTF-8") %>% 
       jsonlite::fromJSON(flatten = TRUE) %T>%
       with({
         .PinnacleAPI$ClientBalance <- .

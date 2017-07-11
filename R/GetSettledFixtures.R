@@ -23,13 +23,20 @@ GetSettledFixtures <- function(sportid,
             ViewSports()
             sportid <- readline('Selection (id): ')
           }
+  
+  message(
+    Sys.time(),
+    '| Pulling Settled Fixtures for - sportid: ', sportid,
+    if (!is.null(leagueids)) sprintf(' leagueids: %s', paste(leagueids, collapse = ', '))
+  )
+  
   r <- sprintf('%s/v1/fixtures/settled',.PinnacleAPI$url) %>%
     GET(add_headers(Authorization= authorization(),
                     "Content-Type" = "application/json"),
         query = list(sportId=sportid,
                      leagueIds = if(!is.null(leagueids)) paste(leagueids,collapse=',') else NULL,
                      since=since)) %>%
-    content(type="text") 
+    content(type="text", encoding = "UTF-8") 
   
   if(identical(r, '')) return(data.frame())
   
