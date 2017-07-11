@@ -43,6 +43,7 @@ GetBetsList <-
                )
              )
         res <-  jsonlite::fromJSON(content(r,type = "text", encoding = "UTF-8"))
+
     
         as.data.frame(unlist(res, recursive = FALSE))
         }))

@@ -49,7 +49,6 @@ GetSpecialOdds <-
       ' tableformat: ', tableformat
     )
     
-    
     r <- 
       sprintf('%s/v1/odds/special', .PinnacleAPI$url) %>%
       modify_url(query = list(sportId = sportid,

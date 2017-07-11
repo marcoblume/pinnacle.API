@@ -60,7 +60,6 @@ GetLine <- function(sportid, leagueids, eventid,
     ViewLeagues(force = force)
     leagueids <- readline('Selection (id): ')
   }
-  
   message(
     Sys.time(),
     '| Pulling line - sportid: ', sportid,
@@ -75,17 +74,17 @@ GetLine <- function(sportid, leagueids, eventid,
   
   r <- sprintf('%s/v1/line', .PinnacleAPI$url) %>%
     modify_url(
-      query = list(sportId=sportid,
-                   leagueId = paste(leagueids,collapse=','),
-                   eventId=eventid,
-                   periodNumber=periodnumber,
-                   betType=betType,
-                   team=team,
-                   side=side,
-                   handicap=handicap,
-                   oddsFormat=oddsFormat)
+      query = list(sportId = sportid,
+                   leagueId = paste(leagueids, collapse = ','),
+                   eventId = eventid,
+                   periodNumber = periodnumber,
+                   betType = betType,
+                   team = team,
+                   side = side,
+                   handicap = handicap,
+                   oddsFormat = oddsFormat)
       ) %>%
-    GET(add_headers(Authorization= authorization(),
+    GET(add_headers(Authorization = authorization(),
                     "Content-Type" = "application/json")) %>%
     content(type = 'text', encoding = "UTF-8") %>%
     jsonlite::fromJSON()

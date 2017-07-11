@@ -32,5 +32,4 @@ GetInrunning <- function() {
       if (all(sapply(.,is.atomic))) .
       expandListColumns(.)
     }
-  
 }

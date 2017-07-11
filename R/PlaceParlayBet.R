@@ -109,6 +109,7 @@ PlaceParlayBet <-
       Sys.time(),
       '| Placing Parlay Bet'
     )
+
     place_bet_data <- list(uniqueRequestId=guids[1],
                            acceptBetterLine=acceptBetterLine,
                            oddsFormat=oddsFormat,
@@ -123,6 +124,7 @@ PlaceParlayBet <-
                           "Content-Type" = "application/json"),
               body = place_bet_body
     )
+
     jsonlite::fromJSON(content(r,type="text", encoding = "UTF-8"))
     
   }
