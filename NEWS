@@ -1,3 +1,12 @@
+pinnacle.API v2.3.1 (Release date: 2016-07-19)
+==============
+
+Changes
+* Potentially breaking change in behavior of showOddsDF:
+we only return lines for which we have returned odds. So if a line is down, 
+showOddsDF will not show it. If inrunning state or fixtures are required, 
+please call those directly.
+  
 pinnacle.API v2.1.1 (Release date: 2016-07-19)
 ==============
 
