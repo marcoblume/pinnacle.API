@@ -1,0 +1,5 @@
+PlaceBetIf <- function(...) {
+  
+    PlaceBet(...)
+   
+}

@@ -6,7 +6,7 @@
 \usage{
 showOddsDF(sportid, leagueids = NULL, since = NULL, islive = 0,
   force = TRUE, tableformat = "mainlines", namesLength = 3,
-  attachLeagueInfo = TRUE, oddsformat = "AMERICAN")
+  attachLeagueInfo = TRUE, oddsformat = "AMERICAN", fixtures_since = NULL)
 }
 \arguments{
 \item{sportid}{(optional) The sportid to get odds from, if none is given, 
@@ -14,8 +14,7 @@ a list of options and a prompt are provided}
 
 \item{leagueids}{numeric vector of leagueids - can get as output from GetLeagues}
 
-\item{since}{numeric This is used to receive incremental updates.
-Use the value of last from previous fixtures response.}
+\item{since}{numeric This is used to receive incremental updates. this will give all lines that have changed odds.}
 
 \item{islive}{boolean if TRUE retrieves ONLY live events}
 
@@ -34,6 +33,8 @@ Use the value of last from previous fixtures response.}
 
 \item{oddsformat}{default AMERICAN, see API manual for more options
 bettable leagues}
+
+\item{fixtures_since}{if set, get only fixtures that were posted since last.}
 }
 \value{
 a dataframe combining GetOdds and GetFixtures data, containing NA's where levels of factors do not have a value.
