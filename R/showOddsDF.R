@@ -77,8 +77,6 @@ showOddsDF <-
       merge(., fixtures, 
             by.x = 'leagues.events.id',
             by.y = 'league.events.id', # Seriously? league vs leagues?
-            all = if (is.null(since)) TRUE else FALSE,
-            all.x = if (!is.null(since)) FALSE else TRUE,
             suffixes = c('','.Fixture'))
     } %>%
       {
@@ -88,7 +86,7 @@ showOddsDF <-
           merge(.,inrunning[sports.id %in% .[['sportId']]],
                 by.x = 'leagues.events.id',
                 by.y = 'sports.leagues.events.id',
-                all = TRUE,
+                all.x = TRUE,
                 suffixes = c('','.Inrunning'))
         } else {
           .
