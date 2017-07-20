@@ -1,3 +1,10 @@
+pinnacle.API v2.3.2 (Release date: 2016-07-20)
+==============
+
+Changes
+* Better handling when there are no odds to display in 
+  showOddsDF.
+
 pinnacle.API v2.3.1 (Release date: 2016-07-19)
 ==============
 
