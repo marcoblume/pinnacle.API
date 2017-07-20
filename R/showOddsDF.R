@@ -59,11 +59,22 @@ showOddsDF <-
                    tableformat = tableformat,
                    oddsformat = oddsformat)
     
+    if (NROW(res) == 0) {
+      message('No odds for the given selections.')
+      return(res)
+    }
+    
     # Get additional matchup details
     fixtures <- GetFixtures(sportid,
                             leagueids,
                             since  = fixtures_since,
                             islive = islive)
+    
+    if (NROW(fixtures) == 0) {
+      message('No fixtures for the given selections.')
+      return(res)
+    }
+    
     inrunning <- GetInrunning()
     
     setDT(res)
