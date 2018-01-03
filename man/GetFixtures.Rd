@@ -2,43 +2,48 @@
 % Please edit documentation in R/GetFixtures.R
 \name{GetFixtures}
 \alias{GetFixtures}
-\title{Get Fixtures}
+\title{Get Non-Settled Events for a Given Sport}
 \usage{
-GetFixtures(sportid, leagueids = NULL, since = NULL, islive = 0)
+GetFixtures(sportid, leagueids = NULL, eventids = NULL, since = NULL,
+  islive = FALSE)
 }
 \arguments{
-\item{sportid}{(optional) an integer giving the sport, if missing, a menu of options is presented}
+\item{sportid}{An integer giving the sport. If this is missing in
+interactive mode, a menu of options is presented to the user.}
 
-\item{leagueids}{(optional) integer vector with league IDs.}
+\item{leagueids}{A vector of league IDs, or \code{NULL}.}
 
-\item{since}{(optional) numeric this is used to receive incremental updates.
-Use the value of `last` from previous fixtures response.}
+\item{eventids}{A vector of event IDs, or \code{NULL}.}
 
-\item{islive}{Default=FALSE, boolean if TRUE retrieves ONLY live events if FALSE retrieved all events}
+\item{since}{To receive only listings updated since the last query, set
+\code{since} to the value of \code{last} from the previous fixtures
+response. Otherwise it will query all listings.}
+
+\item{islive}{When \code{TRUE}, retrieve only live events.}
 }
 \value{
-returns a data frame with columns:
-\itemize{
-\item SportID
-\item Last
-\item League
-\item LeagueID
-\item EventID
-\item StartTime
-\item HomeTeamName
-\item AwayTeamName
-\item Rotation Number
-\item Live Status
-\item Status
-\item Parlay Status
-}
+A data frame with rows containing matching events and columns containing
+sport, league, and event information. Not all sports return the same listing
+format -- in particular, only baseball listings will have pitcher
+information.
 }
 \description{
-Get Fixtures
+Queries the event listing for a given sport, which can be filtered by league
+and/or event ID, and narrowed to include only live events.
+}
+\details{
+This function will raise an error if the API does not return HTTP status
+\code{OK}. For information on the possible errors, see the API documentation
+for \href{https://pinnacleapi.github.io/#operation/Fixtures_V1_Get}{Get Fixtures}.
 }
 \examples{
 \donttest{
 SetCredentials("TESTAPI", "APITEST")
 AcceptTermsAndConditions(accepted=TRUE)
 GetFixtures(sportid = 41, leagueids = 191545)}
+
+}
+\seealso{
+See \code{\link{GetSettledFixtures}} to retrieve settled events, or
+\code{\link{GetSpecialFixtures}} to retrieve special contestants for a sport.
 }
