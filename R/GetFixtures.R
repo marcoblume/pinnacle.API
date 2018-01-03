@@ -1,6 +1,6 @@
 #' Get Fixtures
 #'
-#' @param sportid (optional) an integer giving the sport, if missing, a menu of options is presented
+#' @param sportid An integer giving the sport. If this is missing in interactive mode, a menu of options is presented to the user.
 #' @param leagueids (optional) integer vector with league IDs.
 #' @param eventids (optional) integer vector with event IDs.
 #' @param since (optional) numeric this is used to receive incremental updates.
@@ -41,11 +41,14 @@ GetFixtures <-
            islive=0){
 
     CheckTermsAndConditions()
-    ## retrieve sportid
-    if(missing(sportid)) {
+
+    # In interactive mode, try to retrieve a missing sportid parameter.
+    if(interactive() && missing(sportid)) {
       cat('No Sports Selected, choose one:\n')
       ViewSports()
       sportid <- readline('Selection (id): ')
+    } else if (missing(sportid)) {
+      stop("missing sport ID")
     }
 
     message(Sys.time(), "| Pulling Fixtures for Sport ID: ", sportid,
