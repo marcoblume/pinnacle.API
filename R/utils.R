@@ -99,6 +99,28 @@ APIcall <- function(endpoint, query = NULL) {
     content(type="text")
 }
 
+# Raise formatted Pinnacle API errors for an httr::response object.
+CheckForAPIErrors <- function(response) {
+  code <- httr::status_code(response)
+  # Ignore HTTP status OK (200) objects.
+  if (code != 200) {
+    if (httr::http_type(response) == "application/json") {
+      # Translate JSON errors, if provided.
+      response <- response %>%
+        httr::content(type = "text", encoding = "UTF-8") %>%
+        jsonlite::fromJSON()
+      stop(paste0("API error: ", response$message, " (", response$code, ")"))
+    } else {
+      # Give approximate errors when the error does not return JSON.
+      switch(as.character(code),
+             "400" = stop("Invalid request parameters."),
+             "401" = stop("Invalid login credentials."),
+             "403" = stop("Inactive login account."),
+             stop("API request returned HTTP code ", code))
+    }
+  }
+}
+
 # Remove Nulls from lists:
 RemoveNulls <- function(dt) {
   # if(!is.data.table(dt)) stop('Function only defined for data.table')
