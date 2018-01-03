@@ -81,9 +81,22 @@ GetFixtures <-
         expandListColumns() %>%
         as.data.frame()
     } else {
-      # If there is no content, return an empty data frame.
-      # TODO: Give this the correct columns.
-      data.frame()
+      # If there is no content, return a zero-row data frame. This attempts to
+      # set the columns correctly, but may not be future-proof, and does not
+      # include pitchers. Still -- some column names is still much more
+      # informative than no column names at all.
+
+      # Bypass the data.frame() function purely for the 5x speed up on known,
+      # valid columns.
+      structure(list(
+        sportId = integer(), last = integer(), league.id = integer(),
+        league.name = character(), league.events.id = integer(),
+        league.events.starts = character(), league.events.home = character(),
+        league.events.away = character(), league.events.rotNum = character(),
+        league.events.liveStatus = integer(),
+        league.events.status = character(),
+        league.events.parlayRestriction = integer()
+      ), class = "data.frame")
     }
   }
 
