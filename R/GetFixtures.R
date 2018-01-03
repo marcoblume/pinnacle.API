@@ -67,22 +67,23 @@ GetFixtures <-
       params$eventIds <- paste(eventids, collapse = ",")
     }
 
-    r <- 
-      sprintf('%s/v1/fixtures', .PinnacleAPI$url) %>%
-      GET(add_headers(Authorization = authorization(),
-                      "Content-Type" = "application/json"),
-          query = params) %>%
-      content(type = "text", encoding = "UTF-8") 
-    
-    
-    # If no rows are returned, return empty data.frame
-    if (identical(r, '')) return(data.frame())
+    response <- httr::GET(paste0(.PinnacleAPI$url, "/v1/fixtures"),
+                          httr::add_headers(Authorization = authorization()),
+                          httr::accept_json(),
+                          query = params)
 
-    
-    r %>%
-      jsonlite::fromJSON(flatten = TRUE) %>%
-      as.data.table %>%
-      expandListColumns() %>%
-      as.data.frame()
+    CheckForAPIErrors(response)
+
+    if (httr::has_content(response)) {
+      httr::content(response, type = "text", encoding = "UTF-8") %>%
+        jsonlite::fromJSON(flatten = TRUE) %>%
+        as.data.table() %>%
+        expandListColumns() %>%
+        as.data.frame()
+    } else {
+      # If there is no content, return an empty data frame.
+      # TODO: Give this the correct columns.
+      data.frame()
+    }
   }
 
