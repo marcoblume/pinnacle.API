@@ -2,6 +2,7 @@
 #'
 #' @param sportid (optional) an integer giving the sport, if missing, a menu of options is presented
 #' @param leagueids (optional) integer vector with league IDs.
+#' @param eventids (optional) integer vector with event IDs.
 #' @param since (optional) numeric this is used to receive incremental updates.
 #' Use the value of `last` from previous fixtures response.
 #' @param islive Default=FALSE, boolean if TRUE retrieves ONLY live events if FALSE retrieved all events
@@ -35,6 +36,7 @@
 GetFixtures <-
   function(sportid,
            leagueids=NULL,
+           eventids=NULL,
            since=NULL,
            islive=0){
 
@@ -45,18 +47,28 @@ GetFixtures <-
       ViewSports()
       sportid <- readline('Selection (id): ')
     }
-    
-    message(Sys.time(), '| Pulling Fixtures for SportID: ', sportid, 
-            if (!is.null(leagueids)) sprintf(' and leagueIds: %s', leagueids))
-    
+
+    message(Sys.time(), "| Pulling Fixtures for Sport ID: ", sportid,
+            if (!is.null(leagueids)) paste(", with League ID(s):",
+                                           paste(leagueids, collapse = ", ")),
+            if (!is.null(eventids)) paste(", and Event ID(s):",
+                                          paste(eventids, collapse = ", ")))
+
+    # Construct URL parameter list.
+    params <- list(sportId = sportid, since = since,
+                   isLive = as.integer(islive))
+    if (!is.null(leagueids)) {
+      params$leagueIds <- paste(leagueids, collapse = ",")
+    }
+    if (!is.null(eventids)) {
+      params$eventIds <- paste(eventids, collapse = ",")
+    }
+
     r <- 
       sprintf('%s/v1/fixtures', .PinnacleAPI$url) %>%
       GET(add_headers(Authorization = authorization(),
                       "Content-Type" = "application/json"),
-          query = list(sportId = sportid,
-                       leagueIds = if (!is.null(leagueids)) paste(leagueids,collapse = ',') else NULL,
-                       since = since,
-                       isLive = islive*1L)) %>%
+          query = params) %>%
       content(type = "text", encoding = "UTF-8") 
     
     
