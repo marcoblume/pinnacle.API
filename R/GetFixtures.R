@@ -1,44 +1,49 @@
-#' Get Fixtures
+#' Get Non-Settled Events for a Given Sport
 #'
-#' @param sportid An integer giving the sport. If this is missing in interactive mode, a menu of options is presented to the user.
-#' @param leagueids (optional) integer vector with league IDs.
-#' @param eventids (optional) integer vector with event IDs.
-#' @param since (optional) numeric this is used to receive incremental updates.
-#' Use the value of `last` from previous fixtures response.
-#' @param islive Default=FALSE, boolean if TRUE retrieves ONLY live events if FALSE retrieved all events
+#' Queries the event listing for a given sport, which can be filtered by league
+#' and/or event ID, and narrowed to include only live events.
 #'
-#' @return returns a data frame with columns:
-#' \itemize{
-#' \item SportID
-#' \item Last
-#' \item League
-#' \item LeagueID
-#' \item EventID
-#' \item StartTime
-#' \item HomeTeamName
-#' \item AwayTeamName
-#' \item Rotation Number
-#' \item Live Status
-#' \item Status
-#' \item Parlay Status
-#' }
-#' @import httr
-#' @import data.table
-#' @importFrom jsonlite fromJSON
-#' @export
+#' @param sportid An integer giving the sport. If this is missing in
+#'   interactive mode, a menu of options is presented to the user.
+#' @param leagueids A vector of league IDs, or \code{NULL}.
+#' @param eventids A vector of event IDs, or \code{NULL}.
+#' @param since To receive only listings updated since the last query, set
+#'   \code{since} to the value of \code{last} from the previous fixtures
+#'   response. Otherwise it will query all listings.
+#' @param islive When \code{TRUE}, retrieve only live events.
+#'
+#' @details
+#'
+#' This function will raise an error if the API does not return HTTP status
+#' \code{OK}. For information on the possible errors, see the API documentation
+#' for \href{https://pinnacleapi.github.io/#operation/Fixtures_V1_Get}{Get Fixtures}.
+#'
+#' @return
+#'
+#' A data frame with rows containing matching events and columns containing
+#' sport, league, and event information. Not all sports return the same listing
+#' format -- in particular, only baseball listings will have pitcher
+#' information.
 #'
 #' @examples
 #' \donttest{
 #' SetCredentials("TESTAPI", "APITEST")
 #' AcceptTermsAndConditions(accepted=TRUE)
 #' GetFixtures(sportid = 41, leagueids = 191545)}
-
+#'
+#' @seealso
+#'
+#' See \code{\link{GetSettledFixtures}} to retrieve settled events, or
+#' \code{\link{GetSpecialFixtures}} to retrieve special contestants for a sport.
+#'
+#' @import data.table
+#' @export
 GetFixtures <-
   function(sportid,
            leagueids=NULL,
            eventids=NULL,
            since=NULL,
-           islive=0){
+           islive=FALSE){
 
     CheckTermsAndConditions()
 
@@ -86,4 +91,3 @@ GetFixtures <-
       data.frame()
     }
   }
-
