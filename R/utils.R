@@ -109,13 +109,16 @@ CheckForAPIErrors <- function(response) {
       response <- response %>%
         httr::content(type = "text", encoding = "UTF-8") %>%
         jsonlite::fromJSON()
-      stop(paste0("API error: ", response$message, " (", response$code, ")"))
+      stop(paste0(response$message,
+                  ifelse(endsWith(response$message, "."), "", "."),
+                  " (code: ", response$code, ")"))
     } else {
       # Give approximate errors when the error does not return JSON.
       switch(as.character(code),
              "400" = stop("Invalid request parameters."),
-             "401" = stop("Invalid login credentials."),
-             "403" = stop("Inactive login account."),
+             "401" = stop("Invalid or missing login credentials."),
+             "403" = stop("Account is inactive or lacks API access."),
+             "500" = stop("Internal API server error."),
              stop("API request returned HTTP code ", code))
     }
   }
