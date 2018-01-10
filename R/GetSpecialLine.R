@@ -56,31 +56,19 @@ GetSpecialLine <- function (specialId, contestantId, oddsFormat = "AMERICAN") {
                                         "INDONESIAN", "MALAY"))
   CheckTermsAndConditions()
 
-  request <- httr::GET(paste0(.PinnacleAPI$url, "/v1/line/special"),
-                       httr::add_headers(Authorization = authorization()),
-                       httr::accept_json(),
-                       query = list(oddsFormat = oddsFormat,
-                                    specialId = specialId,
-                                    contestantId = contestantId))
+  response <- httr::GET(paste0(.PinnacleAPI$url, "/v1/line/special"),
+                        httr::add_headers(Authorization = authorization()),
+                        httr::accept_json(),
+                        query = list(oddsFormat = oddsFormat,
+                                     specialId = specialId,
+                                     contestantId = contestantId))
 
-  # This API endpoint might not return JSON error codes, so we signal
-  # approximate errors here instead.
-  if (httr::status_code(request) == 404) {
-    stop("API request returned code 404 (Not Found).")
-  } else if (httr::status_code(request) == 400) {
-    stop("Invalid contestant data parameters.")
-  } else if (httr::status_code(request) == 401) {
-    stop("Invalid login credentials.")
-  } else if (httr::status_code(request) == 403) {
-    stop("Inactive login account.")
-  }
+  CheckForAPIErrors(response)
 
-  response <- jsonlite::fromJSON(httr::content(request, type = "text",
+  response <- jsonlite::fromJSON(httr::content(response, type = "text",
                                                encoding = "UTF-8"))
-  # Try to parse the JSON error on any remaining non-OK responses.
-  if (httr::status_code(request) != 200) {
-    stop(paste0("API error: ", response$message, " (", response$code, ")"))
-  } else if (response$status != "SUCCESS") {
+
+  if (response$status != "SUCCESS") {
     # Because the API will not actually return any of the other columns in this
     # case, we fill them out with NAs.
     response$specialId <- as.integer(specialId)
