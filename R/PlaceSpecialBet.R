@@ -94,27 +94,14 @@ PlaceSpecialBet <- function(stake, lineId, specialId, contestantId,
                      stringsAsFactors = FALSE)
 
   request_body <- jsonlite::toJSON(list(bets = bets), auto_unbox = TRUE)
-  request <- httr::POST(paste0(.PinnacleAPI$url, "/v1/bets/special"),
-                        httr::add_headers(Authorization = authorization(),
-                                          `Content-Type` = "application/json"),
-                        httr::accept_json(),
-                        body = request_body)
-  response <- jsonlite::fromJSON(httr::content(request, type = "text",
-                                               encoding = "UTF-8"))
-  # Error out on non-OK responses.
-  if (httr::status_code(request) == 200) {
-    response$bets
-  } else {
-    # Attempt to signal helpful errors.
-    switch(
-      response$code,
-      "INVALID_REQUEST_DATA" = stop("Internal error. Invalid data."),
-      "INVALID_AUTHORIZATION_HEADER" =
-        stop("Internal error. Missing/incomplete auth header."),
-      "INVALID_CREDENTIALS" = stop("Invalid login credentials."),
-      "ACCOUNT_INACTIVE" = stop("Inactive login account."),
-      "NO_API_ACCESS" = stop("Login account does not have API access."),
-      stop(paste0("API error: ", response$message, " (", response$code, ")"))
-    )
-  }
+  response <- httr::POST(paste0(.PinnacleAPI$url, "/v1/bets/special"),
+                         httr::add_headers(Authorization = authorization(),
+                                           `Content-Type` = "application/json"),
+                         httr::accept_json(),
+                         body = request_body)
+
+  CheckForAPIErrors(response)
+
+  response <- httr::content(response, type = "text", encoding = "UTF-8")
+  jsonlite::fromJSON(response)$bets
 }
