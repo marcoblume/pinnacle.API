@@ -30,33 +30,12 @@
 GetBettingStatus <- function() {
   CheckTermsAndConditions()
 
-  request <- httr::GET(paste0(.PinnacleAPI$url, "/v1/bets/betting-status"),
-                       httr::add_headers(Authorization = authorization()),
-                       httr::accept_json())
+  response <- httr::GET(paste0(.PinnacleAPI$url, "/v1/bets/betting-status"),
+                        httr::add_headers(Authorization = authorization()),
+                        httr::accept_json())
 
-  # The API won't return a JSON error code in this case, so bail out before
-  # trying to parse it.
-  if (httr::status_code(request) == 404) {
-    stop("API request returned code 404 (Not Found).")
-  }
+  CheckForAPIErrors(response)
 
-  response <- jsonlite::fromJSON(httr::content(request, type = "text",
-                                               encoding = "UTF-8"))
-  # Error out on non-OK responses.
-  if (httr::status_code(request) == 200) {
-    response$status
-  } else {
-    # Attempt to signal helpful errors.
-    switch(
-      response$code,
-      "INVALID_REQUEST_DATA" = stop("Internal error. Invalid data."),
-      "INVALID_AUTHORIZATION_HEADER" =
-        stop("Internal error. Missing/incomplete auth header."),
-      "INVALID_CREDENTIALS" = stop("Invalid login credentials."),
-      "ACCOUNT_INACTIVE" = stop("Inactive login account."),
-      "NO_API_ACCESS" = stop("Login account does not have API access."),
-      stop(paste0("API error: ", response$message, " (API code: ",
-                  response$code, ")"))
-    )
-  }
+  response <- httr::content(response, type = "text", encoding = "UTF-8")
+  jsonlite::fromJSON(response)$status
 }
