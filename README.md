@@ -1,6 +1,17 @@
-
-
-
+---
+pagetitle: 'pinnacle.API'
+output:
+  html_document:
+    keep_md: TRUE
+    highlight: null
+    mathjax: null
+    toc: true
+    theme: readable
+    fold: TRUE
+    toc_float:
+      collapsed: FALSE
+      smooth_scroll: true
+---
 
 <div style='position:relative;float:right;'><img src='r-pinnacle-api-sm.png'></div>
 
@@ -41,7 +52,7 @@ Please see [Manual:Fair-Use](http://www.pinnacle.com/en/api/manual#fair-use),
 ## The Pinnacle API package
 
 This document covers version >= 2.0 of the package and is
-intended to be an introduction to the package, it does **not** cover all functions.
+intended to be an introduction to the package, it does **Not** cover all functions.
 
 For a more detailed breakdown, we recommend you explore the functions in the package
 
