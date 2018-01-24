@@ -107,7 +107,7 @@ showOddsDF <-
         # Attach League Info if we are requested to
         out <- .
         if (attachLeagueInfo) {
-          leagueinfo <- GetLeaguesByID(out[!is.na(sportId), unique(sportId)])
+          leagueinfo <- GetLeaguesByID(out[!is.na(get('sportId')), unique(get('sportId'))])
           setDT(leagueinfo)
           merge(out, leagueinfo, 
                 by.x = 'league.id',

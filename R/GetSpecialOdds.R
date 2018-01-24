@@ -44,7 +44,6 @@ GetSpecialOdds <-
       '| Pulling Specials Odds for - sportid: ', sportid,
       if (!is.null(leagueids)) sprintf(' leagueids: %s', paste(leagueids, collapse = ', ')),
       if (!is.null(since)) sprintf(' since: %s', since),
-      ' islive: ', islive,
       ' oddsformat: ', oddsformat,
       ' tableformat: ', tableformat
     )
