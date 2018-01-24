@@ -1,3 +1,10 @@
+pinnacle.API v2.3.3 (Release date: 2018-01-24)
+==============
+
+Changes
+* Error handling and messaging now ubiquitous
+* http codes mapped to failure messages
+
 pinnacle.API v2.3.2 (Release date: 2016-07-20)
 ==============
 
