@@ -71,23 +71,22 @@ GetLine <- function(sportid, leagueids, eventid,
     if (!is.null(handicap)) sprintf(' handicap: %s', handicap),
     ' oddsFormat: ', oddsFormat
   )
-  
-  r <- sprintf('%s/v1/line', .PinnacleAPI$url) %>%
-    modify_url(
-      query = list(sportId = sportid,
-                   leagueId = paste(leagueids, collapse = ','),
-                   eventId = eventid,
-                   periodNumber = periodnumber,
-                   betType = betType,
-                   team = team,
-                   side = side,
-                   handicap = handicap,
-                   oddsFormat = oddsFormat)
-      ) %>%
-    GET(add_headers(Authorization = authorization(),
-                    "Content-Type" = "application/json")) %>%
-    content(type = 'text', encoding = "UTF-8") %>%
-    jsonlite::fromJSON()
-  
-  return(r)
+
+  response <- httr::GET(paste0(.PinnacleAPI$url, "/v1/line"),
+                        httr::add_headers(Authorization = authorization()),
+                        httr::accept_json(),
+                        query = list(sportId = sportid,
+                                     leagueId = leagueids,
+                                     eventId = eventid,
+                                     periodNumber = periodnumber,
+                                     betType = betType,
+                                     team = team,
+                                     side = side,
+                                     handicap = handicap,
+                                     oddsFormat = oddsFormat))
+
+  CheckForAPIErrors(response)
+
+  response <- httr::content(response, type = "text", encoding = "UTF-8")
+  jsonlite::fromJSON(response)
 }

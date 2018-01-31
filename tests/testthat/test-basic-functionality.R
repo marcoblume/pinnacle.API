@@ -103,3 +103,47 @@ testthat::test_that("GetFixtures() returns the expected format", {
   result <- pinnacle.API::GetFixtures(config$sport, eventids = 0)
   testthat::expect_equal(nrow(result), 0)
 })
+
+testthat::test_that("GetLine() returns the expected format", {
+  fixtures <- pinnacle.API::GetFixtures(config$sport)
+
+  # Pick an event to test line query.
+  set.seed(101)
+  events <- sample.int(nrow(fixtures), 1)
+  events <- fixtures[events, c("league.id", "league.events.id")]
+  names(events) <- c("league", "event")
+
+  line <- pinnacle.API::GetLine(config$sport, leagueids = events$league[1],
+                                eventid = events$event[1],
+                                periodnumber = 0, betType = "MONEYLINE",
+                                team = "TEAM1")
+
+  testthat::expect_is(line, "list")
+  testthat::expect_true(line$status %in% c("SUCCESS", "NOT_EXISTS", "OFFLINE"))
+
+  # Invalid event/league IDs should throw an error.
+  testthat::expect_error(
+    pinnacle.API::GetLine(config$sport, leagueids = -1,
+                          eventid = -1,
+                          periodnumber = 0, betType = "MONEYLINE",
+                          team = "TEAM1"),
+    regexp = "Invalid request parameters."
+  )
+
+  # As should some NULL parameters.
+  testthat::expect_error(
+    pinnacle.API::GetLine(config$sport, leagueids = events$league[1],
+                          eventid = events$event[1],
+                          periodnumber = 0, betType = "MONEYLINE"),
+    regexp = "Invalid request parameters."
+  )
+
+  # Some odd event IDs are evidently OK.
+  line <- pinnacle.API::GetLine(config$sport, leagueids = 1,
+                                eventid = 1,
+                                periodnumber = 0, betType = "MONEYLINE",
+                                team = "TEAM1")
+
+  testthat::expect_is(line, "list")
+  testthat::expect_true(line$status %in% c("SUCCESS", "NOT_EXISTS", "OFFLINE"))
+})
