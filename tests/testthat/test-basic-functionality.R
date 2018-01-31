@@ -49,6 +49,21 @@ testthat::test_that("GetBettingStatus() returns the expected format", {
                                       "ALL_BETTING_CLOSED"))
 })
 
+testthat::test_that("GetSports() returns the expected format", {
+  sports <- pinnacle.API::GetSports(force = TRUE)
+  testthat::expect_is(sports, "data.frame")
+  testthat::expect_gt(nrow(sports), 0)
+})
+
+testthat::test_that("GetSports() caches correctly", {
+  pinnacle.API::GetSports(force = FALSE)  # Ensure cache is present.
+  pinnacle.API::SetCredentials(config$username, "badpassword")
+  on.exit(pinnacle.API::SetCredentials(config$username, config$password))
+
+  sports <- pinnacle.API::GetSports(force = FALSE)
+  testthat::expect_gt(nrow(sports), 0)
+})
+
 # Straight Lines --------------------------------------------------------------
 testthat::context("Straight Lines")
 
