@@ -1,8 +1,8 @@
 .PinnacleAPI <- new.env()
 .PinnacleAPI$url <- "https://api.pinnacle.com"
-.PinnacleAPI$accepttermsandconditions <- 'N'
-.PinnacleAPI$Terms <- "This package is a GUIDELINE only. All responsibility of activity on pinnaclesports.com lies with the user of the package and NOT with the authors of the package. Especially wagers placed with the help of this packages are the sole responsibility of the user of this package. The authors and maintainers of the package are not liable or responsible in any form.Please consult http://www.pinnaclesports.com/en/api/manual#fair-use,http://www.pinnaclesports.com/api-xml/terms-and-conditions.aspx and http://www.pinnaclesports.com/en/termsandconditions"
-
+.PinnacleAPI$terms_accepted <- FALSE
+.PinnacleAPI$terms <- "This package is a GUIDELINE only. All responsibility of activity on pinnaclesports.com lies with the user of the package and NOT with the authors of the package. Especially wagers placed with the help of this packages are the sole responsibility of the user of this package. The authors and maintainers of the package are not liable or responsible in any form. Please consult http://www.pinnaclesports.com/en/api/manual#fair-use, http://www.pinnaclesports.com/api-xml/terms-and-conditions.aspx and http://www.pinnaclesports.com/en/termsandconditions"
+.PinnacleAPI$credentials <- list()
 
 #' Accept terms and conditions, only run once per session, must agree to terms or functions will not work
 #'
@@ -13,15 +13,21 @@
 #' @examples
 #' AcceptTermsAndConditions(accepted=TRUE)
 AcceptTermsAndConditions <- function(accepted=FALSE) {
-  if(!accepted) {
-    cat(.PinnacleAPI$Terms)
-    .PinnacleAPI$accepttermsandconditions = readline(prompt = 'Do you understand and accept these terms and conditions? (Y/N):')
-  } else {
-    message(Sys.time(), '| Terms and Conditions Accepted.')
-    .PinnacleAPI$accepttermsandconditions = 'Y'
+  # Use a prompt in interactive sessions.
+  if (missing(accepted) && interactive()) {
+    message(.PinnacleAPI$terms)
+    accepted <- toupper(readline(
+      prompt = paste("Do you understand and accept these terms and",
+                     "conditions? (Y/n): ")
+    ))
+    accepted <- accepted == "Y"
   }
-}
 
+  stopifnot(is.logical(accepted))
+  message(Sys.time(), "| Terms and Conditions ",
+          ifelse(accepted, "Accepted", "Rejected"))
+  .PinnacleAPI$terms_accepted <- accepted
+}
 
 #' Prompts User for Terms and Conditions, otherwise stops running function
 #'
@@ -31,11 +37,12 @@ AcceptTermsAndConditions <- function(accepted=FALSE) {
 #' @examples
 #' CheckTermsAndConditions()
 CheckTermsAndConditions <- function () {
-  if(.PinnacleAPI$accepttermsandconditions != "Y") {
+  # Give the user a chance to accept the terms in interactive sessions.
+  if (!.PinnacleAPI$terms_accepted && interactive()) {
     AcceptTermsAndConditions()
-    if(.PinnacleAPI$accepttermsandconditions != "Y") {
-      stop('Error: please accept terms and conditions to continue')
-    }
+  }
+  if (!.PinnacleAPI$terms_accepted) {
+    stop("Error: please accept terms and conditions to continue.")
   }
 }
 
@@ -73,7 +80,7 @@ SetCredentials <- function(username,password){
 #' SetAPIEndpoint("https://api.pinnaclesports.com")
 #' SetAPIEndpoint()
 SetAPIEndpoint <- function(url = "https://api.pinnaclesports.com") {
-  writeLines(paste('Package endpoint changed to:',url))
+  message(paste('Package endpoint changed to:',url))
   .PinnacleAPI$url <- url
 }
 
@@ -99,6 +106,9 @@ GetAPIEndpoint <- function() {
 #' SetCredentials("TESTAPI","APITEST")
 #' GetUsername()
 GetUsername <- function() {
+  if (is.null(.PinnacleAPI$credentials$key) && interactive()) {
+    SetCredentials()
+  }
   unserialize(do.call(decrypt_envelope, c(.PinnacleAPI$credentials$user, list(.PinnacleAPI$credentials$key))))
 }
 
@@ -107,6 +117,8 @@ GetUsername <- function() {
 #' @return Current Password in plaintext
 #'
 GetPassword <- function() {
+  if (is.null(.PinnacleAPI$credentials$key) && interactive()) {
+    SetCredentials()
+  }
   unserialize(do.call(decrypt_envelope, c(.PinnacleAPI$credentials$pwd, list(.PinnacleAPI$credentials$key))))
 }
-
