@@ -147,3 +147,54 @@ testthat::test_that("GetLine() returns the expected format", {
   testthat::expect_is(line, "list")
   testthat::expect_true(line$status %in% c("SUCCESS", "NOT_EXISTS", "OFFLINE"))
 })
+
+# Straight Lines --------------------------------------------------------------
+testthat::context("Straight Bets")
+
+testthat::test_that("PlaceBet() returns the expected format", {
+  # Some odd parameter combinations succeed.
+
+  bet <- pinnacle.API::PlaceBet(100, config$sport, eventId = 1, periodNumber = 0,
+                                lineId = 1, betType = "MONEYLINE", team = "TEAM1")
+
+  testthat::expect_is(bet, "list")
+  testthat::expect_equal(bet$status, "PROCESSED_WITH_ERROR")
+
+  bet <- pinnacle.API::PlaceBet(100, -config$sport, eventId = 1, periodNumber = 0,
+                                lineId = 1, betType = "MONEYLINE", team = "TEAM1")
+
+  testthat::expect_is(bet, "list")
+  testthat::expect_equal(bet$status, "PROCESSED_WITH_ERROR")
+
+  bet <- pinnacle.API::PlaceBet(100, config$sport, eventId = 1, periodNumber = -1,
+                                lineId = 1, betType = "MONEYLINE", team = "TEAM1")
+
+  testthat::expect_is(bet, "list")
+  testthat::expect_equal(bet$status, "PROCESSED_WITH_ERROR")
+
+  # Others are forbidden.
+
+  testthat::expect_error(
+    pinnacle.API::PlaceBet(100, config$sport, eventId = -1, periodNumber = 0,
+                           lineId = 1, betType = "MONEYLINE", team = "TEAM1"),
+    regexp = "Invalid eventId parameter value."
+  )
+
+  testthat::expect_error(
+    pinnacle.API::PlaceBet(-100, config$sport, eventId = 1, periodNumber = 0,
+                           lineId = 1, betType = "MONEYLINE", team = "TEAM1"),
+    regexp = "Invalid stake."
+  )
+
+  testthat::expect_error(
+    pinnacle.API::PlaceBet(100, config$sport, eventId = 1, periodNumber = 0,
+                           lineId = -1, betType = "MONEYLINE", team = "TEAM1"),
+    regexp = "Invalid lineId parameter value."
+  )
+
+  testthat::expect_error(
+    pinnacle.API::PlaceBet(100, config$sport, eventId = 1, periodNumber = 0,
+                           lineId = 1, betType = "MONEYLINE", team = NULL),
+    regexp = "The Team is required."
+  )
+})
