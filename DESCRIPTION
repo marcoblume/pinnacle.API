@@ -3,7 +3,7 @@ Type: Package
 Version: 2.3.3
 Title: A Wrapper for the Pinnacle API
 URL: https://github.com/marcoblume/pinnacle.API
-Author: Nicholas Jhirad, Marco Blume, Aaron Jacobs, Amine Gassem, 
+Author: Nicholas Jhirad, Marco Blume, Aaron Jacobs, Amine Gassem
 Maintainer: Marco Blume <marco.blume@pinnaclesports.com>
 Description: An interface to the API by Pinnacle that allows Pinnacle customers to interact with the sports market data in R.See <https://www.pinnacle.com/en/api> for more information. The Pinnacle API can be used to place wagers, retrieve line information, retrieve account information.Please be aware that the TOC of Pinnacle apply <https://www.pinnacle.com/en/termsandconditions>. An account with Pinnacle is necessary to use the Pinnacle API. 
 LazyData: true
