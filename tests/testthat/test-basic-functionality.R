@@ -49,6 +49,21 @@ testthat::test_that("GetBettingStatus() returns the expected format", {
                                       "ALL_BETTING_CLOSED"))
 })
 
+testthat::test_that("GetSports() returns the expected format", {
+  sports <- pinnacle.API::GetSports(force = TRUE)
+  testthat::expect_is(sports, "data.frame")
+  testthat::expect_gt(nrow(sports), 0)
+})
+
+testthat::test_that("GetSports() caches correctly", {
+  pinnacle.API::GetSports(force = FALSE)  # Ensure cache is present.
+  pinnacle.API::SetCredentials(config$username, "badpassword")
+  on.exit(pinnacle.API::SetCredentials(config$username, config$password))
+
+  sports <- pinnacle.API::GetSports(force = FALSE)
+  testthat::expect_gt(nrow(sports), 0)
+})
+
 # Straight Lines --------------------------------------------------------------
 testthat::context("Straight Lines")
 
@@ -87,4 +102,99 @@ testthat::test_that("GetFixtures() returns the expected format", {
   # Some odd event IDs are allowed, though.
   result <- pinnacle.API::GetFixtures(config$sport, eventids = 0)
   testthat::expect_equal(nrow(result), 0)
+})
+
+testthat::test_that("GetLine() returns the expected format", {
+  fixtures <- pinnacle.API::GetFixtures(config$sport)
+
+  # Pick an event to test line query.
+  set.seed(101)
+  events <- sample.int(nrow(fixtures), 1)
+  events <- fixtures[events, c("league.id", "league.events.id")]
+  names(events) <- c("league", "event")
+
+  line <- pinnacle.API::GetLine(config$sport, leagueids = events$league[1],
+                                eventid = events$event[1],
+                                periodnumber = 0, betType = "MONEYLINE",
+                                team = "TEAM1")
+
+  testthat::expect_is(line, "list")
+  testthat::expect_true(line$status %in% c("SUCCESS", "NOT_EXISTS", "OFFLINE"))
+
+  # Invalid event/league IDs should throw an error.
+  testthat::expect_error(
+    pinnacle.API::GetLine(config$sport, leagueids = -1,
+                          eventid = -1,
+                          periodnumber = 0, betType = "MONEYLINE",
+                          team = "TEAM1"),
+    regexp = "Invalid request parameters."
+  )
+
+  # As should some NULL parameters.
+  testthat::expect_error(
+    pinnacle.API::GetLine(config$sport, leagueids = events$league[1],
+                          eventid = events$event[1],
+                          periodnumber = 0, betType = "MONEYLINE"),
+    regexp = "Invalid request parameters."
+  )
+
+  # Some odd event IDs are evidently OK.
+  line <- pinnacle.API::GetLine(config$sport, leagueids = 1,
+                                eventid = 1,
+                                periodnumber = 0, betType = "MONEYLINE",
+                                team = "TEAM1")
+
+  testthat::expect_is(line, "list")
+  testthat::expect_true(line$status %in% c("SUCCESS", "NOT_EXISTS", "OFFLINE"))
+})
+
+# Straight Lines --------------------------------------------------------------
+testthat::context("Straight Bets")
+
+testthat::test_that("PlaceBet() returns the expected format", {
+  # Some odd parameter combinations succeed.
+
+  bet <- pinnacle.API::PlaceBet(100, config$sport, eventId = 1, periodNumber = 0,
+                                lineId = 1, betType = "MONEYLINE", team = "TEAM1")
+
+  testthat::expect_is(bet, "list")
+  testthat::expect_equal(bet$status, "PROCESSED_WITH_ERROR")
+
+  bet <- pinnacle.API::PlaceBet(100, -config$sport, eventId = 1, periodNumber = 0,
+                                lineId = 1, betType = "MONEYLINE", team = "TEAM1")
+
+  testthat::expect_is(bet, "list")
+  testthat::expect_equal(bet$status, "PROCESSED_WITH_ERROR")
+
+  bet <- pinnacle.API::PlaceBet(100, config$sport, eventId = 1, periodNumber = -1,
+                                lineId = 1, betType = "MONEYLINE", team = "TEAM1")
+
+  testthat::expect_is(bet, "list")
+  testthat::expect_equal(bet$status, "PROCESSED_WITH_ERROR")
+
+  # Others are forbidden.
+
+  testthat::expect_error(
+    pinnacle.API::PlaceBet(100, config$sport, eventId = -1, periodNumber = 0,
+                           lineId = 1, betType = "MONEYLINE", team = "TEAM1"),
+    regexp = "Invalid eventId parameter value."
+  )
+
+  testthat::expect_error(
+    pinnacle.API::PlaceBet(-100, config$sport, eventId = 1, periodNumber = 0,
+                           lineId = 1, betType = "MONEYLINE", team = "TEAM1"),
+    regexp = "Invalid stake."
+  )
+
+  testthat::expect_error(
+    pinnacle.API::PlaceBet(100, config$sport, eventId = 1, periodNumber = 0,
+                           lineId = -1, betType = "MONEYLINE", team = "TEAM1"),
+    regexp = "Invalid lineId parameter value."
+  )
+
+  testthat::expect_error(
+    pinnacle.API::PlaceBet(100, config$sport, eventId = 1, periodNumber = 0,
+                           lineId = 1, betType = "MONEYLINE", team = NULL),
+    regexp = "The Team is required."
+  )
 })

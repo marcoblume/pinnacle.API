@@ -47,9 +47,6 @@
 #'   \item{errorCode}
 #' }
 #' @export
-#' @import httr
-#' @importFrom rjson toJSON
-#' @import uuid
 #' @examples
 #' \donttest{
 #' SetCredentials("TESTAPI","APITEST")
@@ -92,17 +89,30 @@ function (
     if (!is.null(acceptBetterLine)) sprintf(' acceptBetterLine: %s ', acceptBetterLine),
     ' oddsformat: ', oddsFormat
   )
-  
-  place_bet_data <- list(uniqueRequestId = UUIDgenerate(), 
-                         acceptBetterLine = acceptBetterLine, oddsFormat = oddsFormat, 
-                         stake = stake, winRiskStake = winRiskStake, sportId = sportId, 
-                         eventId = eventId, periodNumber = periodNumber, betType = betType, 
-                         lineId = lineId, altLineId = altLineId, team = team, 
-                         side = side)
-  place_bet_body <- rjson::toJSON(place_bet_data)
-  r <- httr::POST(paste0(.PinnacleAPI$url, "/v1/bets/place"), add_headers(Authorization = authorization(), 
-                                                                    `Content-Type` = "application/json"), 
-                  body = place_bet_body)
-  
-  jsonlite::fromJSON(content(r, type = "text", encoding = "UTF-8"))
+
+  bet <- list(uniqueRequestId = uuid::UUIDgenerate(),
+              acceptBetterLine = acceptBetterLine,
+              oddsFormat = oddsFormat,
+              stake = stake,
+              winRiskStake = winRiskStake,
+              sportId = sportId,
+              eventId = eventId,
+              periodNumber = periodNumber,
+              betType = betType,
+              lineId = lineId,
+              altLineId = altLineId,
+              team = team,
+              side = side)
+
+  request_body <- rjson::toJSON(bet)
+  response <- httr::POST(paste0(.PinnacleAPI$url, "/v1/bets/place"),
+                         httr::add_headers(Authorization = authorization(),
+                                           `Content-Type` = "application/json"),
+                         httr::accept_json(),
+                         body = request_body)
+
+  CheckForAPIErrors(response)
+
+  response <- httr::content(response, type = "text", encoding = "UTF-8")
+  jsonlite::fromJSON(response)
 }
