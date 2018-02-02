@@ -56,6 +56,10 @@ GetFixtures <-
       stop("missing sport ID")
     }
 
+    if (length(sportid) > 1) {
+      stop("Only one sport can be specified at a time.")
+    }
+
     message(Sys.time(), "| Pulling Fixtures for Sport ID: ", sportid,
             if (!is.null(leagueids)) paste(", with League ID(s):",
                                            paste(leagueids, collapse = ", ")),
