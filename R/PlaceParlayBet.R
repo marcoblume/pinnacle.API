@@ -50,7 +50,6 @@
 #' }
 #' @export
 #' @import httr
-#' @importFrom rjson toJSON
 #' @import uuid
 #' @examples
 #' \donttest{
@@ -117,7 +116,7 @@ PlaceParlayBet <-
                            roundRobinOptions = list(roundRobinOptions),
                            legs = lapply(1:length(legslist),function(leg) c(uniqueLegId = guids[-1][leg],legslist[[leg]])))
     
-    place_bet_body <-  rjson::toJSON(place_bet_data)
+    place_bet_body <- jsonlite::toJSON(place_bet_data, auto_unbox = TRUE, null = "null")
     
     r <- POST(paste0(.PinnacleAPI$url ,"/v1/bets/parlay"),
               add_headers(Authorization= authorization(),

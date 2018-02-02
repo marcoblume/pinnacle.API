@@ -17,8 +17,7 @@ Imports:
     purrr,
     uuid,
     httr,
-    jsonlite,
-    rjson
+    jsonlite (>= 1.5)
 RoxygenNote: 6.0.1
 Suggests: 
     testthat (>= 2.0.0), 
