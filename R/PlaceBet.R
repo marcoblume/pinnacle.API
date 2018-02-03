@@ -104,7 +104,7 @@ function (
               team = team,
               side = side)
 
-  request_body <- rjson::toJSON(bet)
+  request_body <- jsonlite::toJSON(bet, auto_unbox = TRUE, null = "null")
   response <- httr::POST(paste0(.PinnacleAPI$url, "/v1/bets/place"),
                          httr::add_headers(Authorization = authorization(),
                                            `Content-Type` = "application/json"),
