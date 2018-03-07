@@ -34,14 +34,16 @@ GetOdds <-
            tableformat = 'mainlines',
            force = TRUE){
     CheckTermsAndConditions()
-    
-    ## retrieve sportid
-    if (missing(sportid)) {
+
+    # In interactive mode, try to retrieve a missing sportid parameter.
+    if(interactive() && missing(sportid)) {
       cat('No Sports Selected, choose one:\n')
       ViewSports()
       sportid <- readline('Selection (id): ')
+    } else if (missing(sportid)) {
+      stop("missing sport ID")
     }
-    
+
     message(
       Sys.time(),
       '| Pulling Odds for - sportid: ', sportid,
