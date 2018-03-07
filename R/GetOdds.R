@@ -53,27 +53,24 @@ GetOdds <-
       ' oddsformat: ', oddsformat,
       ' tableformat: ', tableformat
     )
-    
-    r <- 
-      sprintf('%s/v1/odds', .PinnacleAPI$url) %>%
-      modify_url(
-        query = 
-          list(
-            sportId = sportid,
-            leagueIds = if (!is.null(leagueids)) paste(leagueids, collapse = ',') else NULL,
-            since = since,
-            isLive = islive*1L,
-            oddsFormat = oddsformat)
-      ) %>%
-      httr::GET(add_headers(Authorization = authorization(),
-                      "Content-Type" = "application/json")) %>%
-      content(type = "text", encoding = "UTF-8")
-    
-    
+
+    params <- list(sportId = sportid, since = since,
+                   isLive = as.integer(islive), oddsFormat = oddsformat)
+    if (!is.null(leagueids)) {
+      params$leagueIds <- paste(leagueids, collapse = ",")
+    }
+
+    response <- httr::GET(paste0(.PinnacleAPI$url, "/v1/odds"),
+                          httr::add_headers(Authorization = authorization()),
+                          httr::accept_json(),
+                          query = params)
+
+    CheckForAPIErrors(response)
+
     # If no rows are returned, return empty data.frame
-    if (identical(r, '')) return(data.frame())
-    
-    r %>%
+    if (!httr::has_content(response)) return(data.frame())
+
+    httr::content(response, type = "text", encoding = "UTF-8") %>%
       jsonlite::fromJSON(flatten = TRUE) %>%
       as.data.table %>%
       with({
