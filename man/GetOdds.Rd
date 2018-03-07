@@ -2,37 +2,52 @@
 % Please edit documentation in R/GetOdds.R
 \name{GetOdds}
 \alias{GetOdds}
-\title{Get Odds}
+\title{Get Odds for Non-Settled Events in a Given Sport}
 \usage{
-GetOdds(sportid, leagueids = NULL, since = NULL, islive = 0,
-  oddsformat = "AMERICAN", tableformat = "mainlines", force = TRUE)
+GetOdds(sportid, leagueids = NULL, eventids = NULL, since = NULL,
+  islive = 0, oddsformat = "AMERICAN", tableformat = "mainlines",
+  force = TRUE)
 }
 \arguments{
-\item{sportid}{(optional) The sport id for which to retrieve the fixutres}
+\item{sportid}{An integer giving the sport. If this is missing in
+interactive mode, a menu of options is presented to the user.}
 
-\item{leagueids}{(optional) integer vector of leagueids.}
+\item{leagueids}{A vector of league IDs, or \code{NULL}.}
 
-\item{since}{(optional) numeric This is used to receive incremental updates.
-Use the value of last from previous response.}
+\item{eventids}{A vector of event IDs, or \code{NULL}.}
 
-\item{islive}{boolean if TRUE retrieves ONLY live events}
+\item{since}{To receive only listings updated since the last query, set
+\code{since} to the value of \code{last} from the previous fixtures
+response. Otherwise it will query all listings.}
 
-\item{oddsformat}{default AMERICAN, see API manual for more options}
+\item{islive}{When \code{TRUE}, retrieve only live events.}
 
-\item{tableformat}{\itemize{
-\item 'mainlines' (default), only shows mainlines
-\item 'long' for a single record for each spread/total on an event, 
-\item 'wide' for all lines as one record, 
-\item 'subtables' all lines for spreads/totals stored as nested tables
+\item{oddsformat}{Format for the returned odds. One of \code{"AMERICAN"},
+\code{"DECIMAL"}, \code{"HONGKONG"}, \code{"INDONESIAN"}, or
+\code{"MALAY"}.}
+
+\item{tableformat}{One of
+\itemize{
+  \item \code{"mainlines"} for mainlines only (the default);
+  \item \code{"long"} for a single record for each spread/total on an event; 
+  \item \code{"wide"} for all lines as one record; or
+  \item \code{"subtables"} all lines for spreads/totals stored as nested
+    tables.
 }}
 
-\item{force}{boolean if FALSE, functions using cached data will use the values since the last force}
+\item{force}{Currently ignored.}
 }
 \value{
-data.frame of odds
+A data frame of odds.
 }
 \description{
-Get Odds
+Queries all odds offered for a given sport, which can be filtered by league
+and/or event ID, and narrowed to include only live events.
+}
+\details{
+This function will raise an error if the API does not return HTTP status
+\code{OK}. For information on the possible errors, see the API documentation
+for \href{https://pinnacleapi.github.io/#operation/Odds_Straight_V1_Get}{Get Odds}.
 }
 \examples{
 \donttest{
@@ -40,4 +55,5 @@ SetCredentials("TESTAPI","APITEST")
 AcceptTermsAndConditions(accepted = TRUE)
 # We can run without parameters, and will be given a selection of sports
 GetOdds()}
+
 }

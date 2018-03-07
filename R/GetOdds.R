@@ -1,33 +1,50 @@
-#' Get Odds
+#' Get Odds for Non-Settled Events in a Given Sport
 #'
-#' @param sportid (optional) The sport id for which to retrieve the fixutres
-#' @param leagueids (optional) integer vector of leagueids.
-#' @param since (optional) numeric This is used to receive incremental updates.
-#' Use the value of last from previous response.
-#' @param islive boolean if TRUE retrieves ONLY live events
-#' @param oddsformat default AMERICAN, see API manual for more options
-#' @param tableformat
-#' \itemize{
-#' \item 'mainlines' (default), only shows mainlines
-#' \item 'long' for a single record for each spread/total on an event, 
-#' \item 'wide' for all lines as one record, 
-#' \item 'subtables' all lines for spreads/totals stored as nested tables
-#' } 
-#' @param force boolean if FALSE, functions using cached data will use the values since the last force
-#' @return data.frame of odds
-#' @export
-#' @import httr
-#' @import data.table
-#' @importFrom jsonlite fromJSON
+#' Queries all odds offered for a given sport, which can be filtered by league
+#' and/or event ID, and narrowed to include only live events.
+#'
+#' @param sportid An integer giving the sport. If this is missing in
+#'   interactive mode, a menu of options is presented to the user.
+#' @param leagueids A vector of league IDs, or \code{NULL}.
+#' @param eventids A vector of event IDs, or \code{NULL}.
+#' @param since To receive only listings updated since the last query, set
+#'   \code{since} to the value of \code{last} from the previous fixtures
+#'   response. Otherwise it will query all listings.
+#' @param islive When \code{TRUE}, retrieve only live events.
+#' @param oddsformat Format for the returned odds. One of \code{"AMERICAN"},
+#'   \code{"DECIMAL"}, \code{"HONGKONG"}, \code{"INDONESIAN"}, or
+#'   \code{"MALAY"}.
+#' @param tableformat One of
+#'   \itemize{
+#'     \item \code{"mainlines"} for mainlines only (the default);
+#'     \item \code{"long"} for a single record for each spread/total on an event; 
+#'     \item \code{"wide"} for all lines as one record; or
+#'     \item \code{"subtables"} all lines for spreads/totals stored as nested
+#'       tables.
+#'   }
+#' @param force Currently ignored.
+#'
+#' @details
+#'
+#' This function will raise an error if the API does not return HTTP status
+#' \code{OK}. For information on the possible errors, see the API documentation
+#' for \href{https://pinnacleapi.github.io/#operation/Odds_Straight_V1_Get}{Get Odds}.
+#'
+#' @return A data frame of odds.
+#'
 #' @examples
 #' \donttest{
 #' SetCredentials("TESTAPI","APITEST")
 #' AcceptTermsAndConditions(accepted = TRUE)
 #' # We can run without parameters, and will be given a selection of sports
 #' GetOdds()}
+#'
+#' @import data.table
+#' @export
 GetOdds <-
   function(sportid,
            leagueids = NULL,
+           eventids = NULL,
            since = NULL,
            islive = 0,
            oddsformat = 'AMERICAN',
@@ -44,20 +61,22 @@ GetOdds <-
       stop("missing sport ID")
     }
 
-    message(
-      Sys.time(),
-      '| Pulling Odds for - sportid: ', sportid,
-      if (!is.null(leagueids)) sprintf(' leagueids: %s', paste(leagueids, collapse = ', ')),
-      if (!is.null(since)) sprintf(' since: %s', since),
-      ' islive: ', islive,
-      ' oddsformat: ', oddsformat,
-      ' tableformat: ', tableformat
-    )
+    message(Sys.time(), "| Pulling Odds for - sportid: ", sportid,
+            if (!is.null(leagueids)) sprintf(", with League ID(s): %s",
+                                             paste(leagueids, collapse = ", ")),
+            if (!is.null(eventids)) sprintf(", and Event ID(s): %s",
+                                            paste(eventids, collapse = ", ")),
+            if (!is.null(since)) sprintf(" since: %s", since),
+            " islive: ", islive, " oddsformat: ", oddsformat, " tableformat: ",
+            tableformat)
 
     params <- list(sportId = sportid, since = since,
                    isLive = as.integer(islive), oddsFormat = oddsformat)
     if (!is.null(leagueids)) {
       params$leagueIds <- paste(leagueids, collapse = ",")
+    }
+    if (!is.null(eventids)) {
+      params$eventIds <- paste(eventids, collapse = ",")
     }
 
     response <- httr::GET(paste0(.PinnacleAPI$url, "/v1/odds"),
