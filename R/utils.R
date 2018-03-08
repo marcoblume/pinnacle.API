@@ -127,8 +127,7 @@ CheckForAPIErrors <- function(response) {
 # Remove Nulls from lists:
 RemoveNulls <- function(dt) {
   # if(!is.data.table(dt)) stop('Function only defined for data.table')
-  dt %>%
-    map_if(is.list, function(y) {
+    purrr::map_if(dt, is.list, function(y) {
       tmp <- names(rbindlist(y, fill = TRUE))
       tmp <- setNames(replicate(length(tmp),NA,simplify = FALSE), tmp)
       map_if(y, function(x) length(x) == 0, function(x) tmp)
@@ -141,17 +140,16 @@ RemoveNulls <- function(dt) {
 # Takes only the first element from each name in each sublist
 SpreadsAndTotalsMainlines <- function(dt) {
   RemoveNulls(dt) %>%
-    map_if(is.list, lapply, data.frame) %>%
-    map_if(is.list, lapply, first) %>%
-    map_if(is.list, rbindlist, fill = TRUE) %>%
+    purrr::map_if(is.list, lapply, data.frame) %>%
+    purrr::map_if(is.list, lapply, first) %>%
+    purrr::map_if(is.list, rbindlist, fill = TRUE) %>%
     as.data.table
 }
 
 # Puts data into wide format (not recommended)
 SpreadsAndTotalsWide <- function(dt) {
   #browser()
-  dt %>%
-    .[, c(purrr::discard(.SD, is.list),do.call(c,lapply(purrr::keep(.SD, is.list), simplify_all)))]
+  dt[, c(purrr::discard(.SD, is.list),do.call(c,lapply(purrr::keep(.SD, is.list), simplify_all)))]
     # map_if(is.list, lapply, as.list) %>%
     # #as.data.table %>%
     # RemoveNulls %>%
