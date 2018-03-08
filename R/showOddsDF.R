@@ -1,38 +1,52 @@
-#' showOddsDF - Takes a GetOdds JSON response and combines with Fixtures and Inrunning
+#' Combine Odds, Fixture, and In-Running Information into a Single Data Frame
 #'
-#' @param sportid (optional) The sportid to get odds from, if none is given, 
-#' a list of options and a prompt are provided
-#' @param leagueids numeric vector of leagueids - can get as output from GetLeagues
-#' @param since numeric This is used to receive incremental updates. this will give all lines that have changed odds.
-#' @param islive boolean if TRUE retrieves ONLY live events
-#' @param force boolean default set to TRUE, forces a reload of the cache.
-#' @param tableformat 
-#' \itemize{
-#' \item 'mainlines' (default), only shows mainlines
-#' \item 'long' for a single record for each spread/total on an event, 
-#' \item 'wide' for all lines as one record, 
-#' \item 'subtables' all lines for spreads/totals stored as nested tables
-#' } 
-#' @param namesLength how many identifiers to use in the names, default is 3
-#' @param attachLeagueInfo whether or not to include league information in the data
-#' @param oddsformat default AMERICAN, see API manual for more options
-#' bettable leagues
-#' @param fixtures_since if set, get only fixtures that were posted since last.
-#' @return a dataframe combining GetOdds and GetFixtures data, containing NA's where levels of factors do not have a value.
-#' Naming convention is as follows, Example: spread.altLineId.N is the altLineId associated with spread.hdp.(N+1) 
-#' whereas spread.hdp refers to the mainline. spread.altLineId is the first alternate, and equivalent to spread.altLineId.0
-#' @export
-#' @import httr
-#' @import data.table
+#' Queries the event listing for a given sport and the odds offered on each
+#' event. This query can be filtered by league and/or event ID, and narrowed to
+#' include only live events.
+#'
+#' @param sportid An integer giving the sport. If this is missing in
+#'   interactive mode, a menu of options is presented to the user.
+#' @param leagueids A vector of league IDs, or \code{NULL}.
+#' @param eventids A vector of event IDs, or \code{NULL}.
+#' @param since Used to receive incremental odds updates. See
+#'   \code{\link{GetOdds}}.
+#' @param islive When \code{TRUE}, retrieve only live events.
+#' @param force Currently ignored.
+#' @param tableformat The format of the odds. See \code{\link{GetOdds}}.
+#' @param namesLength The number of identifiers to use in the names.
+#' @param attachLeagueInfo When \code{TRUE}, include league information in the
+#'   data.
+#' @param oddsformat Format for the returned odds. See \code{\link{GetOdds}}.
+#' @param fixtures_since Used to receive incremental fixture updates. See
+#'   \code{\link{GetFixtures}}.
+#'
+#' @return
+#'
+#' A data frame combining odds and fixtures data, containing \code{NA}s where
+#' levels of factors do not have a value. Example of the naming convention:
+#' \code{spread.altLineId.N} is the \code{altLineId} associated with
+#' \code{spread.hdp.(N+1)}, whereas \code{spread.hdp} refers to the mainline.
+#' \code{spread.altLineId} is the first alternate, and equivalent to
+#' \code{spread.altLineId.0}.
+#'
 #' @examples
 #' \donttest{
 #' SetCredentials("TESTAPI","APITEST")
 #' AcceptTermsAndConditions(accepted=TRUE)
 #' # Run without arguments, it will prompt you for the sport
 #' showOddsDF()}
+#'
+#' @seealso
+#'
+#' See \code{\link{GetOdds}}, \code{\link{GetFixtures}}, and
+#' \code{\link{GetInrunning}} for the underlying API requests.
+#'
+#' @import data.table
+#' @export
 showOddsDF <- 
   function(sportid,
            leagueids=NULL,
+           eventids = NULL,
            since = NULL,
            islive = 0,
            force = TRUE,
@@ -54,6 +68,7 @@ showOddsDF <-
     # Get JSON of odds
     res <- GetOdds(sportid,
                    leagueids = leagueids,
+                   eventids = eventids,
                    since = since,
                    islive = islive,
                    tableformat = tableformat,
@@ -67,6 +82,7 @@ showOddsDF <-
     # Get additional matchup details
     fixtures <- GetFixtures(sportid,
                             leagueids,
+                            eventids = eventids,
                             since  = fixtures_since,
                             islive = islive)
     
