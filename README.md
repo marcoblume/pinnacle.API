@@ -489,7 +489,7 @@ becomes
 
 This is done to make the tables easier to work with, but can be overridden (see `?showOddsDF`)
 
-(Default is to show only mainlines, alternate lines are accessible via the `tableFormat` option)
+(Default is to show only mainlines, alternate lines are accessible via the `tableformat` option)
 
 
 
@@ -514,7 +514,7 @@ for the following example, we will place a bet of $0.01
 
 
 ```r
-BasketballOddsDF <- showOddsDF(4,tableFormat = 'mainlines')
+BasketballOddsDF <- showOddsDF(4,tableformat = 'mainlines')
 ```
 
 Record example (filtered to only the interesting fields):
