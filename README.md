@@ -514,7 +514,7 @@ for the following example, we will place a bet of $0.01
 
 
 ```r
-BasketballOddsDF <- showOddsDF(4,tableformat = 'mainlines')
+BasketballOddsDF <- showOddsDF(4, tableformat = 'mainlines')
 ```
 
 Record example (filtered to only the interesting fields):
