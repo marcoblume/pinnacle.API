@@ -23,7 +23,7 @@
 #' \item{pitcher1MustStart OPTIONAL}
 #' \item{pitcher2MustStart OPTIONAL}
 #' }
-#' @param roundRobinOptions one of the round robin options, default is 'Parlay'
+#' @param roundRobinOptions one or more of the round robin options, default is 'Parlay'
 #' \itemize{
 #' \item{Parlay}
 #' \item{TwoLegRoundRobin}
@@ -109,11 +109,15 @@ PlaceParlayBet <-
       '| Placing Parlay Bet'
     )
 
+    # Only turn RR options into an array if there is only one.
+    if (length(roundRobinOptions) == 1) {
+      roundRobinOptions <- list(roundRobinOptions)
+    }
     place_bet_data <- list(uniqueRequestId=guids[1],
                            acceptBetterLine=acceptBetterLine,
                            oddsFormat=oddsFormat,
                            riskAmount=riskAmount,
-                           roundRobinOptions = list(roundRobinOptions),
+                           roundRobinOptions = roundRobinOptions,
                            legs = lapply(1:length(legslist),function(leg) c(uniqueLegId = guids[-1][leg],legslist[[leg]])))
     
     place_bet_body <- jsonlite::toJSON(place_bet_data, auto_unbox = TRUE, null = "null")
