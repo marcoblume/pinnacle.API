@@ -33,7 +33,7 @@ PlaceParlayBet(riskAmount, legslist, roundRobinOptions = c("Parlay",
 \item{pitcher2MustStart OPTIONAL}
 }}
 
-\item{roundRobinOptions}{one of the round robin options, default is 'Parlay'
+\item{roundRobinOptions}{one or more of the round robin options, default is 'Parlay'
 \itemize{
 \item{Parlay}
 \item{TwoLegRoundRobin}
